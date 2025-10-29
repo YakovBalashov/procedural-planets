@@ -10,28 +10,40 @@ namespace ProceduralPlanets
         [SerializeField] private float scale;
         [SerializeField] private int octaves;
         [SerializeField] private float lacunarity;
-        [SerializeField] private float persistence;
+        [SerializeField] [Range(0, 1)] private float persistence;
+        [SerializeField] private float heightMultiplier;
 
         [Header("Debug")] [SerializeField] private bool drawVertexSpheres;
         [SerializeField] private float vertexSphereRadius;
-        
-        
+
+        private MeshFilter _meshFilter;
+
+
         private void Awake()
         {
-            var meshFilter = GetComponent<MeshFilter>();
+            _meshFilter = GetComponent<MeshFilter>();
+            GeneratePlanet();
+        }
+
+        private void GeneratePlanet()
+        {
+            if (_meshFilter == null)
+            {
+                _meshFilter = GetComponent<MeshFilter>();
+            }
 
             var sphereMesh = Resources.GetBuiltinResource<Mesh>("Sphere.fbx");
 
-            meshFilter.mesh = Instantiate(sphereMesh);
+            _meshFilter.sharedMesh = Instantiate(sphereMesh);
 
-            var planetMesh = meshFilter.mesh;
+            var planetMesh = _meshFilter.sharedMesh;
 
             planetMesh.vertices = OffsetVertices(planetMesh.vertices);
 
             planetMesh.RecalculateNormals();
             planetMesh.RecalculateBounds();
         }
-        
+
         private Vector3[] OffsetVertices(Vector3[] meshVertices)
         {
             Vector3[] offsetVertices = new Vector3[meshVertices.Length];
@@ -42,7 +54,7 @@ namespace ProceduralPlanets
 
             for (int i = 0; i < meshVertices.Length; i++)
             {
-                float height = planetRadius + noiseValues[i];
+                float height = planetRadius + noiseValues[i] * planetRadius * heightMultiplier;
                 Vector3 vertex = meshVertices[i].normalized * height;
                 offsetVertices[i] = vertex;
             }
@@ -52,13 +64,15 @@ namespace ProceduralPlanets
 
         private void OnValidate()
         {
-            Debug.Log("OnValidate called");
             planetRadius = Mathf.Max(0, planetRadius);
             scale = Mathf.Max(0.0001f, scale);
             octaves = Mathf.Max(1, octaves);
             lacunarity = Mathf.Max(1, lacunarity);
             persistence = Mathf.Clamp01(persistence);
             vertexSphereRadius = Mathf.Max(0.01f, vertexSphereRadius);
+
+            if (Application.isPlaying) return;
+            GeneratePlanet();
         }
 
         private void OnDrawGizmos()

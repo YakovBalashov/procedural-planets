@@ -102,4 +102,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5eec87f63b060d4d8acb72e32500e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.MeshGenerator
-  vertexCount: {x: 20, y: 20}
+  planetRadius: 0
+  seed: 0
+  scale: 0.0001
+  octaves: 1
+  lacunarity: 1
+  persistence: 0
+  heightMultiplier: 0
+  drawVertexSpheres: 0
+  vertexSphereRadius: 0.01

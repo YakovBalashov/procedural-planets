@@ -6,14 +6,20 @@ namespace ProceduralPlanets
     public class PlanetSurface : MonoBehaviour
     {
         [Header("Mesh")] [SerializeField] float planetRadius;
+        [SerializeField] private int seed;
         [SerializeField] private float scale;
-        [Header("Debug")] [SerializeField] private float vertexSphereRadius;
+        [SerializeField] private int octaves;
+        [SerializeField] private float lacunarity;
+        [SerializeField] private float persistence;
 
-
+        [Header("Debug")] [SerializeField] private bool drawVertexSpheres;
+        [SerializeField] private float vertexSphereRadius;
+        
+        
         private void Awake()
         {
             var meshFilter = GetComponent<MeshFilter>();
-    
+
             var sphereMesh = Resources.GetBuiltinResource<Mesh>("Sphere.fbx");
 
             meshFilter.mesh = Instantiate(sphereMesh);
@@ -24,18 +30,19 @@ namespace ProceduralPlanets
 
             planetMesh.RecalculateNormals();
             planetMesh.RecalculateBounds();
-            
         }
-
+        
         private Vector3[] OffsetVertices(Vector3[] meshVertices)
         {
             Vector3[] offsetVertices = new Vector3[meshVertices.Length];
-            
-            var noiseMap = new NoiseMap(0,0,0,0);
+
+            var noiseMap = new NoiseMap(seed, scale, octaves, persistence, lacunarity);
+
+            float[] noiseValues = noiseMap.GenerateNoiseMap(meshVertices);
 
             for (int i = 0; i < meshVertices.Length; i++)
             {
-                float height = planetRadius + noiseMap.GenerateNoise(meshVertices[i]);
+                float height = planetRadius + noiseValues[i];
                 Vector3 vertex = meshVertices[i].normalized * height;
                 offsetVertices[i] = vertex;
             }
@@ -43,15 +50,25 @@ namespace ProceduralPlanets
             return offsetVertices;
         }
 
-        /*
+        private void OnValidate()
+        {
+            Debug.Log("OnValidate called");
+            planetRadius = Mathf.Max(0, planetRadius);
+            scale = Mathf.Max(0.0001f, scale);
+            octaves = Mathf.Max(1, octaves);
+            lacunarity = Mathf.Max(1, lacunarity);
+            persistence = Mathf.Clamp01(persistence);
+            vertexSphereRadius = Mathf.Max(0.01f, vertexSphereRadius);
+        }
+
         private void OnDrawGizmos()
         {
-            if (!Application.isPlaying)
-                return;
+            if (!drawVertexSpheres) return;
+
+            if (!Application.isPlaying) return;
 
             var mesh = GetComponent<MeshFilter>().sharedMesh;
-            if (mesh == null)
-                return;
+            if (mesh == null) return;
 
             var vertices = mesh.vertices;
 
@@ -61,6 +78,5 @@ namespace ProceduralPlanets
                 Gizmos.DrawSphere(transform.position + vertex, vertexSphereRadius);
             }
         }
-    */
     }
 }

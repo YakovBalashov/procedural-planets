@@ -19,12 +19,13 @@ namespace ProceduralPlanets
 
         private readonly Vector3[] _octaveOffsets;
         
-        public NoiseMap(int seed, float scale, int octaves, float persistence, float lacunarity)
+        public NoiseMap(int seed, float scale, int octaves, float persistence, float lacunarity, float baseRoughness)
         {
             _scale = Mathf.Max(scale, MinScale);
             _octaves = octaves;
             _persistence = persistence;
             _lacunarity = lacunarity;
+            _baseRoughness = baseRoughness;
             
             var pseudoRandomGenerator = new System.Random(seed);
             
@@ -65,14 +66,17 @@ namespace ProceduralPlanets
         public float GenerateNoise(Vector3 point)
         {
             var noiseHeight = 0f;
+            var frequency = _baseRoughness;
+            var amplitude = 1f;
+            
             for (var i = 0; i < _octaves; i++)
             {
-                var frequency = Mathf.Pow(_lacunarity, i);
-                var amplitude = Mathf.Pow(_persistence, i);
-
                 float3 samplePoint = point * frequency / _scale + _octaveOffsets[i];
                 var perlinValue = noise.cnoise(samplePoint);
                 noiseHeight += perlinValue * amplitude;
+                
+                amplitude *= _persistence;
+                frequency *= _lacunarity;
             }
             return noiseHeight;
         }

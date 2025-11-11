@@ -11,6 +11,7 @@ namespace ProceduralPlanets
         [SerializeField] private int octaves;
         [SerializeField] private float lacunarity;
         [SerializeField] [Range(0, 1)] private float persistence;
+        [SerializeField] private float baseRoughness;
         [SerializeField] private float heightMultiplier;
 
         [Header("NormalMap")] [SerializeField] private bool generateNormalMap;
@@ -71,7 +72,7 @@ namespace ProceduralPlanets
 
         private Texture2D GenerateNormalMap()
         {
-            var NoiseMap = new NoiseMap(seed, scale, normalMapOctaves, persistence, lacunarity);
+            var NoiseMap = new NoiseMap(seed, scale, normalMapOctaves, persistence, lacunarity, baseRoughness);
 
             Vector3[] points = new Vector3[width * height];
 
@@ -102,7 +103,7 @@ namespace ProceduralPlanets
         {
             Vector3[] offsetVertices = new Vector3[meshVertices.Length];
 
-            var noiseMap = new NoiseMap(seed, scale, octaves, persistence, lacunarity);
+            var noiseMap = new NoiseMap(seed, scale, octaves, persistence, lacunarity, baseRoughness);
 
             float[] noiseValues = noiseMap.GenerateNoiseMap(meshVertices);
 
@@ -126,7 +127,7 @@ namespace ProceduralPlanets
             vertexSphereRadius = Mathf.Max(0.01f, vertexSphereRadius);
 
             if (!generateNormalMap) ClearNormalMap();
-            
+
             if (Application.isPlaying) return;
             GeneratePlanet();
         }

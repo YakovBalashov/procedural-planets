@@ -13,6 +13,12 @@ namespace ProceduralPlanets
         [SerializeField] [Range(0, 1)] private float persistence;
         [SerializeField] private float heightMultiplier;
 
+        [Header("NormalMap")] [SerializeField] private int height;
+        [SerializeField] private int width;
+        [SerializeField] private int normalMapOctaves;
+        [SerializeField] private float strength;
+
+
         [Header("Debug")] [SerializeField] private bool drawVertexSpheres;
         [SerializeField] private float vertexSphereRadius;
 
@@ -40,8 +46,52 @@ namespace ProceduralPlanets
 
             planetMesh.vertices = OffsetVertices(planetMesh.vertices);
 
+            Texture2D normalMap = GenerateNormalMap();
+
+            var renderer = GetComponent<MeshRenderer>();
+
+            if (renderer.sharedMaterial == null)
+                renderer.sharedMaterial = new Material(Shader.Find("Standard"));
+
+            renderer.sharedMaterial.SetTexture("_BumpMap", normalMap);
+            renderer.sharedMaterial.EnableKeyword("_NORMALMAP");
+
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(renderer.sharedMaterial);
+            UnityEditor.EditorUtility.SetDirty(normalMap);
+#endif
+
             planetMesh.RecalculateNormals();
             planetMesh.RecalculateBounds();
+        }
+
+        private Texture2D GenerateNormalMap()
+        {
+            var NoiseMap = new NoiseMap(seed, scale, normalMapOctaves, persistence, lacunarity);
+
+            Vector3[] points = new Vector3[width * height];
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    points[y * width + x] = new Vector3(x, y, 0);
+                }
+            }
+
+            var heightMap = NoiseMap.GenerateNoiseMap(points);
+
+            var heightMap2D = new float[width, height];
+
+            for (int i = 0; i < heightMap.Length; i++)
+            {
+                int x = i % width;
+                int y = i / width;
+                heightMap2D[x, y] = heightMap[i];
+            }
+
+            Texture2D normalMap = NormalMapGenerator.GenerateNormalMap(heightMap2D, strength);
+            return normalMap;
         }
 
         private Vector3[] OffsetVertices(Vector3[] meshVertices)

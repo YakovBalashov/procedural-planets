@@ -109,5 +109,9 @@ MonoBehaviour:
   lacunarity: 1
   persistence: 0
   heightMultiplier: 0
+  height: 0
+  width: 0
+  normalMapOctaves: 0
+  strength: 0
   drawVertexSpheres: 0
   vertexSphereRadius: 0.01

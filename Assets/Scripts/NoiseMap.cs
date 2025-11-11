@@ -74,5 +74,35 @@ namespace ProceduralPlanets
             }
             return noiseHeight;
         }
+        
+        
+        public Texture2D GenerateNoiseTexture(int width, int height)
+        {
+            var noiseTexture = new Texture2D(width, height);
+            Vector3[] points = new Vector3[width * height];
+            
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    points[y * width + x] = new Vector3(x, y, 0);
+                }
+            }
+            
+            float[] noiseValues = GenerateNoiseMap(points);
+            
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    float noiseValue = noiseValues[y * width + x] * 0.5f + 0.5f;
+                    Color color = new Color(noiseValue, noiseValue, noiseValue);
+                    noiseTexture.SetPixel(x, y, color);
+                }
+            }
+            
+            noiseTexture.Apply();
+            return noiseTexture;
+        }
     }
 }

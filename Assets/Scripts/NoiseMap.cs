@@ -14,6 +14,8 @@ namespace ProceduralPlanets
         private readonly int _octaves;
         private readonly float _persistence;
         private readonly float _lacunarity;
+        
+        private readonly float _baseRoughness;
 
         private readonly Vector3[] _octaveOffsets;
         

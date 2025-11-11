@@ -13,7 +13,8 @@ namespace ProceduralPlanets
         [SerializeField] [Range(0, 1)] private float persistence;
         [SerializeField] private float heightMultiplier;
 
-        [Header("NormalMap")] [SerializeField] private int height;
+        [Header("NormalMap")] [SerializeField] private bool generateNormalMap;
+        [SerializeField] private int height;
         [SerializeField] private int width;
         [SerializeField] private int normalMapOctaves;
         [SerializeField] private float strength;
@@ -46,20 +47,23 @@ namespace ProceduralPlanets
 
             planetMesh.vertices = OffsetVertices(planetMesh.vertices);
 
-            Texture2D normalMap = GenerateNormalMap();
+            if (generateNormalMap)
+            {
+                Texture2D normalMap = GenerateNormalMap();
 
-            var renderer = GetComponent<MeshRenderer>();
+                var renderer = GetComponent<MeshRenderer>();
 
-            if (renderer.sharedMaterial == null)
-                renderer.sharedMaterial = new Material(Shader.Find("Standard"));
+                if (renderer.sharedMaterial == null)
+                    renderer.sharedMaterial = new Material(Shader.Find("Standard"));
 
-            renderer.sharedMaterial.SetTexture("_BumpMap", normalMap);
-            renderer.sharedMaterial.EnableKeyword("_NORMALMAP");
+                renderer.sharedMaterial.SetTexture("_BumpMap", normalMap);
+                renderer.sharedMaterial.EnableKeyword("_NORMALMAP");
 
 #if UNITY_EDITOR
-            UnityEditor.EditorUtility.SetDirty(renderer.sharedMaterial);
-            UnityEditor.EditorUtility.SetDirty(normalMap);
+                UnityEditor.EditorUtility.SetDirty(renderer.sharedMaterial);
+                UnityEditor.EditorUtility.SetDirty(normalMap);
 #endif
+            }
 
             planetMesh.RecalculateNormals();
             planetMesh.RecalculateBounds();
@@ -121,15 +125,28 @@ namespace ProceduralPlanets
             persistence = Mathf.Clamp01(persistence);
             vertexSphereRadius = Mathf.Max(0.01f, vertexSphereRadius);
 
+            if (!generateNormalMap) ClearNormalMap();
+            
             if (Application.isPlaying) return;
             GeneratePlanet();
+        }
+
+        private void ClearNormalMap()
+        {
+            var renderer = GetComponent<MeshRenderer>();
+
+            if (renderer.sharedMaterial != null)
+            {
+                renderer.sharedMaterial.SetTexture("_BumpMap", null); // remove texture
+                renderer.sharedMaterial.DisableKeyword("_NORMALMAP"); // disable shader keyword
+            }
         }
 
         private void OnDrawGizmos()
         {
             if (!drawVertexSpheres) return;
 
-            if (!Application.isPlaying) return;
+            // if (!Application.isPlaying) return;
 
             var mesh = GetComponent<MeshFilter>().sharedMesh;
             if (mesh == null) return;

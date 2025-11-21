@@ -5,7 +5,7 @@ namespace ProceduralPlanets.Surface
     [CreateAssetMenu(fileName = "PlanetSurfaceData", menuName = "Planet Data/PlanetSurfaceData")]
     public class PlanetSurfaceData : ScriptableObject
     {
-        [Range(0.001f, 1000f)]
+        [Range(1.0f, 100f)]
         public float radius;
     }
 }

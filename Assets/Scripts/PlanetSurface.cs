@@ -28,8 +28,8 @@ namespace ProceduralPlanets
 
         private void Initialize()
         {
-            if (_meshFilter == null) _meshFilter = GetComponent<MeshFilter>();
-            if (_meshRenderer == null) _meshRenderer = GetComponent<MeshRenderer>();
+            if (!_meshFilter) _meshFilter = GetComponent<MeshFilter>();
+            if (!_meshRenderer) _meshRenderer = GetComponent<MeshRenderer>();
         }
 
         private void GenerateMesh()

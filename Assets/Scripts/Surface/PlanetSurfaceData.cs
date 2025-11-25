@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using ProceduralPlanets.Noise;
 using UnityEngine;
 
 namespace ProceduralPlanets.Surface
@@ -7,5 +9,8 @@ namespace ProceduralPlanets.Surface
     {
         [Range(1.0f, 100f)]
         public float radius;
+        
+        [SerializeField]
+        public List<NoiseSettings> noiseSettings = new();
     }
 }

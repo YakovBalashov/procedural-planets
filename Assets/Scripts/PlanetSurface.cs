@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using ProceduralPlanets.Noise;
 using ProceduralPlanets.Surface;
 using UnityEngine;
 
@@ -9,8 +12,7 @@ namespace ProceduralPlanets
         [Header("Mesh")] [SerializeField, Range(0, 6)]
         private int subdivisionLevel;
 
-        [Header("Surface")] 
-        public PlanetSurfaceData surfaceData;
+        [Header("Surface")] public PlanetSurfaceData surfaceData;
 
         private MeshFilter _meshFilter;
         private MeshRenderer _meshRenderer;
@@ -35,6 +37,25 @@ namespace ProceduralPlanets
         private void GenerateMesh()
         {
             var mesh = BaseMesh.IcoSphereGenerator.Generate(subdivisionLevel, surfaceData.radius);
+
+            var noiseGenerators = (from noiseSetting in surfaceData.noiseSettings
+                where noiseSetting.Enabled
+                select new NoiseGenerator(noiseSetting)).ToList();
+
+            var vertices = mesh.vertices;
+            for (var i = 0; i < vertices.Length; i++)
+            {
+                var vertex = mesh.vertices[i];
+
+                var elevation = noiseGenerators.Sum(noiseGenerator => noiseGenerator.Evaluate(vertex.normalized));
+
+                vertices[i] = vertex.normalized * (surfaceData.radius * (1 + elevation));
+            }
+
+            mesh.vertices = vertices;
+            mesh.RecalculateNormals();
+            mesh.RecalculateBounds();
+
             _meshFilter.sharedMesh = mesh;
         }
     }

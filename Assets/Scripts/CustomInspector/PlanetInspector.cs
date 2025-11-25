@@ -6,7 +6,6 @@ namespace ProceduralPlanets.CustomInspector
     [CustomEditor(typeof(PlanetSurface))]
     public class PlanetInspector : Editor
     {
-        
         private PlanetSurface _planetSurface;
         private Editor _surfaceEditor;
         

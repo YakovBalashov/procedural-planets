@@ -66,17 +66,17 @@ namespace ProceduralPlanets
         public float GenerateNoise(Vector3 point)
         {
             var noiseHeight = 0f;
-            var frequency = _baseRoughness;
-            var amplitude = 1f;
+            // var frequency = _baseRoughness;
+            // var amplitude = 1f;
             
             for (var i = 0; i < _octaves; i++)
             {
+                var frequency = _baseRoughness * Mathf.Pow(_lacunarity, i);
+                var amplitude = Mathf.Pow(_persistence, i);
+                
                 float3 samplePoint = point * frequency / _scale + _octaveOffsets[i];
                 var perlinValue = noise.cnoise(samplePoint);
                 noiseHeight += perlinValue * amplitude;
-                
-                amplitude *= _persistence;
-                frequency *= _lacunarity;
             }
             return noiseHeight;
         }

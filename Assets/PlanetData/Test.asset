@@ -12,21 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060565f32aa614140a1a81b350edefc3, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Surface.PlanetSurfaceData
-  radius: 14.5
-  noiseSettings:
+  <Radius>k__BackingField: 10
+  <NoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
-    <Strength>k__BackingField: 0.57
-    <BaseRoughness>k__BackingField: 8.59
-    <Persistence>k__BackingField: 0.482
-    <Lacunarity>k__BackingField: 5
-    <MinimumValue>k__BackingField: 1.18
+    <Strength>k__BackingField: 0.5
+    <BaseRoughness>k__BackingField: 2.4
+    <Persistence>k__BackingField: 0.125
+    <Lacunarity>k__BackingField: 1.25
+    <MinimumValue>k__BackingField: 0.5
     <Octaves>k__BackingField: 4
     <Offset>k__BackingField: {x: 0, y: 0, z: 0}
-  - <Enabled>k__BackingField: 1
-    <Strength>k__BackingField: 0.1
-    <BaseRoughness>k__BackingField: 1.46
-    <Persistence>k__BackingField: 0.531
-    <Lacunarity>k__BackingField: 2.33
-    <MinimumValue>k__BackingField: 1
-    <Octaves>k__BackingField: 4
-    <Offset>k__BackingField: {x: 6.42, y: 3.97, z: 2.17}
+  <PlanetMaterial>k__BackingField: {fileID: 2100000, guid: 62a1824170f5d3a41b67692cc6fdda4b, type: 2}

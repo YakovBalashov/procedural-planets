@@ -1,4 +1,5 @@
 using System.Linq;
+using ProceduralPlanets.BaseMesh;
 using ProceduralPlanets.Noise;
 using ProceduralPlanets.Surface;
 using UnityEngine;
@@ -40,7 +41,7 @@ namespace ProceduralPlanets
 
         private void GenerateMesh()
         {
-            var mesh = BaseMesh.IcoSphereGenerator.Generate(subdivisionLevel, surfaceData.Radius);
+            var mesh = IcoSphereGenerator.Generate(subdivisionLevel, surfaceData.Radius);
 
             var noiseGenerators = (from noiseSetting in surfaceData.NoiseSettings
                 where noiseSetting.Enabled

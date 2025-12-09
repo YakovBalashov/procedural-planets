@@ -6,6 +6,7 @@ Shader "Custom/PlanetNoise"
         [TessellationFactor] _TessellationFactor("Tessellation Factor", Int) = 1
         [KeywordEnum(CONSTANT, CAMERA, SCREEN, SPHERE_EDGE)] _TESSELLATION_FACTOR("Tessellation mode", Float) = 0
         _DynamicTessellationScale("Dynamic Tessellation Scale", Float) = 1.0
+        _SilhouetteThreshold("Silhouette Threshold", Float) = 0.1
         [Header(Planet Noise Settings)]
         [Header(Color and Texture Settings)]
         [MainColor] _BaseColor("Base Color", Color) = (1, 1, 1, 1)

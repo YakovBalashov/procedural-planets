@@ -50,6 +50,7 @@ EdgePoints MakeEdgePoints(float3 v0WS, float3 v1WS, float4 v0CS, float4 v1CS, fl
 
 float _TessellationFactor;
 float _DynamicTessellationScale;
+float _SilhouetteThreshold;
 
 TessellationControlPoint Vertex(Attributes input)
 {
@@ -100,7 +101,7 @@ float CalculateTessellationFactor(EdgePoints edgePoints)
 
     float silhouetteDistance = min(abs(d0), abs(d1));
 
-    return (silhouetteDistance < 0.1) ? _DynamicTessellationScale : 1;
+    return (silhouetteDistance < _SilhouetteThreshold) ? _DynamicTessellationScale : 1;
     #endif
 }
 

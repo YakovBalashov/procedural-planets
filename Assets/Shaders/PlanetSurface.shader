@@ -1,4 +1,4 @@
-Shader "Custom/PlanetNoise"
+Shader "Custom/PlanetSurface"
 {
     Properties
     {
@@ -33,7 +33,7 @@ Shader "Custom/PlanetNoise"
             #pragma domain Domain
             #pragma fragment Fragment
 
-            #include "PlanetNoiseForwardLitPass.hlsl"
+            #include "PlanetSurfaceForwardLitPass.hlsl"
             ENDHLSL
         }
     }

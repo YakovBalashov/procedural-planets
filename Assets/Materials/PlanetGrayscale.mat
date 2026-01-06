@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Planet
+  m_Name: PlanetGrayscale
   m_Shader: {fileID: -6465566751694194690, guid: 8bd1e803845b11547911b2d8eebc3a84, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -100,7 +100,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Max: 13.045717
+    - _Max: 12.453524
     - _Metallic: 0
     - _Min: 10
     - _OcclusionStrength: 1

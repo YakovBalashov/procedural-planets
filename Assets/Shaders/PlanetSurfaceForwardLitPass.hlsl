@@ -1,4 +1,5 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+#include "PlanetNoise.hlsl"
 
 struct Attributes
 {
@@ -36,7 +37,8 @@ struct EdgePoints
     float3 vertex1NormalWS;
 };
 
-EdgePoints MakeEdgePoints(float3 v0WS, float3 v1WS, float4 v0CS, float4 v1CS, float3 v0NormalWS = float3(0,0,0), float3 v1NormalWS = float3(0,0,0))
+EdgePoints MakeEdgePoints(float3 v0WS, float3 v1WS, float4 v0CS, float4 v1CS, float3 v0NormalWS = float3(0, 0, 0),
+                          float3 v1NormalWS = float3(0, 0, 0))
 {
     EdgePoints e;
     e.vertex0PositionWS = v0WS;
@@ -51,6 +53,9 @@ EdgePoints MakeEdgePoints(float3 v0WS, float3 v1WS, float4 v0CS, float4 v1CS, fl
 float _TessellationFactor;
 float _DynamicTessellationScale;
 float _SilhouetteThreshold;
+float3 _BaseColor;
+float3 _PlanetCenter;
+float _PlanetRadius;
 
 TessellationControlPoint Vertex(Attributes input)
 {
@@ -83,15 +88,22 @@ TessellationControlPoint Hull(InputPatch<TessellationControlPoint, 3> patch,
 
 float CalculateTessellationFactor(EdgePoints edgePoints)
 {
-    #if defined(_TESSELLATION_FACTOR_CONSTANT)
+    float length = distance(edgePoints.vertex0PositionWS, edgePoints.vertex1PositionWS);
+    float distanceToCamera = distance(GetCameraPositionWS(), 
+                                      (edgePoints.vertex0PositionWS + edgePoints.vertex1PositionWS) * 0.5);
+    return ceil(length * _DynamicTessellationScale / (distanceToCamera * distanceToCamera));
+    /*#if defined(_TESSELLATION_FACTOR_CONSTANT)
     return _TessellationFactor;
     #elif defined(_TESSELLATION_FACTOR_CAMERA)
-    float distanceToCamera = distance(_WorldSpaceCameraPos, (edgePoints.vertex0PositionWS + edgePoints.vertex1PositionWS) * 0.5);
-    float edgeLength = distance(edgePoints.vertex0PositionWS, edgePoints.vertex1PositionWS);
-    return (edgeLength * _DynamicTessellationScale)/ distanceToCamera;
+    float d0 = distance(_WorldSpaceCameraPos, edgePoints.vertex0PositionWS);
+    float d1 = distance(_WorldSpaceCameraPos, edgePoints.vertex1PositionWS);
+    float distanceToCamera = min(d0, d1);
+    // float edgeLength = distance(edgePoints.vertex0PositionWS, edgePoints.vertex1PositionWS);
+    return ceil(_DynamicTessellationScale / distanceToCamera);
     #elif defined(_TESSELLATION_FACTOR_SCREEN)
     return distance(edgePoints.vertex0PositionCS.xyz / edgePoints.vertex0PositionCS.w,
-                    edgePoints.vertex1PositionCS.xyz / edgePoints.vertex1PositionCS.w) * _ScreenParams.y * _DynamicTessellationScale;
+                    edgePoints.vertex1PositionCS.xyz / edgePoints.vertex1PositionCS.w) * _ScreenParams.y *
+        _DynamicTessellationScale;
     #elif defined(_TESSELLATION_FACTOR_SPHERE_EDGE)
     float3 toCam0 = normalize(_WorldSpaceCameraPos - edgePoints.vertex0PositionWS);
     float3 toCam1 = normalize(_WorldSpaceCameraPos - edgePoints.vertex1PositionWS);
@@ -102,7 +114,7 @@ float CalculateTessellationFactor(EdgePoints edgePoints)
     float silhouetteDistance = min(abs(d0), abs(d1));
 
     return (silhouetteDistance < _SilhouetteThreshold) ? _DynamicTessellationScale : 1;
-    #endif
+    #endif*/
 }
 
 TessellationFactors PatchConstantFunction(InputPatch<TessellationControlPoint, 3> patch)
@@ -113,7 +125,7 @@ TessellationFactors PatchConstantFunction(InputPatch<TessellationControlPoint, 3
         patch[0].positionWS, patch[1].positionWS,
         patch[0].positionCS, patch[1].positionCS,
         patch[0].normalWS, patch[1].normalWS));
-    output.edges[1] = CalculateTessellationFactor(MakeEdgePoints(
+    output.edges[1] = CalculateTessellationFactor(MakeEdgePoints( 
         patch[1].positionWS, patch[2].positionWS,
         patch[1].positionCS, patch[2].positionCS,
         patch[1].normalWS, patch[2].normalWS));
@@ -121,6 +133,8 @@ TessellationFactors PatchConstantFunction(InputPatch<TessellationControlPoint, 3
         patch[2].positionWS, patch[0].positionWS,
         patch[2].positionCS, patch[0].positionCS,
         patch[2].normalWS, patch[0].normalWS));
+
+
     output.inside = (output.edges[0] + output.edges[1] + output.edges[2]) / 3.0;
     return output;
 }
@@ -135,9 +149,21 @@ Interpolators Domain(TessellationFactors factors,
     float3 positionWS = BARYCENTRIC_INTERPOLATE(positionWS);
     float3 normalWS = BARYCENTRIC_INTERPOLATE(normalWS);
 
-    output.positionWS = positionWS;
+    float3 relativePosition = positionWS - _PlanetCenter;
+    float3 directionFromCenter = normalize(relativePosition);
+
+    float elevation = 0.0;
+
+    for (int i = 0; i < _NoiseLayerCount; i++)
+    {
+        elevation += EvaluateNoise(directionFromCenter, _NoiseSettings[i]);
+    }
+    
+    float3 displacedPositionWS = _PlanetCenter + directionFromCenter * _PlanetRadius * (1.0 + elevation);
+
+    output.positionWS = displacedPositionWS;
     output.normalWS = normalize(normalWS);
-    output.positionCS = TransformWorldToHClip(positionWS);
+    output.positionCS = TransformWorldToHClip(displacedPositionWS);
 
     return output;
 }
@@ -148,8 +174,7 @@ float4 Fragment(Interpolators input) : SV_Target
     float3 lightDir = normalize(float3(0.5, 1.0, 0.5));
     float NdotL = saturate(dot(n, lightDir));
 
-    float3 baseColor = float3(0.2, 0.6, 0.3);
-    float3 color = baseColor * NdotL + baseColor * 0.1;
+    float3 color = _BaseColor * NdotL + _BaseColor * 0.1;
 
     return float4(color, 1.0);
 }

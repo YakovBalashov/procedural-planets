@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 060565f32aa614140a1a81b350edefc3, type: 3}
-  m_Name: Test
+  m_Name: Demo
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Surface.PlanetSurfaceData
   <Radius>k__BackingField: 10
   <CPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.5
-    <BaseRoughness>k__BackingField: 2.4
-    <Persistence>k__BackingField: 0.125
-    <Lacunarity>k__BackingField: 1.91
+    <BaseRoughness>k__BackingField: 6.82
+    <Persistence>k__BackingField: 0.1
+    <Lacunarity>k__BackingField: 2
     <MinimumValue>k__BackingField: 0.54
     <Octaves>k__BackingField: 4
     <Offset>k__BackingField: {x: 3.65, y: 0, z: 0}

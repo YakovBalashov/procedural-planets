@@ -13,14 +13,22 @@ MonoBehaviour:
   m_Name: GPU
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Surface.PlanetSurfaceData
   <Radius>k__BackingField: 17.2
-  <CPUNoiseSettings>k__BackingField: []
+  <CPUNoiseSettings>k__BackingField:
+  - <Enabled>k__BackingField: 0
+    <Strength>k__BackingField: 0
+    <BaseRoughness>k__BackingField: 0
+    <Persistence>k__BackingField: 0
+    <Lacunarity>k__BackingField: 0
+    <MinimumValue>k__BackingField: 0
+    <Octaves>k__BackingField: 0
+    <Offset>k__BackingField: {x: 0, y: 0, z: 0}
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
-    <Strength>k__BackingField: 0.26
-    <BaseRoughness>k__BackingField: 5.14
-    <Persistence>k__BackingField: 0.142
+    <Strength>k__BackingField: 0.21
+    <BaseRoughness>k__BackingField: 4.14
+    <Persistence>k__BackingField: 0.596
     <Lacunarity>k__BackingField: 2
     <MinimumValue>k__BackingField: 0.5
     <Octaves>k__BackingField: 4
-    <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+    <Offset>k__BackingField: {x: 0.43, y: 0.57, z: 0}
   <PlanetMaterial>k__BackingField: {fileID: 2100000, guid: 3117844a47bf48045b9f50d0ce5e0898, type: 2}

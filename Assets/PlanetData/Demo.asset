@@ -12,15 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060565f32aa614140a1a81b350edefc3, type: 3}
   m_Name: Demo
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Surface.PlanetSurfaceData
-  <Radius>k__BackingField: 10
+  <Radius>k__BackingField: 14.3
   <CPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
-    <Strength>k__BackingField: 0.5
-    <BaseRoughness>k__BackingField: 6.82
-    <Persistence>k__BackingField: 0.1
+    <Strength>k__BackingField: 0.42
+    <BaseRoughness>k__BackingField: 3.3
+    <Persistence>k__BackingField: 0.483
     <Lacunarity>k__BackingField: 2
-    <MinimumValue>k__BackingField: 0.54
+    <MinimumValue>k__BackingField: 0.92
     <Octaves>k__BackingField: 4
-    <Offset>k__BackingField: {x: 3.65, y: 0, z: 0}
+    <Offset>k__BackingField: {x: 3.19, y: 0.15, z: 0}
+  - <Enabled>k__BackingField: 1
+    <Strength>k__BackingField: 0.2
+    <BaseRoughness>k__BackingField: 0.81
+    <Persistence>k__BackingField: 0.356
+    <Lacunarity>k__BackingField: 2
+    <MinimumValue>k__BackingField: 0
+    <Octaves>k__BackingField: 4
+    <Offset>k__BackingField: {x: 0.31, y: 0, z: 0}
   <GPUNoiseSettings>k__BackingField: []
-  <PlanetMaterial>k__BackingField: {fileID: 2100000, guid: 62a1824170f5d3a41b67692cc6fdda4b, type: 2}
+  <PlanetMaterial>k__BackingField: {fileID: 2100000, guid: c45f47597c9ac664f8c71b19560b113a, type: 2}

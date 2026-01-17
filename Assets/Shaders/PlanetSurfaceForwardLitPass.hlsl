@@ -51,8 +51,9 @@ EdgePoints MakeEdgePoints(float3 v0WS, float3 v1WS, float4 v0CS, float4 v1CS, fl
 }
 
 float _TessellationFactor;
-float _DynamicTessellationScale;
+float _SilhouetteTessellationScale;
 float _SilhouetteThreshold;
+float _CameraTessellationScale;
 float3 _BaseColor;
 float3 _PlanetCenter;
 float _PlanetRadius;
@@ -88,22 +89,21 @@ TessellationControlPoint Hull(InputPatch<TessellationControlPoint, 3> patch,
 
 float CalculateTessellationFactor(EdgePoints edgePoints)
 {
+    // float length = distance(edgePoints.vertex0PositionWS, edgePoints.vertex1PositionWS);
+    // float distanceToCamera = distance(GetCameraPositionWS(), 
+    //                                   (edgePoints.vertex0PositionWS + edgePoints.vertex1PositionWS) * 0.5);
+    // return round(length * _DynamicTessellationScale / (distanceToCamera * distanceToCamera));
+    #if defined(_TESSELLATION_FACTOR_CONSTANT)
+    return _TessellationFactor;
+    #elif defined(_TESSELLATION_FACTOR_CAMERA)
     float length = distance(edgePoints.vertex0PositionWS, edgePoints.vertex1PositionWS);
     float distanceToCamera = distance(GetCameraPositionWS(), 
                                       (edgePoints.vertex0PositionWS + edgePoints.vertex1PositionWS) * 0.5);
-    return ceil(length * _DynamicTessellationScale / (distanceToCamera * distanceToCamera));
-    /*#if defined(_TESSELLATION_FACTOR_CONSTANT)
-    return _TessellationFactor;
-    #elif defined(_TESSELLATION_FACTOR_CAMERA)
-    float d0 = distance(_WorldSpaceCameraPos, edgePoints.vertex0PositionWS);
-    float d1 = distance(_WorldSpaceCameraPos, edgePoints.vertex1PositionWS);
-    float distanceToCamera = min(d0, d1);
-    // float edgeLength = distance(edgePoints.vertex0PositionWS, edgePoints.vertex1PositionWS);
-    return ceil(_DynamicTessellationScale / distanceToCamera);
-    #elif defined(_TESSELLATION_FACTOR_SCREEN)
+    return round(length * _CameraTessellationScale / (distanceToCamera * distanceToCamera));
+    /*#elif defined(_TESSELLATION_FACTOR_SCREEN)
     return distance(edgePoints.vertex0PositionCS.xyz / edgePoints.vertex0PositionCS.w,
                     edgePoints.vertex1PositionCS.xyz / edgePoints.vertex1PositionCS.w) * _ScreenParams.y *
-        _DynamicTessellationScale;
+        _DynamicTessellationScale;*/
     #elif defined(_TESSELLATION_FACTOR_SPHERE_EDGE)
     float3 toCam0 = normalize(_WorldSpaceCameraPos - edgePoints.vertex0PositionWS);
     float3 toCam1 = normalize(_WorldSpaceCameraPos - edgePoints.vertex1PositionWS);
@@ -113,8 +113,8 @@ float CalculateTessellationFactor(EdgePoints edgePoints)
 
     float silhouetteDistance = min(abs(d0), abs(d1));
 
-    return (silhouetteDistance < _SilhouetteThreshold) ? _DynamicTessellationScale : 1;
-    #endif*/
+    return (silhouetteDistance < _SilhouetteThreshold) ? _SilhouetteTessellationScale : 1;
+    #endif
 }
 
 TessellationFactors PatchConstantFunction(InputPatch<TessellationControlPoint, 3> patch)

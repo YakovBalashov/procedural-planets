@@ -1,17 +1,18 @@
-using ProceduralPlanets.Surface;
+using ProceduralPlanets.Generation;
+using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using UnityEditor;
 
 namespace ProceduralPlanets.CustomInspector
 {
-    [CustomEditor(typeof(PlanetSurface))]
+    [CustomEditor(typeof(PlanetGenerator))]
     public class PlanetInspector : Editor
     {
-        private PlanetSurface _planetSurface;
+        private PlanetGenerator _planetGenerator;
         private Editor _surfaceEditor;
         
         private void OnEnable()
         {
-            _planetSurface = (PlanetSurface)target;
+            _planetGenerator = (PlanetGenerator)target;
         }
         public override void OnInspectorGUI()
         {
@@ -20,26 +21,26 @@ namespace ProceduralPlanets.CustomInspector
             
             base.OnInspectorGUI();
             
-            EditorGUILayout.InspectorTitlebar(true, _planetSurface);
-            RenderPlanetSurfaceInspector(_planetSurface.surfaceData);
+            EditorGUILayout.InspectorTitlebar(true, _planetGenerator);
+            RenderPlanetSurfaceInspector(_planetGenerator.bodyData);
             
             if (EditorGUI.EndChangeCheck())
             {
-                EditorUtility.SetDirty(_planetSurface);
-                _planetSurface.UpdateSurface();
+                EditorUtility.SetDirty(_planetGenerator);
+                _planetGenerator.UpdateSurface();
             }
             
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void RenderPlanetSurfaceInspector(PlanetSurfaceData surfaceData)
+        private void RenderPlanetSurfaceInspector(PlanetData data)
         {
-            if (!surfaceData)
+            if (!data)
             {
                 EditorGUILayout.HelpBox("Assign a PlanetSurfaceData to edit surface properties.", MessageType.Warning);
                 return;
             }
-            CreateCachedEditor(surfaceData, null, ref _surfaceEditor);
+            CreateCachedEditor(data, null, ref _surfaceEditor);
             _surfaceEditor.OnInspectorGUI();
         }
     }

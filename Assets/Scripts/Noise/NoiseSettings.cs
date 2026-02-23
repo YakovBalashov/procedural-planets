@@ -15,7 +15,7 @@ namespace ProceduralPlanets.Noise
         
         [field: SerializeField, Range(1, 8)] public int Octaves { get; private set; } = 4;
         
-        [field: SerializeField] public Vector3 Offset { get; private set; } = Vector3.zero;
+        [field: SerializeField] public Vector3 Offset { get;  set; } = Vector3.zero;
 
         public NoiseSettingsGPU ToGPU()
         {

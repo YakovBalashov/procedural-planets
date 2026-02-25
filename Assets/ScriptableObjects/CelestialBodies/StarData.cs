@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace ProceduralPlanets
+namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
 {
-    [CreateAssetMenu(fileName = "StarData", menuName = "Scriptable Objects/StarData")]
+    [CreateAssetMenu(fileName = "StarData", menuName = "Planetary Systems/Celestial Body Data/Star Data")]
     public class StarData : ScriptableObject
     {
     

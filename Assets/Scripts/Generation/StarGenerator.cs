@@ -1,19 +1,8 @@
-using UnityEngine;
+using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 
-namespace ProceduralPlanets
+namespace ProceduralPlanets.Generation
 {
-    public class StarGenerator : MonoBehaviour
+    public class StarGenerator : CelestialBodyGenerator<StarData>
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
     }
 }

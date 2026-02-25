@@ -4,5 +4,6 @@ namespace ProceduralPlanets.Generation
 {
     public class PlanetGenerator : CelestialBodyGenerator<PlanetData>
     {
+        
     }
 }

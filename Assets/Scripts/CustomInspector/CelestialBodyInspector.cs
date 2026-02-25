@@ -1,18 +1,18 @@
 using ProceduralPlanets.Generation;
-using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using UnityEditor;
+using UnityEngine;
 
 namespace ProceduralPlanets.CustomInspector
 {
-    [CustomEditor(typeof(PlanetGenerator))]
-    public class PlanetInspector : Editor
+    [CustomEditor(typeof(CelestialBodyGeneratorBase), true)]
+    public class CelestialBodyInspector : Editor
     {
-        private PlanetGenerator _planetGenerator;
+        private CelestialBodyGeneratorBase _bodyGenerator;
         private Editor _surfaceEditor;
         
         private void OnEnable()
         {
-            _planetGenerator = (PlanetGenerator)target;
+            _bodyGenerator = (CelestialBodyGeneratorBase)target;
         }
         public override void OnInspectorGUI()
         {
@@ -21,19 +21,24 @@ namespace ProceduralPlanets.CustomInspector
             
             base.OnInspectorGUI();
             
-            EditorGUILayout.InspectorTitlebar(true, _planetGenerator);
-            RenderPlanetSurfaceInspector(_planetGenerator.bodyData);
+            if (GUILayout.Button("Generate Body Data")) 
+            {
+                _bodyGenerator.GenerateBodyData();
+            }
+            
+            EditorGUILayout.InspectorTitlebar(true, _bodyGenerator);
+            RenderPlanetSurfaceInspector(_bodyGenerator.GetBodyData());
             
             if (EditorGUI.EndChangeCheck())
             {
-                EditorUtility.SetDirty(_planetGenerator);
-                _planetGenerator.UpdateSurface();
+                EditorUtility.SetDirty(_bodyGenerator);
+                _bodyGenerator.UpdateSurface();
             }
             
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void RenderPlanetSurfaceInspector(PlanetData data)
+        private void RenderPlanetSurfaceInspector(CelestialBodyData data)
         {
             if (!data)
             {

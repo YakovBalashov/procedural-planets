@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3c1d802b3902fd4d9f549db55ade09f, type: 3}
+  m_Name: TypeA
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.StarType
+  radiusRange: {x: 70, y: 90}
+  cpuNoiseSettings:
+  - <Enabled>k__BackingField: 1
+    <Strength>k__BackingField: 0.05
+    <BaseRoughness>k__BackingField: 0.37
+    <Persistence>k__BackingField: 0.411
+    <Lacunarity>k__BackingField: 4.56
+    <MinimumValue>k__BackingField: 0
+    <Octaves>k__BackingField: 4
+    <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+  surfaceMaterial:
+  - {fileID: 2100000, guid: 9e66052a9d9bee44ca907e77485a2e4b, type: 2}
+  <PlanetNumberRange>k__BackingField: {x: 0, y: 0}
+  <CompatibleStarTypes>k__BackingField:
+  - {fileID: 0}
+  <StarNumberRange>k__BackingField: {x: 0, y: 0}

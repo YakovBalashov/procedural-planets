@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ce9eeec69d71a409568ac2a690f620, type: 3}
+  m_Name: RockyMoon
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.PlanetType
+  radiusRange: {x: 7, y: 12}
+  cpuNoiseSettings:
+  - <Enabled>k__BackingField: 1
+    <Strength>k__BackingField: 0.1
+    <BaseRoughness>k__BackingField: 4.82
+    <Persistence>k__BackingField: 0.352
+    <Lacunarity>k__BackingField: 4.56
+    <MinimumValue>k__BackingField: 0
+    <Octaves>k__BackingField: 4
+    <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+  surfaceMaterial:
+  - {fileID: 2100000, guid: 9350fe64c19fd7f45bad183d900cda65, type: 2}
+  - {fileID: 2100000, guid: 7accd2df5416454459545c87a5fbab37, type: 2}
+  - {fileID: 2100000, guid: 2dd0f702f62c7e44c8a38be2e4d73a4b, type: 2}
+  - {fileID: 2100000, guid: deb46bca67e6c8344a1894a0f428967e, type: 2}
+  <ParentStarTypes>k__BackingField: []
+  <StarOrbitRadiusRange>k__BackingField: {x: 0, y: 0}
+  <StarOrbitRatioRange>k__BackingField: {x: 0, y: 0}
+  <ParentPlanetTypes>k__BackingField:
+  - {fileID: 11400000, guid: 83df398504e57b74ea603db2ffa85925, type: 2}
+  - {fileID: 11400000, guid: 50d9207219846dd4bbcfc84d6a36344a, type: 2}
+  <PlanetOrbitRadiusRange>k__BackingField: {x: 0, y: 0}
+  <PlanetOrbitRatioRange>k__BackingField: {x: 0, y: 0}
+  <MoonNumberRange>k__BackingField: {x: 0, y: 0}

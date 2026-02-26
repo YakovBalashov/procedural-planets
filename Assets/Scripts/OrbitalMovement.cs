@@ -8,6 +8,7 @@ namespace ProceduralPlanets
         [SerializeField] private float radiusX = 5f;
         [SerializeField] private float radiusZ = 5f;
         [SerializeField] private float speedInDegreesPerSecond = 1f;
+        [SerializeField] private Vector3 rotation;
 
         [Range(10, 360)]
         [SerializeField] private int segmentNumber = 100;
@@ -27,6 +28,14 @@ namespace ProceduralPlanets
         {
             Initialize();
         }
+        
+        public void SetParameters(float newRadiusX, float newRadiusZ, float newSpeedInDegreesPerSecond)
+        {
+            radiusX = newRadiusX;
+            radiusZ = newRadiusZ;
+            speedInDegreesPerSecond = newSpeedInDegreesPerSecond;
+            Initialize();
+        }
 
         private void Initialize()
         {
@@ -38,7 +47,12 @@ namespace ProceduralPlanets
         {
             _currentAngle += speedInDegreesPerSecond * Mathf.Deg2Rad * Time.fixedDeltaTime;
             _currentAngle %= 2 * Mathf.PI;
-            transform.position = transform.parent.TransformPoint(GetLocalPointOnEllipse(_currentAngle));
+            
+            var rotationQuaternion = Quaternion.Euler(rotation);
+            
+            Vector3 localRotatedPoint = rotationQuaternion * GetLocalPointOnEllipse(_currentAngle);
+            
+            transform.position = transform.parent.TransformPoint(localRotatedPoint);
         }
 
         private Vector3 GetLocalPointOnEllipse(float angle)
@@ -51,13 +65,15 @@ namespace ProceduralPlanets
             Gizmos.color = color;
 
             float angleStep = (2 * Mathf.PI) / segmentNumber;
+            
+            var rotationQuaternion = Quaternion.Euler(rotation);
 
-            Vector3 previousPoint = transform.parent.TransformPoint(GetLocalPointOnEllipse(0f));
+            Vector3 previousPoint = transform.parent.TransformPoint(rotationQuaternion * GetLocalPointOnEllipse(0f));
 
             for (var i = 1; i <= segmentNumber; i++)
             {
                 float angle = i * angleStep;
-                Vector3 point = transform.parent.TransformPoint(GetLocalPointOnEllipse(angle));
+                Vector3 point = transform.parent.TransformPoint(rotationQuaternion * GetLocalPointOnEllipse(angle));
 
                 Gizmos.DrawLine(previousPoint, point);
 

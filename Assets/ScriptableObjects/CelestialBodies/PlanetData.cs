@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using ProceduralPlanets.Noise;
-using ProceduralPlanets.ScriptableObjects.Generation;
 using UnityEngine;
 
 namespace ProceduralPlanets.ScriptableObjects.CelestialBodies

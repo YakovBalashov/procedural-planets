@@ -8,6 +8,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
     {
         [SerializeField] protected Vector2 radiusRange;
         [SerializeField] protected List<NoiseSettings> cpuNoiseSettings;
+        [SerializeField] protected List<Material> surfaceMaterial;
         private const float OffsetMultiplayer = 1000f;
         
         public virtual T CreateInstance(int seed)
@@ -27,8 +28,10 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
                     OffsetMultiplayer;
                 copiedCPUNoiseSettings.Add(copiedNoiseSettings);
             }
+            
+            var material = surfaceMaterial[random.Next(surfaceMaterial.Count)];
 
-            instance.Initialize(radius, copiedCPUNoiseSettings);
+            instance.Initialize(radius, copiedCPUNoiseSettings, material);
             return instance;
         }
     }

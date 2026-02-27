@@ -11,10 +11,11 @@ namespace ProceduralPlanets
         [field: SerializeField] public List<NoiseSettings> GPUNoiseSettings { get; protected set; } = new();
         [field: SerializeField] public Material SurfaceMaterial { get; protected set; }
         
-        public void Initialize(float radius, List<NoiseSettings> noiseSettings)
+        public void Initialize(float radius, List<NoiseSettings> noiseSettings, Material surfaceMaterial)
         {
             Radius = radius;
             CPUNoiseSettings = noiseSettings;
+            SurfaceMaterial = surfaceMaterial;
         }
     }
 }

@@ -8,13 +8,15 @@ using UnityEngine;
 namespace ProceduralPlanets.Generation
 {
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-    public abstract class CelestialBodyGenerator<T> : CelestialBodyGeneratorBase where T : CelestialBodyData
+    public abstract class CelestialBodyGenerator<TData, TType> : CelestialBodyGeneratorBase 
+        where TData : CelestialBodyData
+        where TType : CelestialBodyType<TData>
     {
         [Header("Mesh")] [SerializeField, Range(0, 6)]
         private int subdivisionLevel;
 
-        [field: SerializeField] public T BodyData { get; private set; }
-        [field: SerializeField] public CelestialBodyType<T> BodyType { get; private set; }
+        [field: SerializeField] public TData BodyData { get; private set; }
+        [field: SerializeField] public TType BodyType { get; private set; }
 
         private MeshFilter _meshFilter;
         private MeshRenderer _meshRenderer;
@@ -31,6 +33,12 @@ namespace ProceduralPlanets.Generation
             UpdateSurface();
         }
         
+        public void GenerateBodyData(int seed)
+        {
+            BodyData = BodyType.CreateInstance(seed);
+            UpdateSurface();
+        }
+        
         public override void UpdateSurface()
         {
             Initialize();
@@ -41,6 +49,12 @@ namespace ProceduralPlanets.Generation
         public override CelestialBodyData GetBodyData()
         {
             return BodyData;
+        }
+        
+        public void SetBodyType(TType newBodyType) 
+        {
+            BodyType = newBodyType;
+            GenerateBodyData();
         }
 
         private void Initialize()

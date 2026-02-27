@@ -22,9 +22,9 @@ namespace ProceduralPlanets.Generation
 
         public void GenerateSystem()
         {
-            if (Application.isPlaying) return; 
+            if (Application.isPlaying) return;
             var random = new Random(seed);
-            
+
             ClearExistingSystem();
 
             StarType primeStarType = generationParameters.StarTypes[random.Next(generationParameters.StarTypes.Length)];
@@ -37,7 +37,7 @@ namespace ProceduralPlanets.Generation
 
         private void ClearExistingSystem()
         {
-            if (Application.isPlaying) return; 
+            if (Application.isPlaying) return;
             while (transform.childCount > 0)
             {
                 Transform child = transform.GetChild(0);
@@ -70,9 +70,10 @@ namespace ProceduralPlanets.Generation
 
                 planet.transform.SetParent(primeStar.transform);
                 planet.name = $"Planet {i + 1}";
-                
-                OrbitParameters planetOrbitParameters = GenerateOrbitParameters(currentOrbitRadius, planetType, random);
-                
+
+                OrbitParameters planetOrbitParameters =
+                    GenerateOrbitParameters(currentOrbitRadius, planetType.StarOrbitType, random);
+
                 var planetOrbit = planet.GetComponent<OrbitalMovement>();
                 planetOrbit.SetParameters(planetOrbitParameters);
                 planetOrbit.MoveToStartingPosition(random);
@@ -83,15 +84,18 @@ namespace ProceduralPlanets.Generation
             }
         }
 
-        private OrbitParameters GenerateOrbitParameters(float mainRadius, PlanetType planetType, Random random)
+        private OrbitParameters GenerateOrbitParameters<TData, TType>(float mainRadius,
+            OrbitType<TType, TData> orbitType, Random random)
+            where TData : CelestialBodyData
+            where TType : CelestialBodyType<TData>
         {
-            var radiusRatio = (float)(planetType.StarOrbitType.OrbitRatioRange.x + random.NextDouble() *
-                (planetType.StarOrbitType.OrbitRatioRange.y - planetType.StarOrbitType.OrbitRatioRange.x));
-            
+            var radiusRatio = (float)(orbitType.OrbitRatioRange.x + random.NextDouble() *
+                (orbitType.OrbitRatioRange.y - orbitType.OrbitRatioRange.x));
+
             var rotation = (float)(random.NextDouble() * 360);
-            
-            var inclination = (float)(planetType.StarOrbitType.OrbitInclinationRange.x + random.NextDouble() *
-                (planetType.StarOrbitType.OrbitInclinationRange.y - planetType.StarOrbitType.OrbitInclinationRange.x));
+
+            var inclination = (float)(orbitType.OrbitInclinationRange.x + random.NextDouble() *
+                (orbitType.OrbitInclinationRange.y - orbitType.OrbitInclinationRange.x));
 
             var orbitParameters = new OrbitParameters
             {
@@ -128,7 +132,8 @@ namespace ProceduralPlanets.Generation
         private List<PlanetType> GetPlanetsCompatibleWithStar(List<PlanetType> planetTypes,
             CelestialBodyType<StarData> primeStarType)
         {
-            return planetTypes.Where(planetType => planetType.StarOrbitType.ParentTypes.Contains(primeStarType)).ToList();
+            return planetTypes.Where(planetType => planetType.StarOrbitType.ParentTypes.Contains(primeStarType))
+                .ToList();
         }
     }
 }

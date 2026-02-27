@@ -22,16 +22,24 @@ MonoBehaviour:
     <MinimumValue>k__BackingField: 0
     <Octaves>k__BackingField: 4
     <Offset>k__BackingField: {x: 0, y: 0, z: 0}
-  surfaceMaterial: []
-  <ParentStarTypes>k__BackingField:
-  - {fileID: 11400000, guid: beab46154095ae247a613aaaf67f7862, type: 2}
-  - {fileID: 11400000, guid: 8eefb02a83e6d0f44a8e3ec3591a0c75, type: 2}
-  - {fileID: 11400000, guid: 959db72f502e9084993ff4a1c7c3afd2, type: 2}
-  - {fileID: 11400000, guid: 54bce4722c5a3d54a94ad0cd27acdf4e, type: 2}
-  <StarOrbitRadiusRange>k__BackingField: {x: 0, y: 0}
-  <StarOrbitRatioRange>k__BackingField: {x: 0, y: 0}
-  <ParentPlanetTypes>k__BackingField:
-  - {fileID: 11400000, guid: 50d9207219846dd4bbcfc84d6a36344a, type: 2}
-  <PlanetOrbitRadiusRange>k__BackingField: {x: 0, y: 0}
-  <PlanetOrbitRatioRange>k__BackingField: {x: 0, y: 0}
+  surfaceMaterial:
+  - {fileID: 2100000, guid: 9350fe64c19fd7f45bad183d900cda65, type: 2}
+  - {fileID: 2100000, guid: 7accd2df5416454459545c87a5fbab37, type: 2}
+  - {fileID: 2100000, guid: 2dd0f702f62c7e44c8a38be2e4d73a4b, type: 2}
+  - {fileID: 2100000, guid: deb46bca67e6c8344a1894a0f428967e, type: 2}
+  <StarOrbitType>k__BackingField:
+    <ParentTypes>k__BackingField:
+    - {fileID: 11400000, guid: 54bce4722c5a3d54a94ad0cd27acdf4e, type: 2}
+    - {fileID: 11400000, guid: 959db72f502e9084993ff4a1c7c3afd2, type: 2}
+    - {fileID: 11400000, guid: beab46154095ae247a613aaaf67f7862, type: 2}
+    - {fileID: 11400000, guid: 8eefb02a83e6d0f44a8e3ec3591a0c75, type: 2}
+    <OrbitRadiusRange>k__BackingField: {x: 1000, y: 2500}
+    <OrbitRatioRange>k__BackingField: {x: 0.99, y: 1}
+    <OrbitInclinationRange>k__BackingField: {x: -3, y: 3}
+  <PlanetOrbitType>k__BackingField:
+    <ParentTypes>k__BackingField:
+    - {fileID: 11400000, guid: 50d9207219846dd4bbcfc84d6a36344a, type: 2}
+    <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
+    <OrbitRatioRange>k__BackingField: {x: 0, y: 0}
+    <OrbitInclinationRange>k__BackingField: {x: 0, y: 0}
   <MoonNumberRange>k__BackingField: {x: 0, y: 0}

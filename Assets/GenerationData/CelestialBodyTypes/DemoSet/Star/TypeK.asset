@@ -24,7 +24,9 @@ MonoBehaviour:
     <Offset>k__BackingField: {x: 0, y: 0, z: 0}
   surfaceMaterial:
   - {fileID: 2100000, guid: 0bc944aefc542924ea45868487c90e09, type: 2}
-  <PlanetNumberRange>k__BackingField: {x: 0, y: 0}
+  <PlanetNumberRange>k__BackingField: {x: 0, y: 20}
+  <PlanetOrbitRadiusRange>k__BackingField: {x: 200, y: 4000}
+  <DistanceBetweenPlanetsRange>k__BackingField: {x: 350, y: 500}
   <CompatibleStarTypes>k__BackingField:
   - {fileID: 0}
   <StarNumberRange>k__BackingField: {x: 0, y: 0}

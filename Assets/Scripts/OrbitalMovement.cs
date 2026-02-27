@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Random = System.Random;
 
 namespace ProceduralPlanets
 {
@@ -12,11 +13,12 @@ namespace ProceduralPlanets
 
         [Range(10, 360)]
         [SerializeField] private int segmentNumber = 100;
+
         [SerializeField] private Color color = Color.cyan;
 
         private float _centerToFocusDistance;
         private Vector3 _mainAxis;
-        
+
         private float _currentAngle = 0f;
 
         private void OnValidate()
@@ -28,18 +30,20 @@ namespace ProceduralPlanets
         {
             Initialize();
         }
-        
-        public void SetParameters(float newRadiusX, float newRadiusZ, float newSpeedInDegreesPerSecond)
+
+        public void SetParameters(OrbitParameters parameters)
         {
-            radiusX = newRadiusX;
-            radiusZ = newRadiusZ;
-            speedInDegreesPerSecond = newSpeedInDegreesPerSecond;
+            radiusX = parameters.MainRadius;
+            radiusZ = parameters.MainRadius * parameters.RadiusRatio;
+            rotation.y = parameters.Rotation;
+            rotation.z = parameters.Inclination;
+            speedInDegreesPerSecond = parameters.SpeedInDegreesPerSecond;
             Initialize();
         }
 
         private void Initialize()
         {
-            _centerToFocusDistance = Mathf.Sqrt(Mathf.Abs(Mathf.Pow(radiusX, 2) + Mathf.Pow(radiusZ, 2))) / 2f;
+            _centerToFocusDistance = Mathf.Sqrt(Mathf.Abs(Mathf.Pow(radiusX, 2) - Mathf.Pow(radiusZ, 2)));
             _mainAxis = (radiusX >= radiusZ) ? Vector3.right : Vector3.forward;
         }
 
@@ -47,25 +51,35 @@ namespace ProceduralPlanets
         {
             _currentAngle += speedInDegreesPerSecond * Mathf.Deg2Rad * Time.fixedDeltaTime;
             _currentAngle %= 2 * Mathf.PI;
+
+            MoveBodyToAngle(_currentAngle);
+        }
+
+        private void MoveBodyToAngle(float angle)
+        {
+            if (transform.parent == null) return;
             
             var rotationQuaternion = Quaternion.Euler(rotation);
-            
-            Vector3 localRotatedPoint = rotationQuaternion * GetLocalPointOnEllipse(_currentAngle);
-            
+
+            Vector3 localRotatedPoint = rotationQuaternion * GetLocalPointOnEllipse(angle);
+
             transform.position = transform.parent.TransformPoint(localRotatedPoint);
         }
 
         private Vector3 GetLocalPointOnEllipse(float angle)
         {
-            return new Vector3(radiusX * Mathf.Cos(angle), 0f, radiusZ * Mathf.Sin(angle)) + _mainAxis * _centerToFocusDistance;
+            return new Vector3(radiusX * Mathf.Cos(angle), 0f, radiusZ * Mathf.Sin(angle)) +
+                   _mainAxis * _centerToFocusDistance;
         }
 
         private void OnDrawGizmos()
         {
+            if (transform.parent == null) return;
+            
             Gizmos.color = color;
 
             float angleStep = (2 * Mathf.PI) / segmentNumber;
-            
+
             var rotationQuaternion = Quaternion.Euler(rotation);
 
             Vector3 previousPoint = transform.parent.TransformPoint(rotationQuaternion * GetLocalPointOnEllipse(0f));
@@ -79,6 +93,12 @@ namespace ProceduralPlanets
 
                 previousPoint = point;
             }
+        }
+
+        public void MoveToStartingPosition(Random random)
+        {
+            _currentAngle = (float)(random.NextDouble() * 2 * Math.PI);
+            MoveBodyToAngle(_currentAngle);
         }
     }
 }

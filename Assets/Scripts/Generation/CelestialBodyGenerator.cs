@@ -57,7 +57,7 @@ namespace ProceduralPlanets.Generation
             GenerateBodyData();
         }
 
-        private void Initialize()
+        protected virtual void Initialize()
         {
             if (!_meshFilter) _meshFilter = GetComponent<MeshFilter>();
             if (!_meshRenderer) _meshRenderer = GetComponent<MeshRenderer>();

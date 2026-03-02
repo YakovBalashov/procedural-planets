@@ -28,9 +28,11 @@ namespace ProceduralPlanets.Generation
             ClearExistingSystem();
 
             StarType primeStarType = generationParameters.StarTypes[random.Next(generationParameters.StarTypes.Length)];
-            GameObject primeStar = GenerateCelestialBody<StarData, StarType>(starPrefab, primeStarType, seed);
-            primeStar.transform.SetParent(transform);
-            primeStar.name = PrimeStarName;
+
+            var starGenerationParameters = new CelestialBodyGenerationParameters<StarData, StarType>(starPrefab,
+                primeStarType, seed, transform, PrimeStarName);
+
+            GameObject primeStar = GenerateCelestialBody(starGenerationParameters);
 
             GeneratePlanets(primeStar, random);
         }
@@ -65,11 +67,12 @@ namespace ProceduralPlanets.Generation
                 if (planetsWithCurrentOrbit.Count == 0) continue;
 
                 PlanetType planetType = planetsWithCurrentOrbit[random.Next(planetsWithCurrentOrbit.Count)];
-                GameObject planet =
-                    GenerateCelestialBody<PlanetData, PlanetType>(planetPrefab, planetType, seed + i + 1);
 
-                planet.transform.SetParent(primeStar.transform);
-                planet.name = $"Planet {i + 1}";
+                var planetGenerationParameters =
+                    new CelestialBodyGenerationParameters<PlanetData, PlanetType>(planetPrefab, planetType,
+                        seed + i + 1, primeStar.transform, $"Planet {i + 1}");
+
+                GameObject planet = GenerateCelestialBody(planetGenerationParameters);
 
                 OrbitParameters planetOrbitParameters =
                     GenerateOrbitParameters(currentOrbitRadius, planetType.StarOrbitType, random);
@@ -97,14 +100,8 @@ namespace ProceduralPlanets.Generation
             var inclination = (float)(orbitType.OrbitInclinationRange.x + random.NextDouble() *
                 (orbitType.OrbitInclinationRange.y - orbitType.OrbitInclinationRange.x));
 
-            var orbitParameters = new OrbitParameters
-            {
-                MainRadius = mainRadius,
-                RadiusRatio = radiusRatio,
-                Rotation = rotation,
-                Inclination = inclination,
-                SpeedInDegreesPerSecond = orbitalSpeedInDegreesPerSecond
-            };
+            var orbitParameters = new OrbitParameters(mainRadius, radiusRatio, inclination, rotation,
+                orbitalSpeedInDegreesPerSecond);
             return orbitParameters;
         }
 
@@ -116,15 +113,18 @@ namespace ProceduralPlanets.Generation
                 .ToList();
         }
 
-        GameObject GenerateCelestialBody<TData, TType>(GameObject prefab, TType bodyType, int generationSeed)
+        GameObject GenerateCelestialBody<TData, TType>(CelestialBodyGenerationParameters<TData, TType> bodyParameters)
             where TData : CelestialBodyData
             where TType : CelestialBodyType<TData>
         {
-            var celestialBody = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+            var celestialBody = (GameObject)PrefabUtility.InstantiatePrefab(bodyParameters.Prefab);
 
             var celestialBodyGenerator = celestialBody.GetComponent<CelestialBodyGenerator<TData, TType>>();
-            celestialBodyGenerator.SetBodyType(bodyType);
-            celestialBodyGenerator.GenerateBodyData(generationSeed);
+            celestialBodyGenerator.SetBodyType(bodyParameters.BodyType);
+            celestialBodyGenerator.GenerateBodyData(bodyParameters.GenerationSeed);
+
+            celestialBody.transform.SetParent(bodyParameters.Parent);
+            celestialBody.name = bodyParameters.Name;
 
             return celestialBody;
         }

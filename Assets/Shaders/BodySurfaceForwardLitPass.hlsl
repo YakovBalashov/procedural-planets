@@ -1,5 +1,13 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-#include "PlanetNoise.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+
+#include "SurfaceNoise.hlsl"
+#include "Normal.hlsl"
+
+
+#define NORMAL_METHOD_ANALYTIC 0
+#define NORMAL_METHOD_SCREENSPACE 1
 
 struct Attributes
 {
@@ -37,6 +45,7 @@ struct EdgePoints
     float3 vertex1NormalWS;
 };
 
+
 EdgePoints MakeEdgePoints(float3 v0WS, float3 v1WS, float4 v0CS, float4 v1CS, float3 v0NormalWS = float3(0, 0, 0),
                           float3 v1NormalWS = float3(0, 0, 0))
 {
@@ -50,11 +59,19 @@ EdgePoints MakeEdgePoints(float3 v0WS, float3 v1WS, float4 v0CS, float4 v1CS, fl
     return e;
 }
 
-float _TessellationFactor;
+CBUFFER_START(UnityPerMaterial)
+    float _TessellationFactor;
+    float4 _BaseColor;
+    float _Metallic;
+    float _Smoothness;
+    float _Occlusion;
+    float _NormalCalculationMethod;
+CBUFFER_END
+
+float _NormalSampleDistance;
 float _SilhouetteTessellationScale;
 float _SilhouetteThreshold;
 float _CameraTessellationScale;
-float3 _BaseColor;
 float3 _PlanetCenter;
 float _PlanetRadius;
 
@@ -89,32 +106,7 @@ TessellationControlPoint Hull(InputPatch<TessellationControlPoint, 3> patch,
 
 float CalculateTessellationFactor(EdgePoints edgePoints)
 {
-    // float length = distance(edgePoints.vertex0PositionWS, edgePoints.vertex1PositionWS);
-    // float distanceToCamera = distance(GetCameraPositionWS(), 
-    //                                   (edgePoints.vertex0PositionWS + edgePoints.vertex1PositionWS) * 0.5);
-    // return round(length * _DynamicTessellationScale / (distanceToCamera * distanceToCamera));
-    #if defined(_TESSELLATION_FACTOR_CONSTANT)
     return _TessellationFactor;
-    #elif defined(_TESSELLATION_FACTOR_CAMERA)
-    float length = distance(edgePoints.vertex0PositionWS, edgePoints.vertex1PositionWS);
-    float distanceToCamera = distance(GetCameraPositionWS(), 
-                                      (edgePoints.vertex0PositionWS + edgePoints.vertex1PositionWS) * 0.5);
-    return round(length * _CameraTessellationScale / (distanceToCamera * distanceToCamera));
-    /*#elif defined(_TESSELLATION_FACTOR_SCREEN)
-    return distance(edgePoints.vertex0PositionCS.xyz / edgePoints.vertex0PositionCS.w,
-                    edgePoints.vertex1PositionCS.xyz / edgePoints.vertex1PositionCS.w) * _ScreenParams.y *
-        _DynamicTessellationScale;*/
-    #elif defined(_TESSELLATION_FACTOR_SPHERE_EDGE)
-    float3 toCam0 = normalize(_WorldSpaceCameraPos - edgePoints.vertex0PositionWS);
-    float3 toCam1 = normalize(_WorldSpaceCameraPos - edgePoints.vertex1PositionWS);
-
-    float d0 = dot(edgePoints.vertex0NormalWS, toCam0);
-    float d1 = dot(edgePoints.vertex1NormalWS, toCam1);
-
-    float silhouetteDistance = min(abs(d0), abs(d1));
-
-    return (silhouetteDistance < _SilhouetteThreshold) ? _SilhouetteTessellationScale : 1;
-    #endif
 }
 
 TessellationFactors PatchConstantFunction(InputPatch<TessellationControlPoint, 3> patch)
@@ -125,7 +117,7 @@ TessellationFactors PatchConstantFunction(InputPatch<TessellationControlPoint, 3
         patch[0].positionWS, patch[1].positionWS,
         patch[0].positionCS, patch[1].positionCS,
         patch[0].normalWS, patch[1].normalWS));
-    output.edges[1] = CalculateTessellationFactor(MakeEdgePoints( 
+    output.edges[1] = CalculateTessellationFactor(MakeEdgePoints(
         patch[1].positionWS, patch[2].positionWS,
         patch[1].positionCS, patch[2].positionCS,
         patch[1].normalWS, patch[2].normalWS));
@@ -139,6 +131,29 @@ TessellationFactors PatchConstantFunction(InputPatch<TessellationControlPoint, 3
     return output;
 }
 
+float3 ApplyDisplacement(float3 positionWS, in fnl_state noiseState)
+{
+    float3 relativePosition = positionWS - _PlanetCenter;
+    float3 directionFromCenter = normalize(relativePosition);
+
+    float elevation = 0.0;
+
+    for (int i = 0; i < _NoiseLayerCount; i++)
+    {
+        elevation += EvaluateNoise(directionFromCenter, _NoiseSettings[i], noiseState);
+    }
+
+    return _PlanetCenter + directionFromCenter * _PlanetRadius * (1.0 + elevation);
+}
+
+float3 CalculateNormalWS(float3 positionWS, in fnl_state noiseState)
+{
+    Normal normalInfo = (Normal)0;
+    normalInfo.Initialize(positionWS, _PlanetCenter, _NormalSampleDistance);
+    float3 finalNormal = normalInfo.GetNormal(_NoiseSettings, _NoiseLayerCount, _PlanetRadius, noiseState);
+    return finalNormal;
+}
+
 [domain("tri")]
 Interpolators Domain(TessellationFactors factors,
                      const OutputPatch<TessellationControlPoint, 3> patch,
@@ -148,33 +163,59 @@ Interpolators Domain(TessellationFactors factors,
 
     float3 positionWS = BARYCENTRIC_INTERPOLATE(positionWS);
     float3 normalWS = BARYCENTRIC_INTERPOLATE(normalWS);
-
-    float3 relativePosition = positionWS - _PlanetCenter;
-    float3 directionFromCenter = normalize(relativePosition);
-
-    float elevation = 0.0;
-
-    for (int i = 0; i < _NoiseLayerCount; i++)
-    {
-        elevation += EvaluateNoise(directionFromCenter, _NoiseSettings[i]);
-    }
     
-    float3 displacedPositionWS = _PlanetCenter + directionFromCenter * _PlanetRadius * (1.0 + elevation);
+    fnl_state noiseState = fnlCreateState();
+    noiseState.noise_type = FNL_NOISE_VALUE_CUBIC;
+    noiseState.octaves = 1;
+    
+    
+    output.positionWS = ApplyDisplacement(positionWS, noiseState);
 
-    output.positionWS = displacedPositionWS;
-    output.normalWS = normalize(normalWS);
-    output.positionCS = TransformWorldToHClip(displacedPositionWS);
+    if (_NormalCalculationMethod == NORMAL_METHOD_ANALYTIC)
+    {
+        normalWS = CalculateNormalWS(positionWS, noiseState);
+    }
+    output.normalWS = normalWS;
+    
+    output.positionCS = TransformWorldToHClip(output.positionWS);
 
     return output;
 }
 
 float4 Fragment(Interpolators input) : SV_Target
 {
-    float3 n = normalize(input.normalWS);
-    float3 lightDir = normalize(float3(0.5, 1.0, 0.5));
-    float NdotL = saturate(dot(n, lightDir));
 
-    float3 color = _BaseColor * NdotL + _BaseColor * 0.1;
+    float3 normalWS = normalize(input.normalWS);
 
-    return float4(color, 1.0);
+    if (_NormalCalculationMethod == NORMAL_METHOD_SCREENSPACE)
+    {
+        float3 dpdx = ddx(input.positionWS);
+        float3 dpdy = ddy(input.positionWS);
+
+        normalWS = normalize(cross(dpdy, dpdx));
+    }
+    
+    InputData lightingInput = (InputData)0;
+    lightingInput.positionWS = input.positionWS;
+    lightingInput.normalWS = normalWS;
+
+    lightingInput.viewDirectionWS = GetWorldSpaceNormalizeViewDir(input.positionWS);
+
+    lightingInput.shadowCoord = TransformWorldToShadowCoord(input.positionWS);
+    lightingInput.fogCoord = ComputeFogFactor(input.positionWS);
+    lightingInput.vertexLighting = VertexLighting(input.positionWS, input.normalWS);
+    lightingInput.normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
+
+    lightingInput.shadowMask = half4(1, 1, 1, 1);
+
+    lightingInput.bakedGI = SampleSH(lightingInput.normalWS);
+
+    SurfaceData surface = (SurfaceData)0;
+    surface.albedo = _BaseColor.rgb;
+    surface.alpha = _BaseColor.a;
+    surface.metallic = _Metallic;
+    surface.smoothness = _Smoothness;
+    surface.occlusion = _Occlusion;
+
+    return UniversalFragmentPBR(lightingInput, surface);
 }

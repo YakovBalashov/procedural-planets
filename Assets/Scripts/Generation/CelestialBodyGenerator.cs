@@ -1,14 +1,16 @@
+using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using ProceduralPlanets.BaseMesh;
 using ProceduralPlanets.Noise;
 using ProceduralPlanets.ScriptableObjects.Generation;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace ProceduralPlanets.Generation
 {
-    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-    public abstract class CelestialBodyGenerator<TData, TType> : CelestialBodyGeneratorBase 
+    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer)), ExecuteAlways]
+    public abstract class CelestialBodyGenerator<TData, TType> : CelestialBodyGeneratorBase
         where TData : CelestialBodyData
         where TType : CelestialBodyType<TData>
     {
@@ -32,13 +34,13 @@ namespace ProceduralPlanets.Generation
             BodyData = BodyType.CreateInstance(Random.Range(int.MinValue, int.MaxValue));
             UpdateSurface();
         }
-        
+
         public void GenerateBodyData(int seed)
         {
             BodyData = BodyType.CreateInstance(seed);
             UpdateSurface();
         }
-        
+
         public override void UpdateSurface()
         {
             Initialize();
@@ -50,8 +52,8 @@ namespace ProceduralPlanets.Generation
         {
             return BodyData;
         }
-        
-        public void SetBodyType(TType newBodyType) 
+
+        public void SetBodyType(TType newBodyType)
         {
             BodyType = newBodyType;
             GenerateBodyData();
@@ -92,7 +94,7 @@ namespace ProceduralPlanets.Generation
             mesh.vertices = vertices;
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
-            
+
             _meshFilter.sharedMesh = mesh;
         }
 

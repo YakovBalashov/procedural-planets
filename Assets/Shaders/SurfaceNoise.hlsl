@@ -14,12 +14,8 @@ struct NoiseSettings
 int _NoiseLayerCount;
 StructuredBuffer<NoiseSettings> _NoiseSettings;
 
-float EvaluateNoise(float3 position, NoiseSettings settings)
+float EvaluateNoise(float3 position, NoiseSettings settings, in fnl_state noiseState)
 {
-    fnl_state noiseState = fnlCreateState();
-    noiseState.noise_type = FNL_NOISE_OPENSIMPLEX2;
-    noiseState.octaves = 1;
-    
     float noiseValue = 0.0;
 
     for (int i = 0; i < settings.octaves; i++)

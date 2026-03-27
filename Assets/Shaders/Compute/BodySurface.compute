@@ -1,0 +1,37 @@
+#pragma kernel CSMain
+
+#include "Assets/Shaders/SurfaceNoise.hlsl"
+#include "Assets/Shaders/Normal.hlsl"
+
+StructuredBuffer<float3> BaseVertices;
+RWStructuredBuffer<float3> DisplacedVertices;
+RWStructuredBuffer<float3> Normals;
+
+float PlanetRadius;
+float NormalSampleDistance;
+
+RWTexture2D<float4> Result;
+
+[numthreads(64, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    float3 vertexPosition = normalize(BaseVertices[id.x]);
+
+    float elevation = 0.0;
+
+    for (int i = 0; i < _NoiseLayerCount; i++)
+    {
+        elevation += EvaluateNoise(vertexPosition, _NoiseSettings[i]);
+    }
+
+
+    
+    float distanceFromCenter = PlanetRadius * (1.0 + elevation);
+    DisplacedVertices[id.x] = vertexPosition * distanceFromCenter;
+
+    Normal normalInfo = (Normal)0;
+    normalInfo.Initialize(vertexPosition, float3(0.0f, 0.0f, 0.0f), NormalSampleDistance);
+    float3 finalNormal = normalInfo.GetNormal(_NoiseSettings, _NoiseLayerCount, PlanetRadius);
+
+    Normals[id.x] = finalNormal;
+}

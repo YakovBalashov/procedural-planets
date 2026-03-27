@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using ProceduralPlanets.BaseMesh;
@@ -14,11 +13,20 @@ namespace ProceduralPlanets.Generation
         where TData : CelestialBodyData
         where TType : CelestialBodyType<TData>
     {
+        private static readonly int BaseVertices = Shader.PropertyToID("BaseVertices");
+        private static readonly int DisplacedVertices = Shader.PropertyToID("DisplacedVertices");
+        private static readonly int PlanetRadius = Shader.PropertyToID("PlanetRadius");
+        private static readonly int Normals = Shader.PropertyToID("Normals");
+        private static readonly int NormalSampleDistance = Shader.PropertyToID("NormalSampleDistance");
+
         [Header("Mesh")] [SerializeField, Range(0, 6)]
         private int subdivisionLevel;
 
         [field: SerializeField] public TData BodyData { get; private set; }
         [field: SerializeField] public TType BodyType { get; private set; }
+
+        [SerializeField] private ComputeShader displacementShader;
+        [SerializeField] private float normalSampleDistance = 0.01f;
 
         private MeshFilter _meshFilter;
         private MeshRenderer _meshRenderer;
@@ -45,7 +53,7 @@ namespace ProceduralPlanets.Generation
         {
             Initialize();
             GenerateMesh();
-            UpdateMaterial();
+            UpdateTessellationMaterial();
         }
 
         public override CelestialBodyData GetBodyData()
@@ -69,36 +77,63 @@ namespace ProceduralPlanets.Generation
 
         private void GenerateMesh()
         {
-            var mesh = IcoSphereGenerator.Generate(subdivisionLevel, BodyData.Radius);
-
-            var noiseGenerators = (from noiseSetting in BodyData.CPUNoiseSettings
-                where noiseSetting.Enabled
-                select new NoiseGenerator(noiseSetting)).ToList();
-
-            var minMaxElevations = new MinMax();
-            var vertices = mesh.vertices;
-
-            for (var i = 0; i < vertices.Length; i++)
+            if (!displacementShader)
             {
-                var vertex = vertices[i];
-
-                var elevation = noiseGenerators.Sum(noiseGenerator => noiseGenerator.Evaluate(vertex.normalized));
-
-                var distanceFromCenter = BodyData.Radius * (1 + elevation);
-
-                minMaxElevations.Evaluate(distanceFromCenter);
-
-                vertices[i] = vertex.normalized * distanceFromCenter;
+                Debug.LogFormat(LogType.Warning, LogOption.None, this,
+                    "No displacement shader assigned. Cannot generate planet mesh.");
+                return;
             }
 
-            mesh.vertices = vertices;
-            mesh.RecalculateNormals();
+            var mesh = IcoSphereGenerator.Generate(subdivisionLevel, BodyData.Radius);
+
+            var baseVertices = mesh.vertices;
+            var displacedVertices = new Vector3[baseVertices.Length];
+            var normals = new Vector3[baseVertices.Length];
+
+            int vec3Size = sizeof(float) * 3;
+            ComputeBuffer baseVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
+            ComputeBuffer displacedVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
+            ComputeBuffer normalBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
+
+            baseVertexBuffer.SetData(baseVertices);
+            var gpuNoiseSettings = BodyData.GPUNoiseSettings
+                .Where(setting => setting.Enabled)
+                .Select(setting => setting.ToGPU())
+                .ToArray();
+
+            ComputeBuffer noiseBuffer = new ComputeBuffer(Mathf.Max(1, gpuNoiseSettings.Length),
+                Marshal.SizeOf(typeof(NoiseSettingsGPUStruct)));
+            if (gpuNoiseSettings.Length > 0) noiseBuffer.SetData(gpuNoiseSettings);
+
+            int kernel = displacementShader.FindKernel("CSMain");
+            displacementShader.SetBuffer(kernel, BaseVertices, baseVertexBuffer);
+            displacementShader.SetBuffer(kernel, DisplacedVertices, displacedVertexBuffer);
+            displacementShader.SetBuffer(kernel, Normals, normalBuffer);
+            displacementShader.SetBuffer(kernel, _noiseSettingsBufferId, noiseBuffer);
+
+            displacementShader.SetInt(_noiseSettingsCountId, gpuNoiseSettings.Length);
+            displacementShader.SetFloat(PlanetRadius, BodyData.Radius);
+            displacementShader.SetFloat(NormalSampleDistance, normalSampleDistance);
+            
+            int threadGroups = Mathf.CeilToInt(baseVertices.Length / 64f);
+            displacementShader.Dispatch(kernel, threadGroups, 1, 1);
+
+            displacedVertexBuffer.GetData(displacedVertices);
+            normalBuffer.GetData(normals);
+
+            baseVertexBuffer.Release();
+            displacedVertexBuffer.Release();
+            noiseBuffer.Release();
+            normalBuffer.Release();
+
+            mesh.vertices = displacedVertices;
+            mesh.normals = normals;
             mesh.RecalculateBounds();
 
             _meshFilter.sharedMesh = mesh;
         }
 
-        private void UpdateMaterial()
+        private void UpdateTessellationMaterial()
         {
             var gpuNoiseSettings = BodyData.GPUNoiseSettings
                 .Where(setting => setting.Enabled)
@@ -113,7 +148,7 @@ namespace ProceduralPlanets.Generation
 
             _noiseSettingsBuffer?.Release();
             _noiseSettingsBuffer =
-                new ComputeBuffer(gpuNoiseSettings.Length, Marshal.SizeOf(typeof(NoiseSettingsGPU)));
+                new ComputeBuffer(gpuNoiseSettings.Length, Marshal.SizeOf(typeof(NoiseSettingsGPUStruct)));
             _noiseSettingsBuffer.SetData(gpuNoiseSettings);
             _meshRenderer.sharedMaterial.SetBuffer(_noiseSettingsBufferId, _noiseSettingsBuffer);
         }

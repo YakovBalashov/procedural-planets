@@ -9,15 +9,21 @@ struct NoiseSettings
     float minimumValue;
     int octaves;
     float3 offset;
+    int fnlSeed;
+    int fnlNoiseType;
 };
 
 int _NoiseLayerCount;
 StructuredBuffer<NoiseSettings> _NoiseSettings;
 
-float EvaluateNoise(float3 position, NoiseSettings settings, in fnl_state noiseState)
+float EvaluateNoise(float3 position, NoiseSettings settings)
 {
     float noiseValue = 0.0;
 
+    fnl_state noiseState = fnlCreateState();
+    noiseState.seed = settings.fnlSeed;
+    noiseState.noise_type = settings.fnlNoiseType;
+    
     for (int i = 0; i < settings.octaves; i++)
     {
         float frequency = settings.baseRoughness * 100.0 * pow(settings.lacunarity, i);

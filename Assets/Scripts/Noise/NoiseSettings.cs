@@ -17,30 +17,6 @@ namespace ProceduralPlanets.Noise
         
         [field: SerializeField] public Vector3 Offset { get;  set; } = Vector3.zero;
 
-        public NoiseSettingsGPU ToGPU()
-        {
-            return new NoiseSettingsGPU
-            {
-                Strength = Strength,
-                BaseRoughness = BaseRoughness,
-                Persistence = Persistence,
-                Lacunarity = Lacunarity,
-                MinimumValue = MinimumValue,
-                Octaves = Octaves,
-                Offset = Offset
-            };
-        }
-        
     }
     
-    public struct NoiseSettingsGPU
-    {
-        public float Strength;
-        public float BaseRoughness;
-        public float Persistence;
-        public float Lacunarity;
-        public float MinimumValue;
-        public int Octaves;
-        public Vector3 Offset;
-    }
 }

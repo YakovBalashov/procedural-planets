@@ -8,7 +8,7 @@ namespace ProceduralPlanets.Noise
         [field: SerializeField] public int FnlSeed { get; private set; } = 0;
         [field: SerializeField] public int FnlNoiseType { get; private set; } = 0;
 
-        public NoiseSettingsGPUStruct ToGPU()
+        public NoiseSettingsGPUStruct ToStruct()
         {
             return new NoiseSettingsGPUStruct
             {

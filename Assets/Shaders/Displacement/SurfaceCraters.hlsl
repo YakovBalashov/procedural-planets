@@ -1,26 +1,50 @@
 #pragma once
 
-struct CraterSettings
+#define CAVITY_SHAPE_DEGREE 4
+
+struct CraterParameters
 {
-    float strength;
+    float3 position;
     float radius;
-    float floorDepth;
-    float rimSteepness;
+    float depth;
     float rimWidth;
-    int fnlSeed;
+    float rimSteepness;
+    float strength;
 };
 
-StructuredBuffer<CraterSettings> _CraterSettings;
+StructuredBuffer<CraterParameters> Craters;
+int CraterCount;
+
+float GetCavity(float normalizedDistanceFromCenter, float depth)
+{
+    float parabolaPoint = pow(normalizedDistanceFromCenter, CAVITY_SHAPE_DEGREE) - 1.0;
+    return parabolaPoint * depth;
+}
+
+float GetRim(float normalizedDistanceFromCenter, float rimWidth, float rimSteepness)
+{
+    float movedDistance = normalizedDistanceFromCenter - (1.0 + rimWidth);
+    return movedDistance * movedDistance * rimSteepness;
+}
 
 float EvaluateCrater(float3 position)
 {
-    CraterSettings settings = _CraterSettings[0];
-    float3 craterCenter = float3(1, 0, 0);
-    float fractionFromCenter = abs(distance(position, craterCenter) / settings.radius);
+    float craterValue = 0.0;
 
-    if (fractionFromCenter > 1.0) return 0.0;
+    for (int i = 0; i < CraterCount; ++i)
+    {
+        float normalizedDistanceFromCenter = distance(position, Craters[i].position) / Craters[i].
+            radius;
 
-    float cavity = fractionFromCenter * fractionFromCenter - 1.0;
+        if (normalizedDistanceFromCenter > 1.0 + Craters[i].rimWidth) continue;
 
-    return cavity *  settings.strength;  
+        float currentCraterValue = (normalizedDistanceFromCenter > 1.0)
+                                       ? GetRim(normalizedDistanceFromCenter, Craters[i].rimWidth,
+                                                Craters[i].rimSteepness)
+                                       : GetCavity(normalizedDistanceFromCenter, Craters[i].depth);
+
+        craterValue += currentCraterValue * Craters[i].strength;
+    }
+
+    return craterValue;
 }

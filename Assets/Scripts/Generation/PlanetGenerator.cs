@@ -20,13 +20,13 @@ namespace ProceduralPlanets.Generation
         private static readonly int PlanetRadius = Shader.PropertyToID("PlanetRadius");
         private static readonly int Normals = Shader.PropertyToID("Normals");
         private static readonly int NormalSampleDistance = Shader.PropertyToID("NormalSampleDistance");
-        private static readonly int Settings = Shader.PropertyToID("_CraterSettings");
+        private static readonly int CraterParameters = Shader.PropertyToID("Craters");
 
         private readonly int _noiseSettingsCountId = Shader.PropertyToID("_NoiseLayerCount");
         private readonly int _noiseSettingsBufferId = Shader.PropertyToID("_NoiseSettings");
         private readonly int _bodyCenterId = Shader.PropertyToID("_PlanetCenter");
         private readonly int _bodyRadiusId = Shader.PropertyToID("_PlanetRadius");
-        
+        private readonly int _craterCountId = Shader.PropertyToID("CraterCount");
         protected override void GenerateMesh()
         {
             var mesh = IcoSphereGenerator.Generate(subdivisionLevel, BodyData.Radius);
@@ -83,8 +83,6 @@ namespace ProceduralPlanets.Generation
             var displacedVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
             var normalBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
             
-            int stride = Marshal.SizeOf<CraterSettingsStruct>();
-
             baseVertexBuffer.SetData(baseVertices);
             var gpuNoiseSettings = BodyData.GPUNoiseSettings
                 .Where(setting => setting.Enabled)
@@ -94,18 +92,24 @@ namespace ProceduralPlanets.Generation
             ComputeBuffer noiseBuffer = new ComputeBuffer(Mathf.Max(1, gpuNoiseSettings.Length),
                 Marshal.SizeOf(typeof(NoiseSettingsGPUStruct)));
             if (gpuNoiseSettings.Length > 0) noiseBuffer.SetData(gpuNoiseSettings);
-            var craterSettings = BodyData.CraterSettings.ToStruct();
-            var craterSettingsList = new List<CraterSettingsStruct>(1) { craterSettings };
+
+            var craters = CraterGenerator.GenerateCraters(BodyData.CraterGenerationSettings, 0);
+            int stride = Marshal.SizeOf<CraterParameters>();
+            var craterBuffer = new ComputeBuffer(Mathf.Max(1, craters.Count), stride);
+
+            craterBuffer.SetData(craters);
 
             int kernel = displacementShader.FindKernel("CSMain");
             displacementShader.SetBuffer(kernel, BaseVertices, baseVertexBuffer);
             displacementShader.SetBuffer(kernel, DisplacedVertices, displacedVertexBuffer);
             displacementShader.SetBuffer(kernel, Normals, normalBuffer);
             displacementShader.SetBuffer(kernel, _noiseSettingsBufferId, noiseBuffer);
+            displacementShader.SetBuffer(kernel, CraterParameters, craterBuffer);
 
             displacementShader.SetInt(_noiseSettingsCountId, gpuNoiseSettings.Length);
             displacementShader.SetFloat(PlanetRadius, BodyData.Radius);
             displacementShader.SetFloat(NormalSampleDistance, normalSampleDistance);
+            displacementShader.SetInt(_craterCountId, craters.Count);
             
             
             int threadGroups = Mathf.CeilToInt(baseVertices.Length / 64f);
@@ -118,9 +122,11 @@ namespace ProceduralPlanets.Generation
             displacedVertexBuffer.Release();
             noiseBuffer.Release();
             normalBuffer.Release();
+            craterBuffer.Release();
             
             mesh.vertices = displacedVertices;
-            mesh.normals = normals;
+            // mesh.normals = normals;,
+            mesh.RecalculateNormals();
             return mesh;
         }
     }

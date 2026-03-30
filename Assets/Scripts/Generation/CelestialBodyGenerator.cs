@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using ProceduralPlanets.BaseMesh;
 using ProceduralPlanets.Noise;
+using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.ScriptableObjects.Generation;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,14 +15,14 @@ namespace ProceduralPlanets.Generation
         where TData : CelestialBodyData
         where TType : CelestialBodyType<TData>
     {
-        [Header("Mesh")] [SerializeField, Range(0, 10)]
+        [Header("Mesh")] [SerializeField, Range(0, 6)]
         protected int subdivisionLevel;
 
         [field: SerializeField] public TData BodyData { get; private set; }
         [field: SerializeField] public TType BodyType { get; private set; }
         
         protected MeshFilter MeshFilter;
-        private MeshRenderer _meshRenderer;
+        protected MeshRenderer _meshRenderer;
         private ComputeBuffer _noiseSettingsBuffer;
         
         public override void GenerateBodyData()

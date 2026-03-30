@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using ProceduralPlanets.BaseMesh;
@@ -12,21 +12,65 @@ namespace ProceduralPlanets.Generation
     public class PlanetGenerator : CelestialBodyGenerator<PlanetData, PlanetType>
     {
         [SerializeField] private bool useComputeShader = true;
+        [SerializeField] private bool useUnityNormals = true;
         [SerializeField] private ComputeShader displacementShader;
         [SerializeField] private float normalSampleDistance = 0.01f;
-        
+        [SerializeField] private Material planetMaterial;
+        [SerializeField] private Shader planetShader;
+
         private static readonly int BaseVertices = Shader.PropertyToID("BaseVertices");
         private static readonly int DisplacedVertices = Shader.PropertyToID("DisplacedVertices");
         private static readonly int PlanetRadius = Shader.PropertyToID("PlanetRadius");
         private static readonly int Normals = Shader.PropertyToID("Normals");
         private static readonly int NormalSampleDistance = Shader.PropertyToID("NormalSampleDistance");
         private static readonly int CraterParameters = Shader.PropertyToID("Craters");
+        private static readonly int BiomeParameters = Shader.PropertyToID("Biomes");
 
         private readonly int _noiseSettingsCountId = Shader.PropertyToID("_NoiseLayerCount");
         private readonly int _noiseSettingsBufferId = Shader.PropertyToID("_NoiseSettings");
         private readonly int _bodyCenterId = Shader.PropertyToID("_PlanetCenter");
         private readonly int _bodyRadiusId = Shader.PropertyToID("_PlanetRadius");
         private readonly int _craterCountId = Shader.PropertyToID("CraterCount");
+        private readonly int _biomeCountId = Shader.PropertyToID("BiomeCount");
+        private readonly int _baseColorId = Shader.PropertyToID("BaseColor");
+
+        private ComputeBuffer _biomeBuffer;
+
+        private void OnEnable()
+        {
+            UpdateSurface();
+        }
+
+        public override void UpdateSurface()
+        {
+            base.UpdateSurface();
+            UpdateMaterial();
+        }
+
+        private void UpdateMaterial()
+        {
+            _meshRenderer.sharedMaterial = new Material(planetMaterial);
+            _meshRenderer.sharedMaterial.SetInt(_biomeCountId, BodyData.Biomes.Count);
+            var gpuColor = new Vector4(BodyData.BaseColor.r, BodyData.BaseColor.g, BodyData.BaseColor.b, 1f);
+            _meshRenderer.sharedMaterial.SetVector(_baseColorId, gpuColor);
+            _meshRenderer.sharedMaterial.SetInt(_biomeCountId, BodyData.Biomes.Count);
+            
+            _biomeBuffer?.Release();
+            int biomeStructSize = Marshal.SizeOf<BiomeParametersStruct>();
+            _biomeBuffer = new ComputeBuffer(Mathf.Max(1, BodyData.Biomes.Count), biomeStructSize);
+            if (BodyData.Biomes.Count > 0)            {
+                var biomeStructs = BodyData.Biomes.Select(b => b.ToStruct()).ToArray();
+                _biomeBuffer.SetData(biomeStructs);
+            }
+            
+            _meshRenderer.sharedMaterial.SetBuffer(BiomeParameters, _biomeBuffer);
+        }
+
+        private void OnDestroy()
+        {
+            _biomeBuffer?.Release();
+        }
+
         protected override void GenerateMesh()
         {
             var mesh = IcoSphereGenerator.Generate(subdivisionLevel, BodyData.Radius);
@@ -44,6 +88,7 @@ namespace ProceduralPlanets.Generation
 
             MeshFilter.sharedMesh = mesh;
         }
+        
 
         private Mesh GenerateMeshOnCPU(Mesh mesh)
         {
@@ -82,7 +127,7 @@ namespace ProceduralPlanets.Generation
             var baseVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
             var displacedVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
             var normalBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
-            
+
             baseVertexBuffer.SetData(baseVertices);
             var gpuNoiseSettings = BodyData.GPUNoiseSettings
                 .Where(setting => setting.Enabled)
@@ -94,8 +139,9 @@ namespace ProceduralPlanets.Generation
             if (gpuNoiseSettings.Length > 0) noiseBuffer.SetData(gpuNoiseSettings);
 
             var craters = CraterGenerator.GenerateCraters(BodyData.CraterGenerationSettings, 0);
-            int stride = Marshal.SizeOf<CraterParameters>();
-            var craterBuffer = new ComputeBuffer(Mathf.Max(1, craters.Count), stride);
+            int craterStructSize = Marshal.SizeOf<CraterParameters>();
+            var craterBuffer = new ComputeBuffer(Mathf.Max(1, craters.Count), craterStructSize);
+            
 
             craterBuffer.SetData(craters);
 
@@ -105,13 +151,12 @@ namespace ProceduralPlanets.Generation
             displacementShader.SetBuffer(kernel, Normals, normalBuffer);
             displacementShader.SetBuffer(kernel, _noiseSettingsBufferId, noiseBuffer);
             displacementShader.SetBuffer(kernel, CraterParameters, craterBuffer);
-
+            
             displacementShader.SetInt(_noiseSettingsCountId, gpuNoiseSettings.Length);
             displacementShader.SetFloat(PlanetRadius, BodyData.Radius);
             displacementShader.SetFloat(NormalSampleDistance, normalSampleDistance);
             displacementShader.SetInt(_craterCountId, craters.Count);
-            
-            
+
             int threadGroups = Mathf.CeilToInt(baseVertices.Length / 64f);
             displacementShader.Dispatch(kernel, threadGroups, 1, 1);
 
@@ -123,10 +168,17 @@ namespace ProceduralPlanets.Generation
             noiseBuffer.Release();
             normalBuffer.Release();
             craterBuffer.Release();
-            
+
             mesh.vertices = displacedVertices;
-            // mesh.normals = normals;,
-            mesh.RecalculateNormals();
+            if (useUnityNormals)
+            {
+                mesh.RecalculateNormals();
+            }
+            else
+            {
+                mesh.normals = normals;
+            }
+
             return mesh;
         }
     }

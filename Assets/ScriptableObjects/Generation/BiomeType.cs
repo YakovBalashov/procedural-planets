@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ProceduralPlanets.ScriptableObjects.Generation
 {
-    [CreateAssetMenu(fileName = "BiomeType", menuName = "Scriptable Objects/BiomeType")]
+    [CreateAssetMenu(fileName = "BiomeType", menuName = "Planetary Systems/Biome Type")]
     public class BiomeType : ScriptableObject
     {
         [field: SerializeField] public float probability = 1.0f;

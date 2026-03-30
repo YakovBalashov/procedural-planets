@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using ProceduralPlanets.Generation;
 using ProceduralPlanets.Noise;
+using ProceduralPlanets.ScriptableObjects.Generation;
 using UnityEngine;
 
 namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
@@ -7,5 +10,14 @@ namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
     public class PlanetData : CelestialBodyData
     {
         [field: SerializeField] public CraterGenerationSettings CraterGenerationSettings { get; private set; }
+        [field: SerializeField] public Color BaseColor { get; private set; }
+        [field: SerializeField] public List<BiomeParameters> Biomes { get; private set; }
+
+        public void InitializePlanet(List<BiomeParameters> biomes, CraterGenerationSettings craterGenerationSettings, Color baseColor)
+        {
+            Biomes = biomes;
+            CraterGenerationSettings = craterGenerationSettings;
+            BaseColor = baseColor;
+        }
     }
 }

@@ -5,6 +5,9 @@ namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
     [CreateAssetMenu(fileName = "StarData", menuName = "Planetary Systems/Celestial Body Data/Star Data")]
     public class StarData : CelestialBodyData
     {
-    
+        public void SetMaterial(Material starMaterial)
+        {
+            SurfaceMaterial = starMaterial;
+        }
     }
 }

@@ -1,3 +1,4 @@
+using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using UnityEngine;
 
 namespace ProceduralPlanets.Generation

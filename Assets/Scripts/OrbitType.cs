@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.ScriptableObjects.Generation;
 using UnityEngine;
 

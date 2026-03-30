@@ -13,20 +13,18 @@ MonoBehaviour:
   m_Name: RockyMoon
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.PlanetType
   radiusRange: {x: 7, y: 12}
-  cpuNoiseSettings:
+  cpuNoiseSettings: []
+  gpuNoiseSettings:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.1
-    <BaseRoughness>k__BackingField: 4.82
-    <Persistence>k__BackingField: 0.352
-    <Lacunarity>k__BackingField: 4.56
+    <BaseRoughness>k__BackingField: 7.28
+    <Persistence>k__BackingField: 0.597
+    <Lacunarity>k__BackingField: 2
     <MinimumValue>k__BackingField: 0
     <Octaves>k__BackingField: 4
     <Offset>k__BackingField: {x: 0, y: 0, z: 0}
-  surfaceMaterial:
-  - {fileID: 2100000, guid: 9350fe64c19fd7f45bad183d900cda65, type: 2}
-  - {fileID: 2100000, guid: 7accd2df5416454459545c87a5fbab37, type: 2}
-  - {fileID: 2100000, guid: 2dd0f702f62c7e44c8a38be2e4d73a4b, type: 2}
-  - {fileID: 2100000, guid: deb46bca67e6c8344a1894a0f428967e, type: 2}
+    <FnlSeed>k__BackingField: 0
+    <FnlNoiseType>k__BackingField: 4
   <StarOrbitType>k__BackingField:
     <ParentTypes>k__BackingField:
     - {fileID: 11400000, guid: 54bce4722c5a3d54a94ad0cd27acdf4e, type: 2}
@@ -43,4 +41,20 @@ MonoBehaviour:
     <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
     <OrbitRatioRange>k__BackingField: {x: 0, y: 0}
     <OrbitInclinationRange>k__BackingField: {x: 0, y: 0}
+  <BiomeTypes>k__BackingField:
+  - {fileID: 11400000, guid: 65283ec1428c7c941bf2afecdc7ceeac, type: 2}
+  - {fileID: 11400000, guid: b7f783eb6f8621a47955819f3ae3bdbd, type: 2}
   <MoonNumberRange>k__BackingField: {x: 0, y: 0}
+  <CraterGenerationSettings>k__BackingField:
+    <StrengthRange>k__BackingField: {x: 0.1, y: 0.1}
+    <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
+    <DepthRange>k__BackingField: {x: 0.4, y: 0.6}
+    <RimWidthRange>k__BackingField: {x: 0.5, y: 0.5}
+    <RimSteepnessRange>k__BackingField: {x: 0.8, y: 0.8}
+    <NumberRange>k__BackingField: {x: 10, y: 50}
+  <PossibleBaseColors>k__BackingField:
+  - {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 0}
+  - {r: 0.23584908, g: 0.06896834, b: 0.0077874744, a: 0}
+  - {r: 0.4811321, g: 0.34395394, b: 0, a: 0}
+  - {r: 0.3490566, g: 0.2933034, b: 0.15312387, a: 0}
+  - {r: 0.33962262, g: 0.20584211, b: 0.20345317, a: 0}

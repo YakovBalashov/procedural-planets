@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.PlanetType
   radiusRange: {x: 40, y: 50}
   cpuNoiseSettings: []
-  surfaceMaterial:
-  - {fileID: 2100000, guid: 82081d3c8d25a3c4f89126220b0563f0, type: 2}
-  - {fileID: 2100000, guid: e4be2ea1d6a932b4daf57d51201dcfc0, type: 2}
+  gpuNoiseSettings: []
   <StarOrbitType>k__BackingField:
     <ParentTypes>k__BackingField:
     - {fileID: 11400000, guid: 54bce4722c5a3d54a94ad0cd27acdf4e, type: 2}
@@ -31,4 +29,18 @@ MonoBehaviour:
     <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
     <OrbitRatioRange>k__BackingField: {x: 0, y: 0}
     <OrbitInclinationRange>k__BackingField: {x: 0, y: 0}
+  <BiomeTypes>k__BackingField:
+  - {fileID: 11400000, guid: 9198a911cba04ee40b856b5fab9a4148, type: 2}
   <MoonNumberRange>k__BackingField: {x: 0, y: 0}
+  <CraterGenerationSettings>k__BackingField:
+    <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
+    <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
+    <DepthRange>k__BackingField: {x: 0.9, y: 1.1}
+    <RimWidthRange>k__BackingField: {x: 0.05, y: 0.3}
+    <RimSteepnessRange>k__BackingField: {x: 1, y: 3}
+    <NumberRange>k__BackingField: {x: 0, y: 0}
+  <PossibleBaseColors>k__BackingField:
+  - {r: 0, g: 0.034073167, b: 0.7075472, a: 0}
+  - {r: 0.7169812, g: 0.5545055, b: 0.3009968, a: 0}
+  - {r: 0.27224994, g: 0.4339623, b: 0.30994996, a: 0}
+  - {r: 0.12130651, g: 0.53603023, b: 0.5471698, a: 0}

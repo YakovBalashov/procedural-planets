@@ -8,6 +8,7 @@ namespace ProceduralPlanets.Generation
     {
         public static List<CraterParameters> GenerateCraters(CraterGenerationSettings settings, int seed)
         {
+            Random.InitState(0);
             int number = Random.Range((int)settings.NumberRange.x, (int)settings.NumberRange.y);
 
             var craters = new List<CraterParameters>(number);

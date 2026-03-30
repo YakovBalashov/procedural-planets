@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using ProceduralPlanets.Noise;
 using UnityEngine;
 
-namespace ProceduralPlanets
+namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
 {
     public abstract class CelestialBodyData : ScriptableObject
     {
@@ -11,11 +11,11 @@ namespace ProceduralPlanets
         [field: SerializeField] public List<NoiseSettingsGPU> GPUNoiseSettings { get; protected set; } = new();
         [field: SerializeField] public Material SurfaceMaterial { get; protected set; }
         
-        public void Initialize(float radius, List<NoiseSettings> noiseSettings, Material surfaceMaterial)
+        public void Initialize(float radius, List<NoiseSettings> noiseSettings, List<NoiseSettingsGPU> gpuNoiseSettings)
         {
             Radius = radius;
             CPUNoiseSettings = noiseSettings;
-            SurfaceMaterial = surfaceMaterial;
+            GPUNoiseSettings = gpuNoiseSettings;
         }
     }
 }

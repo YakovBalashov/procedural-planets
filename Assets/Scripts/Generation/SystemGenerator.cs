@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.ScriptableObjects.Generation;
+using ProceduralPlanets.UI;
 using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
@@ -18,11 +19,15 @@ namespace ProceduralPlanets.Generation
 
         [SerializeField] private float orbitalSpeedInDegreesPerSecond = 10f;
 
-        private const string PrimeStarName = "Prime Star";
+        [SerializeField] private SystemMap systemMap;
+
+        private const string PrimeStarName = "Polaris";
+
+        private List<GameObject> _celestialBodies = new();
 
         public void GenerateSystem()
         {
-            if (Application.isPlaying) return;
+            // if (Application.isPlaying) return;
             var random = new Random(seed);
 
             ClearExistingSystem();
@@ -33,8 +38,14 @@ namespace ProceduralPlanets.Generation
                 primeStarType, seed, transform, PrimeStarName);
 
             GameObject primeStar = GenerateCelestialBody(starGenerationParameters);
+            _celestialBodies.Add(primeStar);
 
             GeneratePlanets(primeStar, random);
+
+            if (!Application.isPlaying) return;
+            systemMap.Generate(_celestialBodies.Select(body =>
+                body.GetComponent<CelestialBodyGeneratorBase>()
+                    .GetBodyData()).ToList());
         }
 
         private void ClearExistingSystem()
@@ -70,7 +81,7 @@ namespace ProceduralPlanets.Generation
 
                 var planetGenerationParameters =
                     new CelestialBodyGenerationParameters<PlanetData, PlanetType>(planetPrefab, planetType,
-                        seed + i + 1, primeStar.transform, $"Planet {i + 1}");
+                        seed + i + 1, primeStar.transform, $"{PrimeStarName} {i + 1}");
 
                 GameObject planet = GenerateCelestialBody(planetGenerationParameters);
 
@@ -84,6 +95,8 @@ namespace ProceduralPlanets.Generation
                 var offset = (float)(primeStarType.DistanceBetweenPlanetsRange.x + random.NextDouble() *
                     (primeStarType.DistanceBetweenPlanetsRange.y - primeStarType.DistanceBetweenPlanetsRange.x));
                 currentOrbitRadius += offset;
+
+                _celestialBodies.Add(planet);
             }
         }
 
@@ -117,7 +130,16 @@ namespace ProceduralPlanets.Generation
             where TData : CelestialBodyData
             where TType : CelestialBodyType<TData>
         {
-            var celestialBody = (GameObject)PrefabUtility.InstantiatePrefab(bodyParameters.Prefab);
+            GameObject celestialBody;
+            
+            if (Application.isPlaying)
+            {
+                celestialBody = Instantiate(bodyParameters.Prefab, bodyParameters.Parent);
+            }
+            else
+            {
+                celestialBody = (GameObject)PrefabUtility.InstantiatePrefab(bodyParameters.Prefab);
+            }
 
             var celestialBodyGenerator = celestialBody.GetComponent<CelestialBodyGenerator<TData, TType>>();
             celestialBodyGenerator.SetBodyType(bodyParameters.BodyType);
@@ -125,7 +147,7 @@ namespace ProceduralPlanets.Generation
 
             celestialBody.transform.SetParent(bodyParameters.Parent);
             celestialBody.name = bodyParameters.Name;
-
+            celestialBodyGenerator.BodyData.name = bodyParameters.Name;
             return celestialBody;
         }
 

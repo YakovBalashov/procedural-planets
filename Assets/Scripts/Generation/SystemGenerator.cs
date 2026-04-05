@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using ProceduralPlanets.Movement;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.ScriptableObjects.Generation;
 using ProceduralPlanets.UI;
@@ -23,7 +24,7 @@ namespace ProceduralPlanets.Generation
 
         private const string PrimeStarName = "Polaris";
 
-        private List<GameObject> _celestialBodies = new();
+        private readonly List<GameObject> _celestialBodies = new();
 
         public void GenerateSystem()
         {

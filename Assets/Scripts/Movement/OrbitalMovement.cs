@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = System.Random;
 
-namespace ProceduralPlanets
+namespace ProceduralPlanets.Movement
 {
     public class OrbitalMovement : MonoBehaviour
     {
@@ -40,6 +40,23 @@ namespace ProceduralPlanets
             speedInDegreesPerSecond = parameters.SpeedInDegreesPerSecond;
             Initialize();
         }
+        
+        public void ChangeRadius(float deltaRadius)
+        {
+            radiusX += deltaRadius;
+            radiusZ += deltaRadius;
+            Initialize();
+        }
+        
+        public void ChangeSpeed(float deltaSpeed)
+        {
+            speedInDegreesPerSecond += deltaSpeed;
+        }
+        
+        public void ChangeRotation(float deltaRotation)
+        {
+            rotation.x += deltaRotation;
+        }
 
         private void Initialize()
         {
@@ -57,7 +74,7 @@ namespace ProceduralPlanets
 
         private void MoveBodyToAngle(float angle)
         {
-            if (transform.parent == null) return;
+            if (!transform.parent) return;
             
             var rotationQuaternion = Quaternion.Euler(rotation);
 

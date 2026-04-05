@@ -10,8 +10,10 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private float frequency;
         [SerializeField] private int octaves;
         [SerializeField] private float maskThreshold;
-        
-        public void Initialize(Color newColor, int newNoiseType, float newFrequency, int newOctaves, float newMaskThreshold)
+        [SerializeField] private float blendFactor;
+
+        public void Initialize(Color newColor, int newNoiseType, float newFrequency, int newOctaves,
+            float newMaskThreshold)
         {
             color = newColor;
             noiseType = newNoiseType;
@@ -19,7 +21,7 @@ namespace ProceduralPlanets.Generation
             octaves = newOctaves;
             maskThreshold = newMaskThreshold;
         }
-        
+
         public BiomeParametersStruct ToStruct()
         {
             return new BiomeParametersStruct
@@ -28,7 +30,8 @@ namespace ProceduralPlanets.Generation
                 NoiseType = noiseType,
                 Frequency = frequency,
                 Octaves = octaves,
-                MaskThreshold = maskThreshold
+                MaskThreshold = maskThreshold,
+                BlendFactor = blendFactor,
             };
         }
     }
@@ -40,5 +43,6 @@ namespace ProceduralPlanets.Generation
         public float Frequency;
         public int Octaves;
         public float MaskThreshold;
+        public float BlendFactor;
     }
 }

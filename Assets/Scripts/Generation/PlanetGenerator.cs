@@ -29,7 +29,7 @@ namespace ProceduralPlanets.Generation
         private readonly int _noiseSettingsCountId = Shader.PropertyToID("_NoiseLayerCount");
         private readonly int _noiseSettingsBufferId = Shader.PropertyToID("_NoiseSettings");
         private readonly int _bodyCenterId = Shader.PropertyToID("_PlanetCenter");
-        private readonly int _bodyRadiusId = Shader.PropertyToID("_PlanetRadius");
+        private readonly int _bodyRadiusId = Shader.PropertyToID("PlanetRadius");
         private readonly int _craterCountId = Shader.PropertyToID("CraterCount");
         private readonly int _biomeCountId = Shader.PropertyToID("BiomeCount");
         private readonly int _baseColorId = Shader.PropertyToID("BaseColor");
@@ -54,6 +54,7 @@ namespace ProceduralPlanets.Generation
             var gpuColor = new Vector4(BodyData.BaseColor.r, BodyData.BaseColor.g, BodyData.BaseColor.b, 1f);
             _meshRenderer.sharedMaterial.SetVector(_baseColorId, gpuColor);
             _meshRenderer.sharedMaterial.SetInt(_biomeCountId, BodyData.Biomes.Count);
+            _meshRenderer.sharedMaterial.SetFloat(_bodyRadiusId, BodyData.Radius);
             
             _biomeBuffer?.Release();
             int biomeStructSize = Marshal.SizeOf<BiomeParametersStruct>();

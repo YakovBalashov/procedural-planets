@@ -53,9 +53,9 @@ namespace ProceduralPlanets.Movement
             speedInDegreesPerSecond += deltaSpeed;
         }
         
-        public void ChangeRotation(float deltaRotation)
+        public void ChangeInclination(float deltaInclination)
         {
-            rotation.x += deltaRotation;
+            rotation.z += deltaInclination;
         }
 
         private void Initialize()
@@ -89,6 +89,20 @@ namespace ProceduralPlanets.Movement
                    _mainAxis * _centerToFocusDistance;
         }
 
+        public void MoveToStartingPosition(Random random)
+        {
+            _currentAngle = (float)(random.NextDouble() * 2 * Math.PI);
+            MoveBodyToAngle(_currentAngle);
+        }
+        
+        public void CalculateAngleFromPositionForPerfectOrbit()
+        {
+            if (!transform.parent) return;
+
+            var angle = Mathf.Atan2(transform.localPosition.z, transform.localPosition.x);
+            _currentAngle = angle % (2 * Mathf.PI);
+        }
+
         private void OnDrawGizmos()
         {
             if (transform.parent == null) return;
@@ -110,12 +124,6 @@ namespace ProceduralPlanets.Movement
 
                 previousPoint = point;
             }
-        }
-
-        public void MoveToStartingPosition(Random random)
-        {
-            _currentAngle = (float)(random.NextDouble() * 2 * Math.PI);
-            MoveBodyToAngle(_currentAngle);
         }
     }
 }

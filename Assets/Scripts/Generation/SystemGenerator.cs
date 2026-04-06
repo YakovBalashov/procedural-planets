@@ -26,6 +26,12 @@ namespace ProceduralPlanets.Generation
 
         private readonly List<GameObject> _celestialBodies = new();
 
+        public CelestialBodyGeneratorBase GetBodyByIndex(Vector2 index)
+        {
+            var mainBodyIndex = (int)index.x;
+            return _celestialBodies[mainBodyIndex].GetComponent<CelestialBodyGeneratorBase>();
+        }
+        
         public void GenerateSystem()
         {
             // if (Application.isPlaying) return;

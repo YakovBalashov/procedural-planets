@@ -55,7 +55,7 @@ namespace ProceduralPlanets.Movement
             if (rotationInput != 0)
             {
                 float deltaRotation = rotationInput * rotationChangeRate * Time.deltaTime;
-                _orbitalMovement.ChangeRotation(deltaRotation);
+                _orbitalMovement.ChangeInclination(deltaRotation);
             }
 
             if (radiusInput != 0)

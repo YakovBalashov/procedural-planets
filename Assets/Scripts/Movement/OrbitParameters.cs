@@ -1,6 +1,4 @@
-using UnityEngine;
-
-namespace ProceduralPlanets
+namespace ProceduralPlanets.Movement
 {
     public struct OrbitParameters
     {

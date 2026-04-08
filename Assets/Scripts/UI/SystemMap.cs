@@ -58,6 +58,7 @@ namespace ProceduralPlanets.UI
             buttonText.text = bodyData.name;
             
             button.onClick.AddListener(() => SelectBody(bodyIndex));
+            button.onClick.AddListener(() => mapPanel.SetActive(false));
         }
 
         private void SelectBody(Vector2 bodyIndex)

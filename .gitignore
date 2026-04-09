@@ -11,6 +11,8 @@
 /[Uu]ser[Ss]ettings/
 /[Aa]ssets/TextMesh Pro/
 /[Aa]ssets/_Recovery/
+/[Aa]ssets/TextMesh Pro.meta
+/UIElementsSchema
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

@@ -3,20 +3,20 @@
 #include "Assets/Shaders/Displacement/VertexDisplacement.hlsl"
 #include "Assets/Shaders/Displacement/Normal.hlsl"
 
-StructuredBuffer<float3> BaseVertices;
-RWStructuredBuffer<float3> DisplacedVertices;
-RWStructuredBuffer<float3> Normals;
+StructuredBuffer<float3> _BaseVertices;
+RWStructuredBuffer<float3> _DisplacedVertices;
+RWStructuredBuffer<float3> _Normals;
 
 RWTexture2D<float4> Result;
 
 [numthreads(64, 1, 1)]
 void CSMain(uint3 id : SV_DispatchThreadID)
 {
-    DisplacedVertices[id.x] = ApplyVertexDisplacement(BaseVertices[id.x]);
+    _DisplacedVertices[id.x] = ApplyVertexDisplacement(_BaseVertices[id.x]);
 
     Normal normalInfo = (Normal)0;
-    normalInfo.Initialize(BaseVertices[id.x]);
+    normalInfo.Initialize(_BaseVertices[id.x]);
     float3 finalNormal = normalInfo.GetNormal();
 
-    Normals[id.x] = finalNormal;
+    _Normals[id.x] = finalNormal;
 }

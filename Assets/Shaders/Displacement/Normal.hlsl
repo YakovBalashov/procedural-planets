@@ -2,7 +2,7 @@
 
 #include "VertexDisplacement.hlsl"
 
-float NormalSampleDistance;
+float _NormalSampleDistance;
 
 struct Normal
 {
@@ -22,10 +22,10 @@ struct Normal
         float3 tangentXPlus = normalize(cross(directionFromCenter, randomVector));
         float3 tangentYPlus = normalize(cross(directionFromCenter, tangentXPlus));
 
-        sampleXPlus = normalize(position + tangentXPlus * NormalSampleDistance);
-        sampleXMinus = normalize(position - tangentXPlus * NormalSampleDistance);
-        sampleYPlus = normalize(position + tangentYPlus * NormalSampleDistance);
-        sampleYMinus = normalize(position - tangentYPlus * NormalSampleDistance);
+        sampleXPlus = normalize(position + tangentXPlus * _NormalSampleDistance);
+        sampleXMinus = normalize(position - tangentXPlus * _NormalSampleDistance);
+        sampleYPlus = normalize(position + tangentYPlus * _NormalSampleDistance);
+        sampleYMinus = normalize(position - tangentYPlus * _NormalSampleDistance);
     }
 
     float3 GetNormal()

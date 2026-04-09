@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Runtime.InteropServices;
 using ProceduralPlanets.BaseMesh;
@@ -15,31 +14,10 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private bool useUnityNormals = true;
         [SerializeField] private ComputeShader displacementShader;
         [SerializeField] private float normalSampleDistance = 0.01f;
-        [SerializeField] private Material planetMaterial;
         [SerializeField] private Shader planetShader;
 
-        private static readonly int BaseVertices = Shader.PropertyToID("BaseVertices");
-        private static readonly int DisplacedVertices = Shader.PropertyToID("DisplacedVertices");
-        private static readonly int PlanetRadius = Shader.PropertyToID("PlanetRadius");
-        private static readonly int Normals = Shader.PropertyToID("Normals");
-        private static readonly int NormalSampleDistance = Shader.PropertyToID("NormalSampleDistance");
-        private static readonly int CraterParameters = Shader.PropertyToID("Craters");
-        private static readonly int BiomeParameters = Shader.PropertyToID("Biomes");
-
-        private readonly int _noiseSettingsCountId = Shader.PropertyToID("_NoiseLayerCount");
-        private readonly int _noiseSettingsBufferId = Shader.PropertyToID("_NoiseSettings");
-        private readonly int _bodyCenterId = Shader.PropertyToID("_PlanetCenter");
-        private readonly int _bodyRadiusId = Shader.PropertyToID("PlanetRadius");
-        private readonly int _craterCountId = Shader.PropertyToID("CraterCount");
-        private readonly int _biomeCountId = Shader.PropertyToID("BiomeCount");
-        private readonly int _baseColorId = Shader.PropertyToID("BaseColor");
-
+        private Material _materialInstance;
         private ComputeBuffer _biomeBuffer;
-
-        private void OnEnable()
-        {
-            UpdateSurface();
-        }
 
         public override void UpdateSurface()
         {
@@ -49,47 +27,46 @@ namespace ProceduralPlanets.Generation
 
         private void UpdateMaterial()
         {
-            _meshRenderer.sharedMaterial = new Material(planetMaterial);
-            _meshRenderer.sharedMaterial.SetInt(_biomeCountId, BodyData.Biomes.Count);
-            var gpuColor = new Vector4(BodyData.BaseColor.r, BodyData.BaseColor.g, BodyData.BaseColor.b, 1f);
-            _meshRenderer.sharedMaterial.SetVector(_baseColorId, gpuColor);
-            _meshRenderer.sharedMaterial.SetInt(_biomeCountId, BodyData.Biomes.Count);
-            _meshRenderer.sharedMaterial.SetFloat(_bodyRadiusId, BodyData.Radius);
-            
+            if (!_materialInstance)
+            {
+                _materialInstance = new Material(planetShader);
+                _meshRenderer.sharedMaterial = _materialInstance;
+            }
+
+            _materialInstance.SetVector(ShaderParametersIDs.BaseColor, BodyData.BaseColor);
+            _materialInstance.SetInt(ShaderParametersIDs.BiomeCount, BodyData.Biomes.Count);
+            _materialInstance.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
+
             _biomeBuffer?.Release();
+
             int biomeStructSize = Marshal.SizeOf<BiomeParametersStruct>();
             _biomeBuffer = new ComputeBuffer(Mathf.Max(1, BodyData.Biomes.Count), biomeStructSize);
-            if (BodyData.Biomes.Count > 0)            {
+
+            if (BodyData.Biomes.Count > 0)
+            {
                 var biomeStructs = BodyData.Biomes.Select(b => b.ToStruct()).ToArray();
                 _biomeBuffer.SetData(biomeStructs);
             }
-            
-            _meshRenderer.sharedMaterial.SetBuffer(BiomeParameters, _biomeBuffer);
-        }
 
-        private void OnDestroy()
-        {
-            _biomeBuffer?.Release();
+            if (BodyData.NormalMap)
+            {
+                _meshRenderer.sharedMaterial.SetTexture(ShaderParametersIDs.NormalMap, BodyData.NormalMap);
+            }
+
+            _materialInstance.SetBuffer(ShaderParametersIDs.BiomeParameters, _biomeBuffer);
         }
 
         protected override void GenerateMesh()
         {
             var mesh = IcoSphereGenerator.Generate(subdivisionLevel, BodyData.Radius);
 
-            if (useComputeShader && displacementShader is not null)
-            {
-                mesh = GenerateMeshOnGPU(mesh);
-            }
-            else
-            {
-                mesh = GenerateMeshOnCPU(mesh);
-            }
+            if (useComputeShader && displacementShader is not null) mesh = GenerateMeshOnGPU(mesh);
+            else mesh = GenerateMeshOnCPU(mesh);
 
             mesh.RecalculateBounds();
 
             MeshFilter.sharedMesh = mesh;
         }
-        
 
         private Mesh GenerateMeshOnCPU(Mesh mesh)
         {
@@ -103,13 +80,10 @@ namespace ProceduralPlanets.Generation
             for (var i = 0; i < vertices.Length; i++)
             {
                 var vertex = vertices[i];
-
                 var elevation = noiseGenerators.Sum(noiseGenerator => noiseGenerator.Evaluate(vertex.normalized));
-
                 var distanceFromCenter = BodyData.Radius * (1 + elevation);
 
                 minMaxElevations.Evaluate(distanceFromCenter);
-
                 vertices[i] = vertex.normalized * distanceFromCenter;
             }
 
@@ -121,66 +95,64 @@ namespace ProceduralPlanets.Generation
         private Mesh GenerateMeshOnGPU(Mesh mesh)
         {
             var baseVertices = mesh.vertices;
-            var displacedVertices = new Vector3[baseVertices.Length];
-            var normals = new Vector3[baseVertices.Length];
 
             int vec3Size = sizeof(float) * 3;
-            var baseVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
-            var displacedVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
-            var normalBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
 
-            baseVertexBuffer.SetData(baseVertices);
             var gpuNoiseSettings = BodyData.GPUNoiseSettings
                 .Where(setting => setting.Enabled)
                 .Select(setting => setting.ToStruct())
                 .ToArray();
+            var craters = CraterGenerator.GenerateCraters(BodyData.CraterGenerationSettings, 0);
 
-            ComputeBuffer noiseBuffer = new ComputeBuffer(Mathf.Max(1, gpuNoiseSettings.Length),
+            using var baseVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
+            using var displacedVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
+            using var normalBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
+            using var noiseBuffer = new ComputeBuffer(Mathf.Max(1, gpuNoiseSettings.Length),
                 Marshal.SizeOf(typeof(NoiseSettingsGPUStruct)));
+            using var craterBuffer =
+                new ComputeBuffer(Mathf.Max(1, craters.Count), Marshal.SizeOf(typeof(CraterParameters)));
+
+            baseVertexBuffer.SetData(baseVertices);
+            if (craters.Count > 0) craterBuffer.SetData(craters);
             if (gpuNoiseSettings.Length > 0) noiseBuffer.SetData(gpuNoiseSettings);
 
-            var craters = CraterGenerator.GenerateCraters(BodyData.CraterGenerationSettings, 0);
-            int craterStructSize = Marshal.SizeOf<CraterParameters>();
-            var craterBuffer = new ComputeBuffer(Mathf.Max(1, craters.Count), craterStructSize);
-            
-
-            craterBuffer.SetData(craters);
-
             int kernel = displacementShader.FindKernel("CSMain");
-            displacementShader.SetBuffer(kernel, BaseVertices, baseVertexBuffer);
-            displacementShader.SetBuffer(kernel, DisplacedVertices, displacedVertexBuffer);
-            displacementShader.SetBuffer(kernel, Normals, normalBuffer);
-            displacementShader.SetBuffer(kernel, _noiseSettingsBufferId, noiseBuffer);
-            displacementShader.SetBuffer(kernel, CraterParameters, craterBuffer);
-            
-            displacementShader.SetInt(_noiseSettingsCountId, gpuNoiseSettings.Length);
-            displacementShader.SetFloat(PlanetRadius, BodyData.Radius);
-            displacementShader.SetFloat(NormalSampleDistance, normalSampleDistance);
-            displacementShader.SetInt(_craterCountId, craters.Count);
+            displacementShader.SetBuffer(kernel, ShaderParametersIDs.BaseVertices, baseVertexBuffer);
+            displacementShader.SetBuffer(kernel, ShaderParametersIDs.DisplacedVertices, displacedVertexBuffer);
+            displacementShader.SetBuffer(kernel, ShaderParametersIDs.Normals, normalBuffer);
+            displacementShader.SetBuffer(kernel, ShaderParametersIDs.NoiseSettingsBuffer, noiseBuffer);
+            displacementShader.SetBuffer(kernel, ShaderParametersIDs.CraterParameters, craterBuffer);
+
+            displacementShader.SetInt(ShaderParametersIDs.NoiseSettingsCount, gpuNoiseSettings.Length);
+            displacementShader.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
+            displacementShader.SetFloat(ShaderParametersIDs.NormalSampleDistance, normalSampleDistance);
+            displacementShader.SetInt(ShaderParametersIDs.CraterCount, craters.Count);
 
             int threadGroups = Mathf.CeilToInt(baseVertices.Length / 64f);
             displacementShader.Dispatch(kernel, threadGroups, 1, 1);
 
+            var displacedVertices = new Vector3[baseVertices.Length];
+            var normals = new Vector3[baseVertices.Length];
+
             displacedVertexBuffer.GetData(displacedVertices);
             normalBuffer.GetData(normals);
 
-            baseVertexBuffer.Release();
-            displacedVertexBuffer.Release();
-            noiseBuffer.Release();
-            normalBuffer.Release();
-            craterBuffer.Release();
-
             mesh.vertices = displacedVertices;
-            if (useUnityNormals)
-            {
-                mesh.RecalculateNormals();
-            }
-            else
-            {
-                mesh.normals = normals;
-            }
+
+            if (useUnityNormals) mesh.RecalculateNormals();
+            else mesh.normals = normals;
 
             return mesh;
+        }
+
+        private void OnDestroy()
+        {
+            _biomeBuffer?.Release();
+
+            if (!_materialInstance) return;
+            
+            if (Application.isPlaying) Destroy(_materialInstance);
+            else DestroyImmediate(_materialInstance);
         }
     }
 }

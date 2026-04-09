@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ProceduralPlanets.Movement;
@@ -31,7 +32,12 @@ namespace ProceduralPlanets.Generation
             var mainBodyIndex = (int)index.x;
             return _celestialBodies[mainBodyIndex].GetComponent<CelestialBodyGeneratorBase>();
         }
-        
+
+        private void Start()
+        {
+            GenerateSystem();
+        }
+
         public void GenerateSystem()
         {
             // if (Application.isPlaying) return;

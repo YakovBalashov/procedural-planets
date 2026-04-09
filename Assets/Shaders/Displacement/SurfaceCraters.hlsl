@@ -12,8 +12,8 @@ struct CraterParameters
     float strength;
 };
 
-StructuredBuffer<CraterParameters> Craters;
-int CraterCount;
+StructuredBuffer<CraterParameters> _Craters;
+int _CraterCount;
 
 float GetCavity(float normalizedDistanceFromCenter, float depth)
 {
@@ -31,19 +31,19 @@ float EvaluateCrater(float3 position)
 {
     float craterValue = 0.0;
 
-    for (int i = 0; i < CraterCount; ++i)
+    for (int i = 0; i < _CraterCount; ++i)
     {
-        float normalizedDistanceFromCenter = distance(position, Craters[i].position) / Craters[i].
+        float normalizedDistanceFromCenter = distance(position, _Craters[i].position) / _Craters[i].
             radius;
 
-        if (normalizedDistanceFromCenter > 1.0 + Craters[i].rimWidth) continue;
+        if (normalizedDistanceFromCenter > 1.0 + _Craters[i].rimWidth) continue;
 
         float currentCraterValue = (normalizedDistanceFromCenter > 1.0)
-                                       ? GetRim(normalizedDistanceFromCenter, Craters[i].rimWidth,
-                                                Craters[i].rimSteepness)
-                                       : GetCavity(normalizedDistanceFromCenter, Craters[i].depth);
+                                       ? GetRim(normalizedDistanceFromCenter, _Craters[i].rimWidth,
+                                                _Craters[i].rimSteepness)
+                                       : GetCavity(normalizedDistanceFromCenter, _Craters[i].depth);
 
-        craterValue += currentCraterValue * Craters[i].strength;
+        craterValue += currentCraterValue * _Craters[i].strength;
     }
 
     return craterValue;

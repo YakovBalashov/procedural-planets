@@ -3,8 +3,6 @@
 #include "SurfaceNoise.hlsl"
 #include "SurfaceCraters.hlsl"
 
-float PlanetRadius;
-
 float3 ApplyVertexDisplacement(float3 position)
 {
     position = normalize(position);
@@ -14,7 +12,7 @@ float3 ApplyVertexDisplacement(float3 position)
     elevation += EvaluateMultilayeredNoise(position);
     elevation += EvaluateCrater(position);
 
-    float distanceFromCenter = PlanetRadius * (1.0 + elevation);
+    float distanceFromCenter = _PlanetRadius * (1.0 + elevation);
     
     return position * distanceFromCenter;
 }

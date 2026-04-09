@@ -16,6 +16,7 @@ struct NoiseSettings
 
 int _NoiseLayerCount;
 StructuredBuffer<NoiseSettings> _NoiseSettings;
+float _PlanetRadius;
 
 float EvaluateSingleNoise(float3 position, NoiseSettings settings)
 {

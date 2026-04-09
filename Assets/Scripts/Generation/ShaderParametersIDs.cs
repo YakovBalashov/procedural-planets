@@ -12,6 +12,8 @@ namespace ProceduralPlanets.Generation
 
         public static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
         public static readonly int NormalMap = Shader.PropertyToID("_NormalMap");
+        public static readonly int NormalMapTile = Shader.PropertyToID("_Tile");
+        public static readonly int NormalMapBlend = Shader.PropertyToID("_Blend");
 
         public static readonly int CraterParameters = Shader.PropertyToID("_Craters");
         public static readonly int CraterCount = Shader.PropertyToID("_CraterCount");

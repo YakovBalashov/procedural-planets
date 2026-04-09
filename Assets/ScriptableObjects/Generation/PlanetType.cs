@@ -16,6 +16,9 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         [field: SerializeField] public Vector2 MoonNumberRange { get; private set; }
         [field: SerializeField] public CraterGenerationSettings CraterGenerationSettings { get; private set; }
         [field: SerializeField] public List<Color> PossibleBaseColors { get; private set; }
+        [field: SerializeField] public List<Texture2D> PossibleNormalMaps { get; private set; }
+        [field: SerializeField] public Vector2 NormalMapTileRange { get; private set; }
+        [field: SerializeField] public Vector2 NormalMapBlendRange { get; private set; }
 
         public override PlanetData CreateInstance(int seed)
         {
@@ -27,8 +30,12 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
                 select biome.GenerateBiomeParameters()).ToList();
 
             var baseColor = PossibleBaseColors[Random.Range(0, PossibleBaseColors.Count)];
+            
+            var normalMap = PossibleNormalMaps[Random.Range(0, PossibleNormalMaps.Count)];
+            var normalMapTile = Random.Range(NormalMapTileRange.x, NormalMapTileRange.y);
+            var normalMapBlend = Random.Range(NormalMapBlendRange.x, NormalMapBlendRange.y);
 
-            instance.InitializePlanet(biomes, CraterGenerationSettings, baseColor);
+            instance.InitializePlanet(biomes, CraterGenerationSettings, baseColor, normalMap, normalMapTile, normalMapBlend);
 
             return instance;
         }

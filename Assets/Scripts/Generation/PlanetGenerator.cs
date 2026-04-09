@@ -50,7 +50,9 @@ namespace ProceduralPlanets.Generation
 
             if (BodyData.NormalMap)
             {
-                _meshRenderer.sharedMaterial.SetTexture(ShaderParametersIDs.NormalMap, BodyData.NormalMap);
+                _materialInstance.SetTexture(ShaderParametersIDs.NormalMap, BodyData.NormalMap);
+                _materialInstance.SetFloat(ShaderParametersIDs.NormalMapTile, BodyData.NormalMapTile);
+                _materialInstance.SetFloat(ShaderParametersIDs.NormalMapBlend, BodyData.NormalMapBlend);
             }
 
             _materialInstance.SetBuffer(ShaderParametersIDs.BiomeParameters, _biomeBuffer);

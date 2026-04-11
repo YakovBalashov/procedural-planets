@@ -13,6 +13,7 @@ namespace ProceduralPlanets.Generation
         HeightRange = 1 << 2,
         SteepnessRange = 1 << 3,
         Poles = 1 << 4,
+        Stripes = 1 << 5,
     }
 
     [System.Serializable]
@@ -27,6 +28,8 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private Vector2 steepnessRange;
         [SerializeField] private float poleAngle;
         [SerializeField] private Vector3 poleDirection;
+        [SerializeField] private Vector3 stripesAxis;
+        [SerializeField] private float stripesScale;
 
         public BiomeParameters(Color color, FnlParameters mainNoise, float maskThreshold, float blendFactor)
         {
@@ -44,6 +47,8 @@ namespace ProceduralPlanets.Generation
                 Color = new Vector3(color.r, color.g, color.b),
                 MaskThreshold = maskThreshold,
                 NoiseType = (int)mainNoise.Type,
+                WarpType =  (int)mainNoise.WarpType,
+                WarpAmplitude = mainNoise.WarpAmplitude,
                 Frequency = mainNoise.Frequency,
                 Octaves = mainNoise.Octaves,
                 BlendFactor = blendFactor,
@@ -51,6 +56,8 @@ namespace ProceduralPlanets.Generation
                 SteepnessRange = steepnessRange,
                 PoleAngle = poleAngle,
                 PoleDirection = poleDirection,
+                StripesAxis = stripesAxis,
+                StripesScale = stripesScale,
             };
         }
     }
@@ -60,6 +67,8 @@ namespace ProceduralPlanets.Generation
         public uint Features;
         public Vector3 Color;
         public int NoiseType;
+        public int WarpType;
+        public float WarpAmplitude;
         public float Frequency;
         public int Octaves;
         public float MaskThreshold;
@@ -68,5 +77,7 @@ namespace ProceduralPlanets.Generation
         public Vector2 SteepnessRange;
         public float PoleAngle;
         public Vector3 PoleDirection;
+        public Vector3 StripesAxis;
+        public float StripesScale;
     }
 }

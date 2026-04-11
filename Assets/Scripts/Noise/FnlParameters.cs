@@ -1,9 +1,10 @@
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace ProceduralPlanets.Noise
 {
-    public enum FnlType
+    public enum FnlNoiseType
     {
         OpenSimplex2,
         OpenSimplex2S,
@@ -12,15 +13,25 @@ namespace ProceduralPlanets.Noise
         ValueCubic,
         Value,
     }
+    
+    public enum FnlWarpType
+    {
+        None,
+        OpenSimplex2,
+        OpenSimplex2Reduced,
+        BasicGrid,
+    }
 
     [System.Serializable]
     public class FnlParameters
     {
-        [field: SerializeField] public FnlType Type { get; private set; }
+        [field: SerializeField] public FnlNoiseType Type { get; private set; }
         [field: SerializeField] public float Frequency { get; private set; }
         [field: SerializeField] public int Octaves { get; private set; }
+        [field: SerializeField] public FnlWarpType WarpType { get; private set; }
+        [field: SerializeField] public float WarpAmplitude { get; private set; }
 
-        public FnlParameters(FnlType type, float frequency, int octaves)
+        public FnlParameters(FnlNoiseType type, float frequency, int octaves)
         {
             Type = type;
             Frequency = frequency;

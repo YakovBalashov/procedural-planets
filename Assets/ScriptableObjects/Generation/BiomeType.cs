@@ -10,7 +10,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
     {
         [field: SerializeField] public float probability = 1.0f;
         [SerializeField] private List<Color> colors;
-        [SerializeField] private FnlType noiseType;
+        [SerializeField] private FnlNoiseType noiseType;
         [SerializeField] private float frequency;
         [SerializeField] private int octaves;
         [SerializeField] private float maskThreshold;

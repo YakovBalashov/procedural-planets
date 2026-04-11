@@ -8,6 +8,7 @@
 #define FEATURE_HEIGHT_RANGE (1 << 2)
 #define FEATURE_STEEPNESS (1 << 3)
 #define FEATURE_POLE_ANGLE (1 << 4)
+#define FEATURE_STRIPES (1 << 5)
 
 static const float MIN_BIOME_BLEND = 0.001;
 
@@ -19,6 +20,8 @@ struct BiomeParameters
     uint featureMask;
     float3 color;
     int noiseType;
+    int warpType;
+    float warpAmplitude;
     float frequency;
     int octaves;
     float maskThreshold;
@@ -27,6 +30,8 @@ struct BiomeParameters
     float2 steepnessRange;
     float poleAngle;
     float3 poleDirection;
+    float3 stripesAxis;
+    float stripesScale;
 };
 
 StructuredBuffer<BiomeParameters> _Biomes;
@@ -45,12 +50,15 @@ float GetBaseBlend(float3 position, BiomeParameters biome)
 {
     fnl_state state = fnlCreateState();
     state.noise_type = biome.noiseType;
+    state.domain_warp_type = biome.warpType;
+    state.domain_warp_amp = biome.warpAmplitude;
     state.frequency = biome.frequency / _PlanetRadius;
     state.fractal_type = FNL_FRACTAL_FBM;
     state.octaves = biome.octaves;
+    if (biome.warpAmplitude > 0) fnlDomainWarp3D(state, position.x, position.y, position.z);
 
     float noiseValue = fnlGetNoise3D(state, position.x, position.y, position.z);
-        
+
     if (noiseValue < biome.maskThreshold - biome.blendFactor) return 0.0;
     float blend = smoothstep(biome.maskThreshold - biome.blendFactor, biome.maskThreshold, noiseValue);
     return blend;
@@ -59,7 +67,7 @@ float GetBaseBlend(float3 position, BiomeParameters biome)
 float GetHeightBlend(float3 position, BiomeParameters biome)
 {
     float2 range = biome.heightRange;
-    
+
     float height = InverseLerp(_LowestVertexHeight, _HighestVertexHeight, length(position));
 
     float bottomFade = smoothstep(range.x - biome.blendFactor, range.x, height);
@@ -91,6 +99,13 @@ float GetPoleAngleBlend(float3 position, BiomeParameters biome)
     return smoothstep(biome.poleAngle - biome.blendFactor, biome.poleAngle, latitude);
 }
 
+float3 ScalePosition(float3 position, float3 axis, float scale)
+{
+    axis = normalize(axis);
+
+    return position + axis * dot(position, axis) * (scale - 1.0);
+}
+
 float GetBiomeBlend(float3 position, float3 normal, BiomeParameters biome)
 {
     float maxBlend = INITIAL_BIOME_BLEND;
@@ -115,19 +130,22 @@ float GetBiomeBlend(float3 position, float3 normal, BiomeParameters biome)
         if (poleBlend < MIN_BIOME_BLEND) return 0.0;
         maxBlend = max(maxBlend, poleBlend);
     }
-    
-    float baseBlend = (biome.featureMask & FEATURE_MAIN_NOISE) != 0 ? GetBaseBlend(position, biome) : 1.0;
+
+    float3 scaledPosition = (biome.featureMask & FEATURE_STRIPES) != 0
+                                ? ScalePosition(position, biome.stripesAxis, biome.stripesScale)
+                                : position;
+    float baseBlend = (biome.featureMask & FEATURE_MAIN_NOISE) != 0 ? GetBaseBlend(scaledPosition, biome) : 1.0;
     if (baseBlend < MIN_BIOME_BLEND) return 0.0;
 
     if (maxBlend == INITIAL_BIOME_BLEND) return baseBlend;
-    
+
     return min(baseBlend, maxBlend);
 }
 
 void CalculateColor_float(float3 position, float3 normal, out float3 color)
 {
     color = _BaseColor.rgb;
-    
+
     for (int i = 0; i < _BiomeCount; ++i)
     {
         float blend = GetBiomeBlend(position, normal, _Biomes[i]);

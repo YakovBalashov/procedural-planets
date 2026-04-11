@@ -3,8 +3,13 @@
 #include "Assets/Shaders/Displacement/FastNoiseLite.hlsl"
 #include "Assets/Shaders/Displacement/SurfaceNoise.hlsl"
 
+#define FEATURE_MAIN_NOISE (1 << 0)
+#define FEATURE_EDGE_NOISE (1 << 1)
+#define FEATURE_HEIGHT_RANGE (1 << 2)
+
 struct BiomeParameters
 {
+    uint featureMask;
     float3 color;
     int noiseType;
     float frequency;
@@ -56,8 +61,8 @@ float GetHeightBlend(float3 position, BiomeParameters biome)
 
 float GetBiomeBlend(float3 position, BiomeParameters biome)
 {
-    float baseBlend = GetBaseBlend(position, biome);
-    float heightBlend = GetHeightBlend(position, biome);
+    float baseBlend = (biome.featureMask & FEATURE_MAIN_NOISE) != 0 ? GetBaseBlend(position, biome) : 1.0;
+    float heightBlend = (biome.featureMask & FEATURE_HEIGHT_RANGE) != 0 ? GetHeightBlend(position, biome) : 1.0;
     return baseBlend * heightBlend;
 }
 

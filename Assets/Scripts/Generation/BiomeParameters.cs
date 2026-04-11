@@ -11,8 +11,10 @@ namespace ProceduralPlanets.Generation
         MainNoise = 1 << 0,
         EdgeNoise = 1 << 1,
         HeightRange = 1 << 2,
+        SteepnessRange = 1 << 3,
+        Poles = 1 << 4,
     }
-    
+
     [System.Serializable]
     public class BiomeParameters
     {
@@ -22,7 +24,10 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private float maskThreshold;
         [SerializeField] private float blendFactor;
         [SerializeField] private Vector2 heightRange;
-        
+        [SerializeField] private Vector2 steepnessRange;
+        [SerializeField] private float poleAngle;
+        [SerializeField] private Vector3 poleDirection;
+
         public BiomeParameters(Color color, FnlParameters mainNoise, float maskThreshold, float blendFactor)
         {
             this.color = color;
@@ -43,6 +48,9 @@ namespace ProceduralPlanets.Generation
                 Octaves = mainNoise.Octaves,
                 BlendFactor = blendFactor,
                 HeightRange = heightRange,
+                SteepnessRange = steepnessRange,
+                PoleAngle = poleAngle,
+                PoleDirection = poleDirection,
             };
         }
     }
@@ -57,5 +65,8 @@ namespace ProceduralPlanets.Generation
         public float MaskThreshold;
         public float BlendFactor;
         public Vector2 HeightRange;
+        public Vector2 SteepnessRange;
+        public float PoleAngle;
+        public Vector3 PoleDirection;
     }
 }

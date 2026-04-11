@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using ProceduralPlanets.Generation;
+using ProceduralPlanets.Noise;
 using UnityEngine;
 
 namespace ProceduralPlanets.ScriptableObjects.Generation
@@ -9,16 +10,17 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
     {
         [field: SerializeField] public float probability = 1.0f;
         [SerializeField] private List<Color> colors;
-        [SerializeField] private int noiseType;
+        [SerializeField] private FnlType noiseType;
         [SerializeField] private float frequency;
         [SerializeField] private int octaves;
         [SerializeField] private float maskThreshold;
-        
-        public BiomeParameters GenerateBiomeParameters() 
+        [SerializeField] private float blendFactor;
+
+        public BiomeParameters GenerateBiomeParameters()
         {
             var color = colors[Random.Range(0, colors.Count)];
-            var biomeParameters = new BiomeParameters();
-            biomeParameters.Initialize(color, noiseType, frequency, octaves, maskThreshold);
+            var biomeParameters = new BiomeParameters(color, new FnlParameters(noiseType, frequency, octaves),
+                maskThreshold, blendFactor);
             return biomeParameters;
         }
     }

@@ -26,5 +26,8 @@ namespace ProceduralPlanets.Generation
 
         public static readonly int BodyCenter = Shader.PropertyToID("_PlanetCenter");
         public static readonly int BodyRadius = Shader.PropertyToID("_PlanetRadius");
+        
+        public static readonly int LowestVertexHeight = Shader.PropertyToID("_LowestVertexHeight");
+        public static readonly int HighestVertexHeight = Shader.PropertyToID("_HighestVertexHeight");
     }
 }

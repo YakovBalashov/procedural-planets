@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using ProceduralPlanets.BaseMesh;
@@ -15,7 +16,7 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private ComputeShader displacementShader;
         [SerializeField] private float normalSampleDistance = 0.01f;
         [SerializeField] private Shader planetShader;
-
+        
         private Material _materialInstance;
         private ComputeBuffer _biomeBuffer;
 
@@ -32,6 +33,8 @@ namespace ProceduralPlanets.Generation
                 _materialInstance = new Material(planetShader);
                 _meshRenderer.sharedMaterial = _materialInstance;
             }
+            
+            UpdateVertexRange();
 
             _materialInstance.SetVector(ShaderParametersIDs.BaseColor, BodyData.BaseColor);
             _materialInstance.SetInt(ShaderParametersIDs.BiomeCount, BodyData.Biomes.Count);
@@ -68,6 +71,26 @@ namespace ProceduralPlanets.Generation
             mesh.RecalculateBounds();
 
             MeshFilter.sharedMesh = mesh;
+        }
+
+        private void UpdateVertexRange()
+        {
+            var vertices = new List<Vector3>();
+            MeshFilter.sharedMesh.GetVertices(vertices); 
+
+            if (vertices.Count == 0) return;
+
+            var minSquare = float.MaxValue;
+            var maxSquare = float.MinValue;
+
+            foreach (var squareMagnitude in vertices.Select(vertex => vertex.sqrMagnitude))
+            {
+                if (squareMagnitude < minSquare) minSquare = squareMagnitude;
+                if (squareMagnitude > maxSquare) maxSquare = squareMagnitude;
+            }
+            
+            _materialInstance.SetFloat(ShaderParametersIDs.LowestVertexHeight, Mathf.Sqrt(minSquare));
+            _materialInstance.SetFloat(ShaderParametersIDs.HighestVertexHeight, Mathf.Sqrt(maxSquare));
         }
 
         private Mesh GenerateMeshOnCPU(Mesh mesh)

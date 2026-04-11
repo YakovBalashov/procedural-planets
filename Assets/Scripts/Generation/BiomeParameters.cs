@@ -1,56 +1,48 @@
+using ProceduralPlanets.Noise;
 using UnityEngine;
 
 namespace ProceduralPlanets.Generation
 {
-    enum BiomeType
-    {
-        Default = 0,
-    }
-    
     [System.Serializable]
     public class BiomeParameters
     {
-        [SerializeField] private BiomeType biomeType;
         [SerializeField] private Color color;
-        [SerializeField] private int noiseType;
-        [SerializeField] private float frequency;
-        [SerializeField] private int octaves;
+        [SerializeField] private FnlParameters mainNoise;
         [SerializeField] private float maskThreshold;
         [SerializeField] private float blendFactor;
-
-        public void Initialize(Color newColor, int newNoiseType, float newFrequency, int newOctaves,
-            float newMaskThreshold)
+        [SerializeField] private Vector2 heightRange;
+        
+        public BiomeParameters(Color color, FnlParameters mainNoise, float maskThreshold, float blendFactor)
         {
-            color = newColor;
-            noiseType = newNoiseType;
-            frequency = newFrequency;
-            octaves = newOctaves;
-            maskThreshold = newMaskThreshold;
+            this.color = color;
+            this.mainNoise = mainNoise;
+            this.maskThreshold = maskThreshold;
+            this.blendFactor = blendFactor;
         }
 
         public BiomeParametersStruct ToStruct()
         {
             return new BiomeParametersStruct
             {
-                BiomeType = (int)biomeType,
                 Color = new Vector3(color.r, color.g, color.b),
-                NoiseType = noiseType,
-                Frequency = frequency,
-                Octaves = octaves,
                 MaskThreshold = maskThreshold,
+                NoiseType = (int)mainNoise.Type,
+                Frequency = mainNoise.Frequency,
+                Octaves = mainNoise.Octaves,
                 BlendFactor = blendFactor,
+                HeightRange = heightRange,
             };
         }
     }
 
     public struct BiomeParametersStruct
     {
-        public int BiomeType;
         public Vector3 Color;
         public int NoiseType;
         public float Frequency;
         public int Octaves;
         public float MaskThreshold;
         public float BlendFactor;
+        public Vector2 HeightRange;
     }
 }

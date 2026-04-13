@@ -14,6 +14,7 @@ namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
         [field: SerializeField] public Texture2D NormalMap { get; private set; }
         [field: SerializeField] public float NormalMapTile { get; private set; }
         [field: SerializeField] public float NormalMapBlend { get; private set; }
+        [field: SerializeField] public RingParameters RingParameters { get; private set; }
 
         public void InitializePlanet(List<BiomeParameters> biomes, CraterGenerationSettings craterGenerationSettings,
             Color baseColor, Texture2D normalMap, float normalMapTile, float normalMapBlend)

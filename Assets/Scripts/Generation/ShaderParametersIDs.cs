@@ -29,5 +29,10 @@ namespace ProceduralPlanets.Generation
         
         public static readonly int LowestVertexHeight = Shader.PropertyToID("_LowestVertexHeight");
         public static readonly int HighestVertexHeight = Shader.PropertyToID("_HighestVertexHeight");
+        
+        public static readonly int RingColor = Shader.PropertyToID("_RingColor");
+        public static readonly int RingNoiseType = Shader.PropertyToID("_RingNoiseType");
+        public static readonly int RingNoiseOctaves = Shader.PropertyToID("_RingNoiseOctaves");
+        public static readonly int RingNoiseFrequency = Shader.PropertyToID("_RingNoiseFrequency");
     }
 }

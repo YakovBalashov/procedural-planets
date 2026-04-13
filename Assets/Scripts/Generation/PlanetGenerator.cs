@@ -19,6 +19,7 @@ namespace ProceduralPlanets.Generation
         
         private Material _materialInstance;
         private ComputeBuffer _biomeBuffer;
+        private PlanetaryRingsGenerator _ringsGenerator;
 
         public override void UpdateSurface()
         {
@@ -71,6 +72,10 @@ namespace ProceduralPlanets.Generation
             mesh.RecalculateBounds();
 
             MeshFilter.sharedMesh = mesh;
+            
+            if (!BodyData.RingParameters.Enabled) return; 
+            if (!_ringsGenerator) _ringsGenerator = GetComponentInChildren<PlanetaryRingsGenerator>();
+            _ringsGenerator.UpdateRings(BodyData.RingParameters);
         }
 
         private void UpdateVertexRange()

@@ -34,5 +34,14 @@ namespace ProceduralPlanets.Generation
         public static readonly int RingNoiseType = Shader.PropertyToID("_RingNoiseType");
         public static readonly int RingNoiseOctaves = Shader.PropertyToID("_RingNoiseOctaves");
         public static readonly int RingNoiseFrequency = Shader.PropertyToID("_RingNoiseFrequency");
+        
+        public static readonly int AtmosphereColor = Shader.PropertyToID("_AtmosphereColor");
+        public static readonly int AtmosphereNoiseType = Shader.PropertyToID("_AtmosphereNoiseType");
+        public static readonly int AtmosphereNoiseOctaves = Shader.PropertyToID("_AtmosphereNoiseOctaves");
+        public static readonly int AtmosphereNoiseFrequency = Shader.PropertyToID("_AtmosphereNoiseFrequency");
+        public static readonly int AtmosphereNoiseWarpType = Shader.PropertyToID("_AtmosphereNoiseWarpType");
+        public static readonly int AtmosphereNoiseWarpAmplitude = Shader.PropertyToID("_AtmosphereNoiseWarpAmplitude");
+        public static readonly int AtmosphereNoiseRange = Shader.PropertyToID("_AtmosphereNoiseRange");
+        public static readonly int AtmosphereMinAlpha = Shader.PropertyToID("_AtmosphereMinAlpha");
     }
 }

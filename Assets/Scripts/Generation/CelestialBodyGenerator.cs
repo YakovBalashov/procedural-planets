@@ -63,6 +63,5 @@ namespace ProceduralPlanets.Generation
         }
 
         protected abstract void GenerateMesh();
-       
     }
 }

@@ -7,6 +7,10 @@ using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.ScriptableObjects.Generation;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace ProceduralPlanets.Generation
 {
     public class PlanetGenerator : CelestialBodyGenerator<PlanetData, PlanetType>
@@ -198,5 +202,35 @@ namespace ProceduralPlanets.Generation
             if (Application.isPlaying) Destroy(_materialInstance);
             else DestroyImmediate(_materialInstance);
         }
+        
+#if UNITY_EDITOR
+        [ContextMenu("Save Planet Data to Asset")]
+        public void SavePlanetDataToAsset()
+        {
+            if (BodyData == null) return;
+
+            if (EditorUtility.IsPersistent(BodyData))
+            {
+                EditorUtility.SetDirty(BodyData);
+                AssetDatabase.SaveAssets();
+                return;
+            }
+
+            string path = EditorUtility.SaveFilePanelInProject(
+                "Save Planet Data",
+                $"{gameObject.name}",
+                "asset",
+                "Save procedural planet data"
+            );
+
+            if (string.IsNullOrEmpty(path)) return;
+
+            AssetDatabase.CreateAsset(BodyData, path);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            Debug.Log($"<color=cyan>Saved Planet Data:</color> {path}");
+        }
+#endif
     }
 }

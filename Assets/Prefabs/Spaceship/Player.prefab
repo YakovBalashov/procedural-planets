@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1891438339132072879}
+  - component: {fileID: 1302052156508529300}
+  - component: {fileID: 6672577040670389489}
+  - component: {fileID: 7401323694097079747}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -42,6 +45,61 @@ Transform:
   - {fileID: 146100378000388494}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1302052156508529300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7687471758654040645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49406ae3c1a04a54cbad7ae4322f6dd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.OrbitalMovement
+  radiusX: 100
+  radiusZ: 100
+  speedInDegreesPerSecond: 1
+  rotation: {x: 0, y: 0, z: 0}
+  segmentNumber: 100
+  color: {r: 0, g: 1, b: 1, a: 1}
+--- !u!114 &6672577040670389489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7687471758654040645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14e34fddfe4e88488f053d2fd9e04a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.OrbitController
+  changeSpeedAction: {fileID: -7114516232753091758, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  changeRotationAction: {fileID: 8604578503492570285, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  changeRadiusAction: {fileID: 864151734770856386, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  speedChangeRate: 10
+  rotationChangeRate: 45
+  radiusChangeRate: 10
+--- !u!114 &7401323694097079747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7687471758654040645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbdb383b1eb7aca4eac661c6110c55f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.PlayerMovement
+  orbitToBodyRadiusRatio: 1.5
+  velocity: 10
+  trajectoryColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  destinationColor: {r: 1, g: 0.6470588, b: 0, a: 1}
+  destinationGizmoRadius: 0.5
+  systemGenerator: {fileID: 0}
+  systemMap: {fileID: 0}
 --- !u!1001 &505643846148634144
 PrefabInstance:
   m_ObjectHideFlags: 0

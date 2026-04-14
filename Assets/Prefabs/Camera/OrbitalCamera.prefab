@@ -93,8 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineOrbitalFollow
   TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
-    BindingMode: 0
-    PositionDamping: {x: 1, y: 1, z: 1}
+    BindingMode: 4
+    PositionDamping: {x: 0, y: 0, z: 0}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
@@ -135,7 +135,7 @@ MonoBehaviour:
   RadialAxis:
     Value: 1
     Center: 1
-    Range: {x: 0.8, y: 10}
+    Range: {x: 0.8, y: 20}
     Wrap: 0
     Recentering:
       Enabled: 0

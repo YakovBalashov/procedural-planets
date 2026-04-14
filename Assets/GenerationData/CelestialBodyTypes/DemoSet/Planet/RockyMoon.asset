@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10ce9eeec69d71a409568ac2a690f620, type: 3}
   m_Name: RockyMoon
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.PlanetType
-  radiusRange: {x: 7, y: 12}
+  radiusRange: {x: 70, y: 120}
   cpuNoiseSettings: []
   gpuNoiseSettings:
   - <Enabled>k__BackingField: 1
@@ -31,7 +31,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 959db72f502e9084993ff4a1c7c3afd2, type: 2}
     - {fileID: 11400000, guid: beab46154095ae247a613aaaf67f7862, type: 2}
     - {fileID: 11400000, guid: 8eefb02a83e6d0f44a8e3ec3591a0c75, type: 2}
-    <OrbitRadiusRange>k__BackingField: {x: 0, y: 1500}
+    <OrbitRadiusRange>k__BackingField: {x: 0, y: 15000}
     <OrbitRatioRange>k__BackingField: {x: 0.99, y: 1}
     <OrbitInclinationRange>k__BackingField: {x: -3, y: 3}
   <PlanetOrbitType>k__BackingField:
@@ -58,3 +58,7 @@ MonoBehaviour:
   - {r: 0.4811321, g: 0.34395394, b: 0, a: 0}
   - {r: 0.3490566, g: 0.2933034, b: 0.15312387, a: 0}
   - {r: 0.33962262, g: 0.20584211, b: 0.20345317, a: 0}
+  <PossibleNormalMaps>k__BackingField:
+  - {fileID: 2800000, guid: 136d97f37cf4aa447b1581e68ef76784, type: 3}
+  <NormalMapTileRange>k__BackingField: {x: 2.5, y: 3.5}
+  <NormalMapBlendRange>k__BackingField: {x: 1, y: 1}

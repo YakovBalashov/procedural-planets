@@ -90,6 +90,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &185146552934206992
 MonoBehaviour:
@@ -103,14 +104,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1bc84d54900c34ba70f3f0af3af2a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Generation.PlanetGenerator
-  subdivisionLevel: 6
+  subdivisionLevel: 3
   <BodyData>k__BackingField: {fileID: 0}
   <BodyType>k__BackingField: {fileID: 0}
   useComputeShader: 1
-  useUnityNormals: 0
+  useUnityNormals: 1
   displacementShader: {fileID: 7200000, guid: baa519b85dc8d5b4aa725b9eaa28ed1d, type: 3}
   normalSampleDistance: 0.01
-  planetMaterial: {fileID: 2100000, guid: 0f21dc7456391a1429d965a81bd5733a, type: 2}
+  planetShader: {fileID: -6465566751694194690, guid: 37530056bb4d5024fb1b6bfa4495384a, type: 3}
 --- !u!114 &4258944856013886645
 MonoBehaviour:
   m_ObjectHideFlags: 0

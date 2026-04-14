@@ -53,6 +53,12 @@ namespace ProceduralPlanets.Generation
             BodyType = newBodyType;
             GenerateBodyData();
         }
+        
+        public void SetBodyData(TData newBodyData)
+        {
+            BodyData = newBodyData;
+            UpdateSurface();
+        }
 
         protected virtual void Initialize()
         {

@@ -26,6 +26,8 @@ namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
             NormalMap = normalMap;
             NormalMapTile = normalMapTile;
             NormalMapBlend = normalMapBlend;
+            RingParameters = new RingParameters();
+            AtmosphereParameters = new AtmosphereParameters();
         }
     }
 }

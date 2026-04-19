@@ -14,6 +14,7 @@ namespace ProceduralPlanets.Generation
         SteepnessRange = 1 << 3,
         Poles = 1 << 4,
         Stripes = 1 << 5,
+        Emission = 1 << 6,
     }
 
     [System.Serializable]
@@ -30,6 +31,7 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private Vector3 poleDirection;
         [SerializeField] private Vector3 stripesAxis;
         [SerializeField] private float stripesScale;
+        [SerializeField] private float emissionIntensity;
 
         public BiomeParameters(Color color, FnlParameters mainNoise, float maskThreshold, float blendFactor)
         {
@@ -58,6 +60,7 @@ namespace ProceduralPlanets.Generation
                 PoleDirection = poleDirection,
                 StripesAxis = stripesAxis,
                 StripesScale = stripesScale,
+                EmissionIntensity = emissionIntensity
             };
         }
     }
@@ -79,5 +82,6 @@ namespace ProceduralPlanets.Generation
         public Vector3 PoleDirection;
         public Vector3 StripesAxis;
         public float StripesScale;
+        public float EmissionIntensity;
     }
 }

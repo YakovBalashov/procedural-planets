@@ -9,6 +9,7 @@
 #define FEATURE_STEEPNESS (1 << 3)
 #define FEATURE_POLE_ANGLE (1 << 4)
 #define FEATURE_STRIPES (1 << 5)
+#define FEATURE_EMISSION (1 << 6)
 
 static const float MIN_BIOME_BLEND = 0.001;
 
@@ -32,6 +33,7 @@ struct BiomeParameters
     float3 poleDirection;
     float3 stripesAxis;
     float stripesScale;
+    float emissionIntensity;
 };
 
 StructuredBuffer<BiomeParameters> _Biomes;
@@ -142,13 +144,17 @@ float GetBiomeBlend(float3 position, float3 normal, BiomeParameters biome)
     return min(baseBlend, maxBlend);
 }
 
-void CalculateColor_float(float3 position, float3 normal, out float3 color)
+void CalculateColor_float(float3 position, float3 normal, out float3 color, out float emissionIntensity)
 {
     color = _BaseColor.rgb;
+    emissionIntensity = 0.0;
 
     for (int i = 0; i < _BiomeCount; ++i)
     {
         float blend = GetBiomeBlend(position, normal, _Biomes[i]);
         color = lerp(color, _Biomes[i].color, blend);
+
+        float biomeEmission = (_Biomes[i].featureMask & FEATURE_EMISSION) != 0 ? _Biomes[i].emissionIntensity : 0.0;
+        emissionIntensity = lerp(emissionIntensity, biomeEmission, blend);
     }
 }

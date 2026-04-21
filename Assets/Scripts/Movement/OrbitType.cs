@@ -4,7 +4,7 @@ using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.ScriptableObjects.Generation;
 using UnityEngine;
 
-namespace ProceduralPlanets
+namespace ProceduralPlanets.Movement
 {
     [Serializable]
     public struct OrbitType<TType, TData> 

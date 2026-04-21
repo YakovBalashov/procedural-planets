@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ProceduralPlanets.Generation;
+using ProceduralPlanets.Movement;
 using ProceduralPlanets.Noise;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using UnityEngine;
@@ -13,7 +14,6 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         [field: SerializeField] public OrbitType<StarType, StarData> StarOrbitType { get; private set; }
         [field: SerializeField] public OrbitType<PlanetType, PlanetData> PlanetOrbitType { get; private set; }
         [field: SerializeField] public List<BiomeType> BiomeTypes { get; private set; }
-        [field: SerializeField] public Vector2 MoonNumberRange { get; private set; }
         [field: SerializeField] public CraterGenerationSettings CraterGenerationSettings { get; private set; }
         [field: SerializeField] public List<Color> PossibleBaseColors { get; private set; }
         [field: SerializeField] public List<Texture2D> PossibleNormalMaps { get; private set; }

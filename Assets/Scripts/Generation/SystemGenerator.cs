@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ProceduralPlanets.Extensions;
 using ProceduralPlanets.Movement;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.ScriptableObjects.Generation;
@@ -24,9 +25,9 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private float orbitalSpeedInDegreesPerSecond = 10f;
 
         [SerializeField] private SystemMap systemMap;
-        [SerializeField] private List<PlanetData> planets;
 
         private const string PrimeStarName = "Polaris";
+        private const int FirstCapitalLetterASCII = 65;
 
         private readonly List<GameObject> _celestialBodies = new();
 
@@ -38,12 +39,11 @@ namespace ProceduralPlanets.Generation
 
         private void Start()
         {
-            GenerateSystem();
+            // GenerateSystem();
         }
 
         public void GenerateSystem()
         {
-            // if (Application.isPlaying) return;
             var random = new Random(seed);
 
             ClearExistingSystem();
@@ -55,20 +55,45 @@ namespace ProceduralPlanets.Generation
 
             GameObject primeStar = GenerateCelestialBody(starGenerationParameters);
             _celestialBodies.Add(primeStar);
-
-            if (planets != null && planets.Count > 0)
-            {
-                GeneratePlanetsFromList(primeStar, random);
-            }
-            else
-            {
-                GeneratePlanets(primeStar, random);
-            }
+            
+            GeneratePlanets(primeStarType, primeStar, random);
+            GenerateMoons(random);
 
             if (!Application.isPlaying) return;
             systemMap.Generate(_celestialBodies.Select(body =>
                 body.GetComponent<CelestialBodyGeneratorBase>()
                     .GetBodyData()).ToList());
+        }
+
+        private void GenerateMoons(Random random)
+        {
+            var planets = _celestialBodies.Where(body => body.GetComponent<PlanetGenerator>() != null).ToList();
+            
+            foreach (var planet in planets)
+            {
+                var planetGenerator = planet.GetComponent<PlanetGenerator>();
+                var planetType = planetGenerator.BodyType;
+
+                var moonSatelliteParameters = new SatelliteGenerationParameters<PlanetType, PlanetData>(
+                    planetType,
+                    planet.transform,
+                    type => type.PlanetOrbitType,
+                    index => $"{planet.name} {(char)(FirstCapitalLetterASCII + index)}"
+                );
+
+                GenerateSatellites(moonSatelliteParameters, random);
+            }
+        }
+
+        private void GeneratePlanets(StarType primeStarType, GameObject primeStar, Random random)
+        {
+            var planetSatelliteParameters = new SatelliteGenerationParameters<StarType, StarData>(
+                primeStarType,
+                primeStar.transform,
+                type => type.StarOrbitType,
+                index => $"{PrimeStarName} {index + 1}"
+            );
+            _celestialBodies.AddRange(GenerateSatellites(planetSatelliteParameters, random));
         }
 
         private void ClearExistingSystem()
@@ -81,91 +106,76 @@ namespace ProceduralPlanets.Generation
             }
         }
 
-        private void GeneratePlanets(GameObject primeStar, Random random)
+        private List<GameObject> GenerateSatellites<TParent, TParentData>(
+            SatelliteGenerationParameters<TParent, TParentData> parameters, 
+            Random random)
+            where TParent : CelestialBodyType<TParentData>
+            where TParentData : CelestialBodyData
         {
-            StarType primeStarType = primeStar.GetComponent<StarGenerator>().BodyType;
-
             List<PlanetType> availablePlanetTypes =
-                GetPlanetsCompatibleWithStar(generationParameters.PlanetTypes.ToList(), primeStarType);
+                GetPlanetsCompatibleWithParent(generationParameters.PlanetTypes.ToList(), parameters.ParentType,
+                    parameters.OrbitSelector);
 
-            var maxPlanetCount = (int)primeStarType.PlanetNumberRange.y;
-            var firstPlanetOrbitOffset = (float)(primeStarType.DistanceBetweenPlanetsRange.x * random.NextDouble());
-            float currentOrbitRadius = primeStarType.PlanetOrbitRadiusRange.x + firstPlanetOrbitOffset;
+            SatelliteParameters satelliteParameters = parameters.ParentType.satelliteParameters;
 
-            for (var i = 0; i < maxPlanetCount; i++)
+            var maxSatelliteCount = (int)satelliteParameters.NumberRange.y;
+            var firstSatelliteOrbitOffset =
+                random.Range(new Vector2(0, satelliteParameters.DistanceBetweenSatellitesRange.x));
+            float currentOrbitRadius = satelliteParameters.OrbitRadiusRange.x + firstSatelliteOrbitOffset;
+
+            List<GameObject> satellites = new List<GameObject>();
+
+            var currentPlanetIndex = 0;
+            while (currentOrbitRadius < satelliteParameters.OrbitRadiusRange.y && currentPlanetIndex < maxSatelliteCount)
             {
-                if (currentOrbitRadius > primeStarType.PlanetOrbitRadiusRange.y) break;
-
+                var offset = random.Range(satelliteParameters.DistanceBetweenSatellitesRange);
+                
                 List<PlanetType> planetsWithCurrentOrbit =
-                    GetPlanetsCompatibleWithOrbit(availablePlanetTypes, currentOrbitRadius);
-                if (planetsWithCurrentOrbit.Count == 0) continue;
+                    GetPlanetsCompatibleWithOrbit(availablePlanetTypes, currentOrbitRadius, parameters.OrbitSelector);
 
-                PlanetType planetType = planetsWithCurrentOrbit[random.Next(planetsWithCurrentOrbit.Count)];
+                if (planetsWithCurrentOrbit.Count == 0)
+                {
+                    currentOrbitRadius += offset;
+                    continue;
+                }
 
-                var planetGenerationParameters =
-                    new CelestialBodyGenerationParameters<PlanetData, PlanetType>(planetPrefab, planetType,
-                        seed + i + 1, primeStar.transform, $"{PrimeStarName} {i + 1}");
+                PlanetType satelliteType = planetsWithCurrentOrbit[random.Next(planetsWithCurrentOrbit.Count)];
 
-                GameObject planet = GenerateCelestialBody(planetGenerationParameters);
+                var satelliteGenerationParameters = new CelestialBodyGenerationParameters<PlanetData, PlanetType>(
+                    planetPrefab, satelliteType,
+                    seed + currentPlanetIndex + 1,
+                    parameters.ParentTransform,
+                    parameters.NameGenerator(currentPlanetIndex));
 
-                OrbitParameters planetOrbitParameters =
-                    GenerateOrbitParameters(currentOrbitRadius, planetType.StarOrbitType, random);
+                GameObject satellite = GenerateCelestialBody(satelliteGenerationParameters);
 
-                var planetOrbit = planet.GetComponent<OrbitalMovement>();
-                planetOrbit.SetParameters(planetOrbitParameters);
-                planetOrbit.MoveToStartingPosition(random);
+                OrbitParameters satelliteOrbitParameters =
+                    GenerateOrbitParameters(currentOrbitRadius, parameters.OrbitSelector(satelliteType), random);
 
-                var offset = (float)(primeStarType.DistanceBetweenPlanetsRange.x + random.NextDouble() *
-                    (primeStarType.DistanceBetweenPlanetsRange.y - primeStarType.DistanceBetweenPlanetsRange.x));
+                var satelliteOrbit = satellite.GetComponent<OrbitalMovement>();
+                satelliteOrbit.SetParameters(satelliteOrbitParameters);
+                satelliteOrbit.MoveToStartingPosition(random);
+                
                 currentOrbitRadius += offset;
 
-                _celestialBodies.Add(planet);
+                satellites.Add(satellite);
+                currentPlanetIndex += 1;
             }
+
+            return satellites;
         }
 
-        private void GeneratePlanetsFromList(GameObject primeStar, Random random)
-        {
-            StarType primeStarType = primeStar.GetComponent<StarGenerator>().BodyType;
-            var firstPlanetOrbitOffset = (float)(primeStarType.DistanceBetweenPlanetsRange.x * random.NextDouble());
-            float currentOrbitRadius = primeStarType.PlanetOrbitRadiusRange.x + firstPlanetOrbitOffset;
-            
-            for (var i = 0; i < planets.Count; i++)
-            {
-                if (currentOrbitRadius > primeStarType.PlanetOrbitRadiusRange.y) break;
-
-                PlanetData planetData = planets[i];
-                
-                GameObject planet = InstantiatePlanetFromData(planetData, primeStar.transform, $"{PrimeStarName} {i + 1}");
-
-                var orbitType = new OrbitType<StarType, StarData>(new Vector2(currentOrbitRadius, currentOrbitRadius),
-                    Vector2.one,
-                    Vector2.zero);
-                
-                OrbitParameters planetOrbitParameters =
-                    GenerateOrbitParameters(currentOrbitRadius, orbitType, random);
-                
-                var planetOrbit = planet.GetComponent<OrbitalMovement>();
-                planetOrbit.SetParameters(planetOrbitParameters);
-                planetOrbit.MoveToStartingPosition(random);
-
-                var offset = (float)(primeStarType.DistanceBetweenPlanetsRange.x + random.NextDouble() *
-                    (primeStarType.DistanceBetweenPlanetsRange.y - primeStarType.DistanceBetweenPlanetsRange.x));
-                currentOrbitRadius += offset;
-
-                _celestialBodies.Add(planet);
-            }
-        }
-
-        private GameObject InstantiatePlanetFromData(PlanetData planetData, Transform primeStarTransform, string planetName)
+        private GameObject InstantiatePlanetFromData(PlanetData planetData, Transform primeStarTransform,
+            string planetName)
         {
             GameObject planet = Instantiate(planetPrefab, primeStarTransform);
-            
+
             Instantiate(ringPrefab, planet.transform);
             Instantiate(atmospherePrefab, planet.transform);
-            
+
             var planetGenerator = planet.GetComponent<PlanetGenerator>();
             planetGenerator.SetBodyData(planetData);
-            
+
             planet.name = planetName;
             return planet;
         }
@@ -175,7 +185,7 @@ namespace ProceduralPlanets.Generation
             where TType : CelestialBodyType<TData>
         {
             GameObject celestialBody;
-            
+
             if (Application.isPlaying)
             {
                 celestialBody = Instantiate(bodyParameters.Prefab, bodyParameters.Parent);
@@ -213,18 +223,27 @@ namespace ProceduralPlanets.Generation
             return orbitParameters;
         }
 
-        private List<PlanetType> GetPlanetsCompatibleWithOrbit(List<PlanetType> planetTypes, float orbitRadius)
+        private List<PlanetType> GetPlanetsCompatibleWithOrbit<TParent, TParentData>(
+            List<PlanetType> planetTypes,
+            float orbitRadius,
+            Func<PlanetType, OrbitType<TParent, TParentData>> orbitSelector)
+            where TParent : CelestialBodyType<TParentData>
+            where TParentData : CelestialBodyData
         {
             return planetTypes.Where(planetType =>
-                    planetType.StarOrbitType.OrbitRadiusRange.x <= orbitRadius &&
-                    planetType.StarOrbitType.OrbitRadiusRange.y >= orbitRadius)
-                .ToList();
+                orbitSelector(planetType).OrbitRadiusRange.x <= orbitRadius &&
+                orbitSelector(planetType).OrbitRadiusRange.y >= orbitRadius).ToList();
         }
 
-        private List<PlanetType> GetPlanetsCompatibleWithStar(List<PlanetType> planetTypes,
-            CelestialBodyType<StarData> primeStarType)
+        private List<PlanetType> GetPlanetsCompatibleWithParent<TParent, TParentData>(
+            List<PlanetType> planetTypes,
+            TParent parentType,
+            Func<PlanetType, OrbitType<TParent, TParentData>> orbitSelector)
+            where TParent : CelestialBodyType<TParentData>
+            where TParentData : CelestialBodyData
         {
-            return planetTypes.Where(planetType => planetType.StarOrbitType.ParentTypes.Contains(primeStarType))
+            return planetTypes
+                .Where(planetType => orbitSelector(planetType).ParentTypes.Contains(parentType))
                 .ToList();
         }
     }

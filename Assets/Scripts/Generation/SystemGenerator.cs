@@ -124,7 +124,7 @@ namespace ProceduralPlanets.Generation
                 GetPlanetsCompatibleWithParent(generationParameters.PlanetTypes.ToList(), parameters.ParentType,
                     parameters.OrbitSelector);
 
-            SatelliteParameters satelliteParameters = parameters.ParentType.satelliteParameters;
+            SatelliteParameters satelliteParameters = parameters.ParentType.SatelliteParameters;
 
             var maxSatelliteCount = (int)satelliteParameters.NumberRange.y;
             var firstSatelliteOrbitOffset =

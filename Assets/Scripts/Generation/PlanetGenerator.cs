@@ -19,14 +19,10 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private bool useUnityNormals = true;
         [SerializeField] private ComputeShader displacementShader;
         [SerializeField] private float normalSampleDistance = 0.01f;
-        [SerializeField] private Shader planetShader;
 
         [SerializeField] private GameObject atmospherePrefab;
         [SerializeField] private GameObject ringsPrefab;
-
-        private Material _materialInstance;
-        private ComputeBuffer _biomeBuffer;
-
+        
         private PlanetaryRingsGenerator _ringsGenerator;
         private AtmosphereGenerator _atmosphereGenerator;
 
@@ -51,47 +47,10 @@ namespace ProceduralPlanets.Generation
         {
             base.UpdateSurface();
             
-            UpdateMaterial();
-
             if (BodyData.AtmosphereParameters.Enabled)
                 _atmosphereGenerator.UpdateAtmosphere(BodyData.AtmosphereParameters, BodyData.Radius);
             
             if (BodyData.RingParameters.Enabled) _ringsGenerator.UpdateRings(BodyData.RingParameters);
-        }
-        
-        private void UpdateMaterial()
-        {
-            if (!_materialInstance)
-            {
-                _materialInstance = new Material(planetShader);
-                _meshRenderer.sharedMaterial = _materialInstance;
-            }
-
-            UpdateVertexRange();
-
-            _materialInstance.SetVector(ShaderParametersIDs.BaseColor, BodyData.BaseColor);
-            _materialInstance.SetInt(ShaderParametersIDs.BiomeCount, BodyData.Biomes.Count);
-            _materialInstance.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
-
-            _biomeBuffer?.Release();
-
-            int biomeStructSize = Marshal.SizeOf<BiomeParametersStruct>();
-            _biomeBuffer = new ComputeBuffer(Mathf.Max(1, BodyData.Biomes.Count), biomeStructSize);
-
-            if (BodyData.Biomes.Count > 0)
-            {
-                var biomeStructs = BodyData.Biomes.Select(b => b.ToStruct()).ToArray();
-                _biomeBuffer.SetData(biomeStructs);
-            }
-
-            if (BodyData.NormalMap)
-            {
-                _materialInstance.SetTexture(ShaderParametersIDs.NormalMap, BodyData.NormalMap);
-                _materialInstance.SetFloat(ShaderParametersIDs.NormalMapTile, BodyData.NormalMapTile);
-                _materialInstance.SetFloat(ShaderParametersIDs.NormalMapBlend, BodyData.NormalMapBlend);
-            }
-
-            _materialInstance.SetBuffer(ShaderParametersIDs.BiomeParameters, _biomeBuffer);
         }
 
         protected override void GenerateMesh()
@@ -104,26 +63,6 @@ namespace ProceduralPlanets.Generation
             mesh.RecalculateBounds();
 
             MeshFilter.sharedMesh = mesh;
-        }
-
-        private void UpdateVertexRange()
-        {
-            var vertices = new List<Vector3>();
-            MeshFilter.sharedMesh.GetVertices(vertices);
-
-            if (vertices.Count == 0) return;
-
-            var minSquare = float.MaxValue;
-            var maxSquare = float.MinValue;
-
-            foreach (var squareMagnitude in vertices.Select(vertex => vertex.sqrMagnitude))
-            {
-                if (squareMagnitude < minSquare) minSquare = squareMagnitude;
-                if (squareMagnitude > maxSquare) maxSquare = squareMagnitude;
-            }
-
-            _materialInstance.SetFloat(ShaderParametersIDs.LowestVertexHeight, Mathf.Sqrt(minSquare));
-            _materialInstance.SetFloat(ShaderParametersIDs.HighestVertexHeight, Mathf.Sqrt(maxSquare));
         }
 
         private Mesh GenerateMeshOnCPU(Mesh mesh)
@@ -201,16 +140,6 @@ namespace ProceduralPlanets.Generation
             else mesh.normals = normals;
 
             return mesh;
-        }
-
-        private void OnDestroy()
-        {
-            _biomeBuffer?.Release();
-
-            if (!_materialInstance) return;
-
-            if (Application.isPlaying) Destroy(_materialInstance);
-            else DestroyImmediate(_materialInstance);
         }
 
 #if UNITY_EDITOR

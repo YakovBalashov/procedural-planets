@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using ProceduralPlanets.Extensions;
 using ProceduralPlanets.Generation;
 using ProceduralPlanets.Noise;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
@@ -13,7 +15,12 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         [SerializeField] protected Vector2 radiusRange;
         [SerializeField] protected List<NoiseSettings> cpuNoiseSettings;
         [SerializeField] protected List<NoiseSettingsGPU> gpuNoiseSettings;
-        [field: SerializeField] public SatelliteParameters satelliteParameters { get; private set; }
+        [field: SerializeField] public List<Color> PossibleBaseColors { get; private set; }
+        [field: SerializeField] public List<Texture2D> PossibleNormalMaps { get; private set; }
+        [field: SerializeField] public Vector2 NormalMapTileRange { get; private set; }
+        [field: SerializeField] public Vector2 NormalMapBlendRange { get; private set; }
+        [field: SerializeField] public List<BiomeCandidate> BiomeCandidates { get; private set; }
+        [field: SerializeField] public SatelliteParameters SatelliteParameters { get; private set; }
         private const float OffsetMultiplayer = 1000f;
 
         public virtual T CreateInstance(int seed)
@@ -26,7 +33,17 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             var copiedCPUNoiseSettings = DeepCopyNoiseSettings(cpuNoiseSettings, random);
             var copiedGPUNoiseSettings = DeepCopyNoiseSettings(gpuNoiseSettings, random);
 
-            instance.Initialize(radius, copiedCPUNoiseSettings, copiedGPUNoiseSettings);
+            Dictionary<int, List<BiomeCandidate>> biomeGroups = GetBiomeGroups(BiomeCandidates);
+
+            List<BiomeParameters> biomes = GenerateBiomes(biomeGroups, random);
+
+            var baseColor = PossibleBaseColors[random.Range(0, PossibleBaseColors.Count)];
+
+            var normalMap = PossibleNormalMaps[random.Range(0, PossibleNormalMaps.Count)];
+            var normalMapTile = random.Range(NormalMapTileRange.x, NormalMapTileRange.y);
+            var normalMapBlend = random.Range(NormalMapBlendRange.x, NormalMapBlendRange.y);
+
+            instance.Initialize(radius, copiedCPUNoiseSettings, copiedGPUNoiseSettings, biomes, baseColor, normalMap, normalMapTile, normalMapBlend);
             return instance;
         }
 
@@ -46,6 +63,53 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             }
 
             return copiedNoiseSettingsList;
+        }
+
+        private List<BiomeParameters> GenerateBiomes(Dictionary<int, List<BiomeCandidate>> biomeGroups,
+            System.Random random)
+        {
+            var biomes = new List<BiomeParameters>();
+            if (biomeGroups.ContainsKey(0))
+            {
+                biomes = (from biomeCandidate in biomeGroups[0]
+                    where random.NextDouble() < biomeCandidate.Probability
+                    select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue))).ToList();
+            }
+
+            biomes.AddRange(from biomeGroup in biomeGroups
+                where biomeGroup.Key != 0
+                select GetBiomeFromGroup(biomeGroup.Value, random)
+                into biome
+                where biome != null
+                select biome);
+
+            return biomes;
+        }
+
+        private BiomeParameters GetBiomeFromGroup(List<BiomeCandidate> biomeGroup, System.Random random)
+        {
+            var biomes = (from biomeCandidate in biomeGroup
+                where random.NextDouble() < biomeCandidate.Probability
+                select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue))).ToList();
+
+            return biomes.Count == 0 ? null : biomes[random.Range(0, biomes.Count)];
+        }
+
+        private static Dictionary<int, List<BiomeCandidate>> GetBiomeGroups(List<BiomeCandidate> biomeCandidates)
+        {
+            var biomeGroups = new Dictionary<int, List<BiomeCandidate>>();
+
+            foreach (var biomeCandidate in biomeCandidates)
+            {
+                if (!biomeGroups.ContainsKey(biomeCandidate.ExclusivityGroup))
+                {
+                    biomeGroups[biomeCandidate.ExclusivityGroup] = new List<BiomeCandidate>();
+                }
+
+                biomeGroups[biomeCandidate.ExclusivityGroup].Add(biomeCandidate);
+            }
+
+            return biomeGroups;
         }
     }
 }

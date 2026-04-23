@@ -108,6 +108,7 @@ MonoBehaviour:
   subdivisionLevel: 5
   <BodyData>k__BackingField: {fileID: 0}
   <BodyType>k__BackingField: {fileID: 0}
+  planetShader: {fileID: -6465566751694194690, guid: 37530056bb4d5024fb1b6bfa4495384a, type: 3}
 --- !u!108 &2411807560672345087
 Light:
   m_ObjectHideFlags: 0

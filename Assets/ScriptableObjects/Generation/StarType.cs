@@ -10,13 +10,5 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
     {
         [field: SerializeField] public List<StarType> CompatibleStarTypes { get; private set; }
         [field: SerializeField] public Vector2 StarNumberRange { get; private set; }
-        [field: SerializeField] public Material StarMaterial { get; private set; }
-
-        public override StarData CreateInstance(int seed)
-        {
-            StarData instance = base.CreateInstance(seed);
-            instance.SetMaterial(StarMaterial);
-            return instance;
-        }
     }
 }

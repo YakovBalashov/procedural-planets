@@ -29,8 +29,14 @@ namespace ProceduralPlanets.Generation
 
         private const string PrimeStarName = "Polaris";
         private const int FirstCapitalLetterASCII = 65;
+        private const float MaxOffset = 10000f;
 
         private readonly List<GameObject> _celestialBodies = new();
+
+        public static Vector3 GetOffset(Random random)
+        {
+            return new Vector3(random.NextFloat(), random.NextFloat(), random.NextFloat()) * random.Range(0, MaxOffset);
+        }
 
         public CelestialBodyGeneratorBase GetBodyByIndex(Vector2 index)
         {

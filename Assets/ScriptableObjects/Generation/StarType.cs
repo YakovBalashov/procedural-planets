@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ProceduralPlanets.ScriptableObjects.Generation
 {
-    [CreateAssetMenu(fileName = "StarType", menuName = "Planetary Systems/Celestial Body Types/Star Type")]
+    [CreateAssetMenu(fileName = "StarType", menuName = "Planetary Systems/Generation Types/Star Type")]
     public class StarType : CelestialBodyType<StarData>
     {
         [field: SerializeField] public List<StarType> CompatibleStarTypes { get; private set; }

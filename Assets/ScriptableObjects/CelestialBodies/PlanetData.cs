@@ -18,7 +18,8 @@ namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
         [field: SerializeField] public AtmosphereParameters AtmosphereParameters { get; private set; }
 
         public void InitializePlanet(List<BiomeParameters> biomes, CraterGenerationSettings craterGenerationSettings,
-            Color baseColor, Texture2D normalMap, float normalMapTile, float normalMapBlend)
+            Color baseColor, Texture2D normalMap, float normalMapTile, float normalMapBlend,
+            RingParameters ringParameters, AtmosphereParameters atmosphereParameters)
         {
             Biomes = biomes;
             CraterGenerationSettings = craterGenerationSettings;
@@ -26,8 +27,8 @@ namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
             NormalMap = normalMap;
             NormalMapTile = normalMapTile;
             NormalMapBlend = normalMapBlend;
-            RingParameters = new RingParameters();
-            AtmosphereParameters = new AtmosphereParameters();
+            RingParameters = ringParameters;
+            AtmosphereParameters = atmosphereParameters;
         }
     }
 }

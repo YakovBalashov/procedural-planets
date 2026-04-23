@@ -12,5 +12,21 @@ namespace ProceduralPlanets.Generation
         [field: SerializeField] public FnlParameters NoiseParameters { get; private set; }
         [field: SerializeField] public Vector2 NoiseRange { get; private set; } = new Vector2(-1f, 1f);
         [field: SerializeField] public float MinAlpha { get; private set; } = 0.1f;
+        
+        public AtmosphereParameters()
+        {
+            Enabled = false;
+        }
+
+        public AtmosphereParameters(bool enabled, Color color, float radiusMultiplier, FnlParameters noiseParameters,
+            Vector2 noiseRange, float minAlpha)
+        {
+            Enabled = enabled;
+            Color = color;
+            RadiusMultiplier = radiusMultiplier;
+            NoiseParameters = noiseParameters;
+            NoiseRange = noiseRange;
+            MinAlpha = minAlpha;
+        }
     }
 }

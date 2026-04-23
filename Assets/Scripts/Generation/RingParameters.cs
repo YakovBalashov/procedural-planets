@@ -12,5 +12,20 @@ namespace ProceduralPlanets.Generation
         [field: SerializeField] public int SegmentCount { get; private set; } = 100;
         [field: SerializeField] public FnlParameters NoiseParameters { get; private set; }
         [field: SerializeField] public Color RingColor { get; private set; }
+
+        public RingParameters(bool enabled, float innerRadius, float outerRadius, int segmentCount, FnlParameters noiseParameters, Color ringColor)
+        {
+            Enabled = enabled;
+            InnerRadius = innerRadius;
+            OuterRadius = outerRadius;
+            SegmentCount = segmentCount;
+            NoiseParameters = noiseParameters;
+            RingColor = ringColor;
+        }
+
+        public RingParameters()
+        {
+            Enabled = false;
+        }
     }
 }

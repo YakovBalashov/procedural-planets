@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using ProceduralPlanets.Generation;
@@ -6,11 +5,11 @@ using ProceduralPlanets.Movement;
 using ProceduralPlanets.Noise;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using ProceduralPlanets.Extensions;
 
 namespace ProceduralPlanets.ScriptableObjects.Generation
 {
-    [CreateAssetMenu(fileName = "PlanetType", menuName = "Planetary Systems/Celestial Body Types/Planet Type")]
+    [CreateAssetMenu(fileName = "PlanetType", menuName = "Planetary Systems/Generation Types/Planet Type")]
     public class PlanetType : CelestialBodyType<PlanetData>
     {
         [field: SerializeField] public OrbitType<StarType, StarData> StarOrbitType { get; private set; }
@@ -21,6 +20,8 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         [field: SerializeField] public List<Texture2D> PossibleNormalMaps { get; private set; }
         [field: SerializeField] public Vector2 NormalMapTileRange { get; private set; }
         [field: SerializeField] public Vector2 NormalMapBlendRange { get; private set; }
+        [field: SerializeField] public RingType Rings { get; private set; }
+        [field: SerializeField] public AtmosphereType Atmosphere { get; private set; }
 
         public override PlanetData CreateInstance(int seed)
         {
@@ -31,14 +32,17 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
 
             List<BiomeParameters> biomes = GenerateBiomes(biomeGroups, random);
             
-            var baseColor = PossibleBaseColors[Random.Range(0, PossibleBaseColors.Count)];
+            var baseColor = PossibleBaseColors[random.Range(0, PossibleBaseColors.Count)];
 
-            var normalMap = PossibleNormalMaps[Random.Range(0, PossibleNormalMaps.Count)];
-            var normalMapTile = Random.Range(NormalMapTileRange.x, NormalMapTileRange.y);
-            var normalMapBlend = Random.Range(NormalMapBlendRange.x, NormalMapBlendRange.y);
+            var normalMap = PossibleNormalMaps[random.Range(0, PossibleNormalMaps.Count)];
+            var normalMapTile = random.Range(NormalMapTileRange.x, NormalMapTileRange.y);
+            var normalMapBlend = random.Range(NormalMapBlendRange.x, NormalMapBlendRange.y);
+            
+            var ringParameters = Rings ? Rings.GenerateRingParameters(random.Next(0, int.MaxValue)) : new RingParameters();
+            var atmosphereParameters = Atmosphere ? Atmosphere.GenerateAtmosphereParameters(random.Next(0, int.MaxValue)) : new AtmosphereParameters();
 
             instance.InitializePlanet(biomes, CraterGenerationSettings, baseColor, normalMap, normalMapTile,
-                normalMapBlend);
+                normalMapBlend, ringParameters, atmosphereParameters);
 
             return instance;
         }
@@ -70,7 +74,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
                 where random.NextDouble() < biomeCandidate.Probability
                 select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue))).ToList();
 
-            return biomes.Count == 0 ? null : biomes[Random.Range(0, biomes.Count)];
+            return biomes.Count == 0 ? null : biomes[random.Range(0, biomes.Count)];
         }
 
         private static Dictionary<int, List<BiomeCandidate>> GetBiomeGroups(List<BiomeCandidate> biomeCandidates)

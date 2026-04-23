@@ -6,7 +6,7 @@ using ProceduralPlanets.Extensions;
 
 namespace ProceduralPlanets.ScriptableObjects.Generation
 {
-    [CreateAssetMenu(fileName = "BiomeType", menuName = "Planetary Systems/Biome Type")]
+    [CreateAssetMenu(fileName = "BiomeType", menuName = "Planetary Systems/Generation Types/Biome Type")]
     public class BiomeType : ScriptableObject
     {
         [SerializeField] BiomeParameters biomeParameters;

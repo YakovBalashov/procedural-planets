@@ -27,14 +27,12 @@ namespace ProceduralPlanets.Generation
         
         public override void GenerateBodyData()
         {
-            BodyData = BodyType.CreateInstance(Random.Range(int.MinValue, int.MaxValue));
-            UpdateSurface();
+            GenerateBodyData(Random.Range(0, int.MaxValue));
         }
 
         public void GenerateBodyData(int seed)
         {
             BodyData = BodyType.CreateInstance(seed);
-            //TODO Generate Rings and Atmosphere
             UpdateSurface();
         }
 

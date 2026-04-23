@@ -20,35 +20,45 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private ComputeShader displacementShader;
         [SerializeField] private float normalSampleDistance = 0.01f;
         [SerializeField] private Shader planetShader;
-        
+
+        [SerializeField] private GameObject atmospherePrefab;
+        [SerializeField] private GameObject ringsPrefab;
+
         private Material _materialInstance;
         private ComputeBuffer _biomeBuffer;
-        
+
         private PlanetaryRingsGenerator _ringsGenerator;
         private AtmosphereGenerator _atmosphereGenerator;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            if (BodyData.AtmosphereParameters.Enabled && !_atmosphereGenerator)
+            {
+                _atmosphereGenerator = Instantiator.InstantiateGameObject(atmospherePrefab, transform)
+                    .GetComponent<AtmosphereGenerator>();
+            }
+
+            if (BodyData.RingParameters.Enabled && !_ringsGenerator)
+            {
+                _ringsGenerator = Instantiator.InstantiateGameObject(ringsPrefab, transform)
+                    .GetComponent<PlanetaryRingsGenerator>();
+            }
+        }
 
         public override void UpdateSurface()
         {
             base.UpdateSurface();
+            
             UpdateMaterial();
-            UpdateRings();
-            UpdateAtmosphere();
-        }
 
-        private void UpdateAtmosphere()
-        {
-            if (!BodyData.AtmosphereParameters.Enabled) return;
-            if (!_atmosphereGenerator) _atmosphereGenerator = GetComponentInChildren<AtmosphereGenerator>();
-            _atmosphereGenerator.UpdateAtmosphere(BodyData.AtmosphereParameters, BodyData.Radius);
+            if (BodyData.AtmosphereParameters.Enabled)
+                _atmosphereGenerator.UpdateAtmosphere(BodyData.AtmosphereParameters, BodyData.Radius);
+            
+            if (BodyData.RingParameters.Enabled) _ringsGenerator.UpdateRings(BodyData.RingParameters);
         }
-
-        private void UpdateRings()
-        {
-            if (!BodyData.RingParameters.Enabled) return; 
-            if (!_ringsGenerator) _ringsGenerator = GetComponentInChildren<PlanetaryRingsGenerator>();
-            _ringsGenerator.UpdateRings(BodyData.RingParameters);
-        }
-
+        
         private void UpdateMaterial()
         {
             if (!_materialInstance)
@@ -56,7 +66,7 @@ namespace ProceduralPlanets.Generation
                 _materialInstance = new Material(planetShader);
                 _meshRenderer.sharedMaterial = _materialInstance;
             }
-            
+
             UpdateVertexRange();
 
             _materialInstance.SetVector(ShaderParametersIDs.BaseColor, BodyData.BaseColor);
@@ -99,7 +109,7 @@ namespace ProceduralPlanets.Generation
         private void UpdateVertexRange()
         {
             var vertices = new List<Vector3>();
-            MeshFilter.sharedMesh.GetVertices(vertices); 
+            MeshFilter.sharedMesh.GetVertices(vertices);
 
             if (vertices.Count == 0) return;
 
@@ -111,7 +121,7 @@ namespace ProceduralPlanets.Generation
                 if (squareMagnitude < minSquare) minSquare = squareMagnitude;
                 if (squareMagnitude > maxSquare) maxSquare = squareMagnitude;
             }
-            
+
             _materialInstance.SetFloat(ShaderParametersIDs.LowestVertexHeight, Mathf.Sqrt(minSquare));
             _materialInstance.SetFloat(ShaderParametersIDs.HighestVertexHeight, Mathf.Sqrt(maxSquare));
         }
@@ -198,11 +208,11 @@ namespace ProceduralPlanets.Generation
             _biomeBuffer?.Release();
 
             if (!_materialInstance) return;
-            
+
             if (Application.isPlaying) Destroy(_materialInstance);
             else DestroyImmediate(_materialInstance);
         }
-        
+
 #if UNITY_EDITOR
         [ContextMenu("Save Planet Data to Asset")]
         public void SavePlanetDataToAsset()

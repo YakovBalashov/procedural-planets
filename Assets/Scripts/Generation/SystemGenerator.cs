@@ -17,6 +17,7 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private int seed;
         [SerializeField] private GenerationParameters generationParameters;
 
+        [SerializeField] private GameObject anchorPrefab;
         [SerializeField] private GameObject starPrefab;
         [SerializeField] private GameObject planetPrefab;
         [SerializeField] private GameObject ringPrefab;
@@ -67,11 +68,11 @@ namespace ProceduralPlanets.Generation
 
         private void GenerateMoons(Random random)
         {
-            var planets = _celestialBodies.Where(body => body.GetComponent<PlanetGenerator>() != null).ToList();
+            var planets = _celestialBodies.Where(body => body.GetComponentInChildren<PlanetGenerator>()).ToList();
             
             foreach (var planet in planets)
             {
-                var planetGenerator = planet.GetComponent<PlanetGenerator>();
+                var planetGenerator = planet.GetComponentInChildren<PlanetGenerator>();
                 var planetType = planetGenerator.BodyType;
 
                 var moonSatelliteParameters = new SatelliteGenerationParameters<PlanetType, PlanetData>(
@@ -101,6 +102,7 @@ namespace ProceduralPlanets.Generation
             if (Application.isPlaying) return;
             while (transform.childCount > 0)
             {
+                _celestialBodies.Clear();
                 Transform child = transform.GetChild(0);
                 DestroyImmediate(child.gameObject);
             }
@@ -140,21 +142,18 @@ namespace ProceduralPlanets.Generation
                 }
 
                 PlanetType satelliteType = planetsWithCurrentOrbit[random.Next(planetsWithCurrentOrbit.Count)];
-
+                
+                OrbitParameters satelliteOrbitParameters =
+                    GenerateOrbitParameters(currentOrbitRadius, parameters.OrbitSelector(satelliteType), random);
+                GameObject anchor = GenerateAnchor(satelliteOrbitParameters, parameters.ParentTransform, random);
+                anchor.name = $"{parameters.NameGenerator(currentPlanetIndex)} Anchor";
+                
                 var satelliteGenerationParameters = new CelestialBodyGenerationParameters<PlanetData, PlanetType>(
                     planetPrefab, satelliteType,
                     seed + currentPlanetIndex + 1,
-                    parameters.ParentTransform,
+                    anchor.transform,
                     parameters.NameGenerator(currentPlanetIndex));
-
                 GameObject satellite = GenerateCelestialBody(satelliteGenerationParameters);
-
-                OrbitParameters satelliteOrbitParameters =
-                    GenerateOrbitParameters(currentOrbitRadius, parameters.OrbitSelector(satelliteType), random);
-
-                var satelliteOrbit = satellite.GetComponent<OrbitalMovement>();
-                satelliteOrbit.SetParameters(satelliteOrbitParameters);
-                satelliteOrbit.MoveToStartingPosition(random);
                 
                 currentOrbitRadius += offset;
 
@@ -163,6 +162,25 @@ namespace ProceduralPlanets.Generation
             }
 
             return satellites;
+        }
+
+        private GameObject GenerateAnchor(OrbitParameters parameters, Transform primeStarTransform, Random random)
+        {
+            GameObject anchor;
+         
+            if (Application.isPlaying)
+            {
+                anchor = Instantiate(anchorPrefab, primeStarTransform);
+            }
+            else
+            {
+                anchor = (GameObject)PrefabUtility.InstantiatePrefab(anchorPrefab, primeStarTransform);
+            }
+            
+            var orbitalMovement = anchor.GetComponent<OrbitalMovement>();
+            orbitalMovement.SetParameters(parameters);
+            orbitalMovement.MoveToStartingPosition(random);
+            return anchor;
         }
 
         private GameObject InstantiatePlanetFromData(PlanetData planetData, Transform primeStarTransform,
@@ -192,14 +210,13 @@ namespace ProceduralPlanets.Generation
             }
             else
             {
-                celestialBody = (GameObject)PrefabUtility.InstantiatePrefab(bodyParameters.Prefab);
+                celestialBody = (GameObject)PrefabUtility.InstantiatePrefab(bodyParameters.Prefab, bodyParameters.Parent);
             }
 
             var celestialBodyGenerator = celestialBody.GetComponent<CelestialBodyGenerator<TData, TType>>();
             celestialBodyGenerator.SetBodyType(bodyParameters.BodyType);
             celestialBodyGenerator.GenerateBodyData(bodyParameters.GenerationSeed);
 
-            celestialBody.transform.SetParent(bodyParameters.Parent);
             celestialBody.name = bodyParameters.Name;
             celestialBodyGenerator.BodyData.name = bodyParameters.Name;
             return celestialBody;

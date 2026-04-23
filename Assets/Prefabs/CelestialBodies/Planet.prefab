@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4871293480622757834}
   - component: {fileID: 1032552763695210112}
   - component: {fileID: 185146552934206992}
-  - component: {fileID: 4258944856013886645}
+  - component: {fileID: 8433746115422980080}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -112,7 +112,7 @@ MonoBehaviour:
   displacementShader: {fileID: 7200000, guid: baa519b85dc8d5b4aa725b9eaa28ed1d, type: 3}
   normalSampleDistance: 0.01
   planetShader: {fileID: -6465566751694194690, guid: 37530056bb4d5024fb1b6bfa4495384a, type: 3}
---- !u!114 &4258944856013886645
+--- !u!114 &8433746115422980080
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,12 +121,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 6039681440229025307}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49406ae3c1a04a54cbad7ae4322f6dd6, type: 3}
+  m_Script: {fileID: 11500000, guid: bf00851dc50d124499cdbf820d26231f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.OrbitalMovement
-  radiusX: 5
-  radiusZ: 5
-  speedInDegreesPerSecond: 1
-  rotation: {x: 0, y: 0, z: 0}
-  segmentNumber: 100
-  color: {r: 0, g: 1, b: 1, a: 1}
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.AxisRotation
+  axis: {x: 0, y: 1, z: 0}
+  speedInDegreesPerSecond: 20

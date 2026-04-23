@@ -33,12 +33,30 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private float stripesScale;
         [SerializeField] private float emissionIntensity;
 
-        public BiomeParameters(Color color, FnlParameters mainNoise, float maskThreshold, float blendFactor)
+        public BiomeParameters CreateCopy(Vector3 offset, Color randomColor)
         {
-            this.color = color;
-            this.mainNoise = mainNoise;
-            this.maskThreshold = maskThreshold;
-            this.blendFactor = blendFactor;
+            var randomizedParameters = new BiomeParameters
+            {
+                features = features,
+                color = randomColor,
+                mainNoise = mainNoise,
+                maskThreshold = maskThreshold,
+                blendFactor = blendFactor,
+                heightRange = heightRange,
+                steepnessRange = steepnessRange,
+                poleAngle = poleAngle,
+                poleDirection = poleDirection,
+                stripesAxis = stripesAxis,
+                stripesScale = stripesScale,
+                emissionIntensity = emissionIntensity
+            };
+
+            if (features.HasFlag(BiomeFeatures.MainNoise))
+            {
+                mainNoise.SetOffset(offset);
+            }
+
+            return randomizedParameters;
         }
 
         public BiomeParametersStruct ToStruct()

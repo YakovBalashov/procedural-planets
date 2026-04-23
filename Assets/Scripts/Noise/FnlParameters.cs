@@ -31,6 +31,11 @@ namespace ProceduralPlanets.Noise
         [field: SerializeField] public FnlWarpType WarpType { get; private set; }
         [field: SerializeField] public float WarpAmplitude { get; private set; }
 
+        
+        public void SetOffset(Vector3 offset)
+        {
+            Offset = offset;
+        }
         public FnlParameters(FnlNoiseType type, float frequency, int octaves)
         {
             Type = type;

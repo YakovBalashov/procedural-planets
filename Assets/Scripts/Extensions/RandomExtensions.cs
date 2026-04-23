@@ -16,5 +16,10 @@ namespace ProceduralPlanets.Extensions
         {
             return random.Next(minValue, maxValue);
         }
+        
+        public static float NextFloat(this System.Random random)
+        {
+            return (float)random.NextDouble();
+        }
     }
 }

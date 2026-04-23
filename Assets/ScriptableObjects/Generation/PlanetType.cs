@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ProceduralPlanets.Generation;
@@ -5,6 +6,7 @@ using ProceduralPlanets.Movement;
 using ProceduralPlanets.Noise;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace ProceduralPlanets.ScriptableObjects.Generation
 {
@@ -49,7 +51,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             {
                 biomes = (from biomeCandidate in biomeGroups[0]
                     where random.NextDouble() < biomeCandidate.Probability
-                    select biomeCandidate.BiomeType.GenerateBiomeParameters()).ToList();
+                    select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue))).ToList();
             }
             
             biomes.AddRange(from biomeGroup in biomeGroups
@@ -66,7 +68,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         {
             var biomes = (from biomeCandidate in biomeGroup
                 where random.NextDouble() < biomeCandidate.Probability
-                select biomeCandidate.BiomeType.GenerateBiomeParameters()).ToList();
+                select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue))).ToList();
 
             return biomes.Count == 0 ? null : biomes[Random.Range(0, biomes.Count)];
         }

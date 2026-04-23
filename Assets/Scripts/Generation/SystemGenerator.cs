@@ -166,16 +166,7 @@ namespace ProceduralPlanets.Generation
 
         private GameObject GenerateAnchor(OrbitParameters parameters, Transform primeStarTransform, Random random)
         {
-            GameObject anchor;
-         
-            if (Application.isPlaying)
-            {
-                anchor = Instantiate(anchorPrefab, primeStarTransform);
-            }
-            else
-            {
-                anchor = (GameObject)PrefabUtility.InstantiatePrefab(anchorPrefab, primeStarTransform);
-            }
+            GameObject anchor = Instantiator.InstantiateGameObject(anchorPrefab, primeStarTransform);
             
             var orbitalMovement = anchor.GetComponent<OrbitalMovement>();
             orbitalMovement.SetParameters(parameters);
@@ -202,17 +193,9 @@ namespace ProceduralPlanets.Generation
             where TData : CelestialBodyData
             where TType : CelestialBodyType<TData>
         {
-            GameObject celestialBody;
+            GameObject celestialBody = Instantiator.InstantiateGameObject(bodyParameters.Prefab, bodyParameters.Parent);
 
-            if (Application.isPlaying)
-            {
-                celestialBody = Instantiate(bodyParameters.Prefab, bodyParameters.Parent);
-            }
-            else
-            {
-                celestialBody = (GameObject)PrefabUtility.InstantiatePrefab(bodyParameters.Prefab, bodyParameters.Parent);
-            }
-
+            celestialBody.transform.localPosition = Vector3.zero;
             var celestialBodyGenerator = celestialBody.GetComponent<CelestialBodyGenerator<TData, TType>>();
             celestialBodyGenerator.SetBodyType(bodyParameters.BodyType);
             celestialBodyGenerator.GenerateBodyData(bodyParameters.GenerationSeed);

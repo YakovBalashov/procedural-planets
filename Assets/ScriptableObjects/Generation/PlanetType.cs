@@ -13,7 +13,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
     {
         [field: SerializeField] public OrbitType<StarType, StarData> StarOrbitType { get; private set; }
         [field: SerializeField] public OrbitType<PlanetType, PlanetData> PlanetOrbitType { get; private set; }
-        [field: SerializeField] public List<BiomeType> BiomeTypes { get; private set; }
+        [field: SerializeField] public List<BiomeCandidate> BiomeCandidates { get; private set; }
         [field: SerializeField] public CraterGenerationSettings CraterGenerationSettings { get; private set; }
         [field: SerializeField] public List<Color> PossibleBaseColors { get; private set; }
         [field: SerializeField] public List<Texture2D> PossibleNormalMaps { get; private set; }
@@ -22,22 +22,70 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
 
         public override PlanetData CreateInstance(int seed)
         {
-            Random.InitState(seed);
+            var random = new System.Random(seed);
             PlanetData instance = base.CreateInstance(seed);
 
-            var biomes = (from biome in BiomeTypes
-                where Random.value <= biome.probability
-                select biome.GenerateBiomeParameters()).ToList();
+            Dictionary<int, List<BiomeCandidate>> biomeGroups = GetBiomeGroups(BiomeCandidates);
 
-            var baseColor = PossibleBaseColors[Random.Range(0, PossibleBaseColors.Count)];
+            List<BiomeParameters> biomes = GenerateBiomes(biomeGroups, random);
             
+            var baseColor = PossibleBaseColors[Random.Range(0, PossibleBaseColors.Count)];
+
             var normalMap = PossibleNormalMaps[Random.Range(0, PossibleNormalMaps.Count)];
             var normalMapTile = Random.Range(NormalMapTileRange.x, NormalMapTileRange.y);
             var normalMapBlend = Random.Range(NormalMapBlendRange.x, NormalMapBlendRange.y);
 
-            instance.InitializePlanet(biomes, CraterGenerationSettings, baseColor, normalMap, normalMapTile, normalMapBlend);
+            instance.InitializePlanet(biomes, CraterGenerationSettings, baseColor, normalMap, normalMapTile,
+                normalMapBlend);
 
             return instance;
+        }
+
+        private List<BiomeParameters> GenerateBiomes(Dictionary<int, List<BiomeCandidate>> biomeGroups,
+            System.Random random)
+        {
+            var biomes = new List<BiomeParameters>();
+            if (biomeGroups.ContainsKey(0))
+            {
+                biomes = (from biomeCandidate in biomeGroups[0]
+                    where random.NextDouble() < biomeCandidate.Probability
+                    select biomeCandidate.BiomeType.GenerateBiomeParameters()).ToList();
+            }
+            
+            biomes.AddRange(from biomeGroup in biomeGroups
+                where biomeGroup.Key != 0
+                select GetBiomeFromGroup(biomeGroup.Value, random)
+                into biome
+                where biome != null
+                select biome);
+
+            return biomes;
+        }
+
+        private BiomeParameters GetBiomeFromGroup(List<BiomeCandidate> biomeGroup, System.Random random)
+        {
+            var biomes = (from biomeCandidate in biomeGroup
+                where random.NextDouble() < biomeCandidate.Probability
+                select biomeCandidate.BiomeType.GenerateBiomeParameters()).ToList();
+
+            return biomes.Count == 0 ? null : biomes[Random.Range(0, biomes.Count)];
+        }
+
+        private static Dictionary<int, List<BiomeCandidate>> GetBiomeGroups(List<BiomeCandidate> biomeCandidates)
+        {
+            var biomeGroups = new Dictionary<int, List<BiomeCandidate>>();
+
+            foreach (var biomeCandidate in biomeCandidates)
+            {
+                if (!biomeGroups.ContainsKey(biomeCandidate.ExclusivityGroup))
+                {
+                    biomeGroups[biomeCandidate.ExclusivityGroup] = new List<BiomeCandidate>();
+                }
+
+                biomeGroups[biomeCandidate.ExclusivityGroup].Add(biomeCandidate);
+            }
+
+            return biomeGroups;
         }
     }
 }

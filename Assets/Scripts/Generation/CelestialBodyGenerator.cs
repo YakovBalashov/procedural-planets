@@ -34,6 +34,7 @@ namespace ProceduralPlanets.Generation
         public void GenerateBodyData(int seed)
         {
             BodyData = BodyType.CreateInstance(seed);
+            //TODO Generate Rings and Atmosphere
             UpdateSurface();
         }
 

@@ -25,6 +25,7 @@ struct BiomeParameters
     float warpAmplitude;
     float frequency;
     int octaves;
+    float3 offset;
     float maskThreshold;
     float blendFactor;
     float2 heightRange;
@@ -57,6 +58,9 @@ float GetBaseBlend(float3 position, BiomeParameters biome)
     state.frequency = biome.frequency / _PlanetRadius;
     state.fractal_type = FNL_FRACTAL_FBM;
     state.octaves = biome.octaves;
+
+    position += biome.offset;
+    
     if (biome.warpAmplitude > 0) fnlDomainWarp3D(state, position.x, position.y, position.z);
 
     float noiseValue = fnlGetNoise3D(state, position.x, position.y, position.z);

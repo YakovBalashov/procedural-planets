@@ -53,6 +53,7 @@ namespace ProceduralPlanets.Generation
                 WarpAmplitude = mainNoise.WarpAmplitude,
                 Frequency = mainNoise.Frequency,
                 Octaves = mainNoise.Octaves,
+                Offset = mainNoise.Offset,
                 BlendFactor = blendFactor,
                 HeightRange = heightRange,
                 SteepnessRange = steepnessRange,
@@ -74,6 +75,7 @@ namespace ProceduralPlanets.Generation
         public float WarpAmplitude;
         public float Frequency;
         public int Octaves;
+        public Vector3 Offset;
         public float MaskThreshold;
         public float BlendFactor;
         public Vector2 HeightRange;

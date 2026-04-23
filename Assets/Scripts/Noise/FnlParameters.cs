@@ -13,10 +13,9 @@ namespace ProceduralPlanets.Noise
         ValueCubic,
         Value,
     }
-    
+
     public enum FnlWarpType
     {
-        None,
         OpenSimplex2,
         OpenSimplex2Reduced,
         BasicGrid,
@@ -28,6 +27,7 @@ namespace ProceduralPlanets.Noise
         [field: SerializeField] public FnlNoiseType Type { get; private set; }
         [field: SerializeField] public float Frequency { get; private set; }
         [field: SerializeField] public int Octaves { get; private set; }
+        [field: SerializeField] public Vector3 Offset { get; private set; }
         [field: SerializeField] public FnlWarpType WarpType { get; private set; }
         [field: SerializeField] public float WarpAmplitude { get; private set; }
 

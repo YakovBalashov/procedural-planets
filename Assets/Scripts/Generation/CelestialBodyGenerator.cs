@@ -43,8 +43,8 @@ namespace ProceduralPlanets.Generation
         public override void UpdateSurface()
         {
             Initialize();
-            UpdateMaterial();
             GenerateMesh();
+            UpdateMaterial();
         }
 
         public override CelestialBodyData GetBodyData()
@@ -66,12 +66,6 @@ namespace ProceduralPlanets.Generation
         
         private void UpdateMaterial()
         {
-            if (!_materialInstance)
-            {
-                _materialInstance = new Material(planetShader);
-                _meshRenderer.sharedMaterial = _materialInstance;
-            }
-
             UpdateVertexRange();
 
             _materialInstance.SetVector(ShaderParametersIDs.BaseColor, BodyData.BaseColor);
@@ -123,6 +117,10 @@ namespace ProceduralPlanets.Generation
         {
             if (!MeshFilter) MeshFilter = GetComponent<MeshFilter>();
             if (!_meshRenderer) _meshRenderer = GetComponent<MeshRenderer>();
+            
+            if (_materialInstance) return;
+            _materialInstance = new Material(planetShader);
+            _meshRenderer.sharedMaterial = _materialInstance;
         }
         
         private void OnDestroy()

@@ -23,9 +23,9 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private Shader planetShader;
         
         protected MeshFilter MeshFilter;
-        protected MeshRenderer _meshRenderer;
+        private MeshRenderer _meshRenderer;
         private ComputeBuffer _noiseSettingsBuffer;
-        protected Material _materialInstance;
+        private Material _materialInstance;
         private ComputeBuffer _biomeBuffer;
 
         

@@ -11,17 +11,18 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
     {
         [SerializeField] BiomeParameters biomeParameters;
         [SerializeField] private List<Color> colors;
+        [SerializeField] private List<BiomeColors> biomeColors;
         private const float MaxOffset = 10000f;
 
         public BiomeParameters GenerateBiomeParameters(int seed)
         {
             var random = new Random(seed);
 
-            var color = colors[random.Range(0, colors.Count)];
+            var biomeColor = biomeColors[random.Next(0, biomeColors.Count)];
             var offset = new Vector3(random.NextFloat(), random.NextFloat(), random.NextFloat()) *
                          random.Range(0, MaxOffset);
 
-            return biomeParameters.CreateCopy(offset, color);
+            return biomeParameters.CreateCopy(offset, biomeColor);
         }
     }
 }

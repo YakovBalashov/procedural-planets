@@ -16,15 +16,26 @@ namespace ProceduralPlanets.Generation
         Stripes = 1 << 5,
         Emission = 1 << 6,
     }
+    
+    [System.Serializable]
+    public struct BiomeColors
+    {
+        public Color baseColor;
+        public Color accentColor;
+    }
 
     [System.Serializable]
     public class BiomeParameters
     {
         [SerializeField] private BiomeFeatures features;
         [SerializeField] private Color color;
+        [SerializeField] private Color accentColor;
+        [SerializeField] private BiomeColors biomeColors;
         [SerializeField] private FnlParameters mainNoise;
         [SerializeField] private float maskThreshold;
         [SerializeField] private float blendFactor;
+        [SerializeField] private float accentThreshold;
+        [SerializeField] private float accentBlendFactor;
         [SerializeField] private Vector2 heightRange;
         [SerializeField] private Vector2 steepnessRange;
         [SerializeField] private float poleAngle;
@@ -33,15 +44,17 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private float stripesScale;
         [SerializeField] private float emissionIntensity;
 
-        public BiomeParameters CreateCopy(Vector3 offset, Color randomColor)
+        public BiomeParameters CreateCopy(Vector3 offset, BiomeColors randomColor)
         {
             var randomizedParameters = new BiomeParameters
             {
                 features = features,
-                color = randomColor,
+                biomeColors = randomColor,
                 mainNoise = mainNoise,
                 maskThreshold = maskThreshold,
                 blendFactor = blendFactor,
+                accentThreshold = accentThreshold,
+                accentBlendFactor = accentBlendFactor,
                 heightRange = heightRange,
                 steepnessRange = steepnessRange,
                 poleAngle = poleAngle,
@@ -64,7 +77,8 @@ namespace ProceduralPlanets.Generation
             return new BiomeParametersStruct
             {
                 Features = (uint)features,
-                Color = new Vector3(color.r, color.g, color.b),
+                Color = new Vector3(biomeColors.baseColor.r, biomeColors.baseColor.g, biomeColors.baseColor.b),
+                AccentColor = new Vector3(biomeColors.accentColor.r, biomeColors.accentColor.g, biomeColors.accentColor.b),
                 MaskThreshold = maskThreshold,
                 NoiseType = (int)mainNoise.Type,
                 WarpType =  (int)mainNoise.WarpType,
@@ -73,6 +87,8 @@ namespace ProceduralPlanets.Generation
                 Octaves = mainNoise.Octaves,
                 Offset = mainNoise.Offset,
                 BlendFactor = blendFactor,
+                AccentThreshold = accentThreshold,
+                AccentBlendFactor = accentBlendFactor,
                 HeightRange = heightRange,
                 SteepnessRange = steepnessRange,
                 PoleAngle = poleAngle,
@@ -88,6 +104,7 @@ namespace ProceduralPlanets.Generation
     {
         public uint Features;
         public Vector3 Color;
+        public Vector3 AccentColor;
         public int NoiseType;
         public int WarpType;
         public float WarpAmplitude;
@@ -96,6 +113,8 @@ namespace ProceduralPlanets.Generation
         public Vector3 Offset;
         public float MaskThreshold;
         public float BlendFactor;
+        public float AccentThreshold;
+        public float AccentBlendFactor;
         public Vector2 HeightRange;
         public Vector2 SteepnessRange;
         public float PoleAngle;

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
+  m_Name: TopPole
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
+  biomeParameters:
+    features: 17
+    color: {r: 0.27450982, g: 0.050980397, b: 0, a: 1}
+    accentColor: {r: 0.07450981, g: 0.015686275, b: 0, a: 0}
+    biomeColors:
+      baseColor: {r: 1, g: 1, b: 1, a: 1}
+      accentColor: {r: 1, g: 1, b: 1, a: 0}
+    mainNoise:
+      <Type>k__BackingField: 1
+      <Frequency>k__BackingField: 3.48
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 1444.0485, y: 1491.018, z: 2916.737}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: -0.21
+    blendFactor: 0.47
+    accentThreshold: 2
+    accentBlendFactor: 0.43
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 1.15
+    poleDirection: {x: 0, y: 1, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  colors: []
+  biomeColors:
+  - baseColor: {r: 1, g: 1, b: 1, a: 0}
+    accentColor: {r: 1, g: 1, b: 1, a: 0}

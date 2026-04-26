@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ce9eeec69d71a409568ac2a690f620, type: 3}
+  m_Name: MarsLike
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.PlanetType
+  radiusRange: {x: 25, y: 45}
+  cpuNoiseSettings: []
+  gpuNoiseSettings:
+  - <Enabled>k__BackingField: 1
+    <Strength>k__BackingField: 0.015
+    <BaseRoughness>k__BackingField: 7.29
+    <Persistence>k__BackingField: 0.478
+    <Lacunarity>k__BackingField: 2
+    <MinimumValue>k__BackingField: 0
+    <Octaves>k__BackingField: 4
+    <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+    <FnlSeed>k__BackingField: 0
+    <FnlNoiseType>k__BackingField: 2
+  <PossibleBaseColors>k__BackingField:
+  - {r: 0.6117647, g: 0.15294118, b: 0.06666667, a: 0}
+  - {r: 0.6117647, g: 0.4095952, b: 0.066666655, a: 0}
+  - {r: 0.2924528, g: 0.25645694, b: 0.24968849, a: 0}
+  - {r: 0.4528302, g: 0.40428492, b: 0.39943042, a: 0}
+  <PossibleNormalMaps>k__BackingField:
+  - {fileID: 2800000, guid: 136d97f37cf4aa447b1581e68ef76784, type: 3}
+  <NormalMapTileRange>k__BackingField: {x: 5, y: 5}
+  <NormalMapBlendRange>k__BackingField: {x: 1, y: 1}
+  <BiomeCandidates>k__BackingField:
+  - <Probability>k__BackingField: 1
+    <ExclusivityGroup>k__BackingField: 0
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: 7ce4ed29a6536c34cb3312ce97385c16, type: 2}
+  - <Probability>k__BackingField: 1
+    <ExclusivityGroup>k__BackingField: 0
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: 34f2c275f7fc82f46bf0d3aa55309f81, type: 2}
+  - <Probability>k__BackingField: 1
+    <ExclusivityGroup>k__BackingField: 0
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: 85594b985168deb43a61d4565dfd3b76, type: 2}
+  - <Probability>k__BackingField: 1
+    <ExclusivityGroup>k__BackingField: 0
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: 6a62622b08aa016488d200ccefce761e, type: 2}
+  <SatelliteParameters>k__BackingField:
+    <NumberRange>k__BackingField: {x: 0, y: 2}
+    <OrbitRadiusRange>k__BackingField: {x: 500, y: 2000}
+    <DistanceBetweenSatellitesRange>k__BackingField: {x: 600, y: 800}
+  <StarOrbitType>k__BackingField:
+    <ParentTypes>k__BackingField:
+    - {fileID: 11400000, guid: 93cdb83cc697bd847bd632d179cd08f1, type: 2}
+    <OrbitRadiusRange>k__BackingField: {x: 150000, y: 300000}
+    <OrbitRatioRange>k__BackingField: {x: 1, y: 1}
+    <OrbitInclinationRange>k__BackingField: {x: -3, y: 3}
+  <PlanetOrbitType>k__BackingField:
+    <ParentTypes>k__BackingField:
+    - {fileID: 11400000, guid: 26f6877814010764da026c9fbf3f173c, type: 2}
+    - {fileID: 11400000, guid: dabb8fa4ca965b54b838ef969c91cc7e, type: 2}
+    <OrbitRadiusRange>k__BackingField: {x: 5000, y: 10000}
+    <OrbitRatioRange>k__BackingField: {x: 0.99, y: 1.01}
+    <OrbitInclinationRange>k__BackingField: {x: -3, y: 3}
+  <CraterGenerationSettings>k__BackingField:
+    <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
+    <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
+    <DepthRange>k__BackingField: {x: 0.9, y: 1.1}
+    <RimWidthRange>k__BackingField: {x: 0.05, y: 0.3}
+    <RimSteepnessRange>k__BackingField: {x: 1, y: 3}
+    <NumberRange>k__BackingField: {x: 0, y: 0}
+  <Rings>k__BackingField: {fileID: 0}
+  <Atmosphere>k__BackingField: {fileID: 11400000, guid: aa27edbcfc6e3814ab48ba4a82356650, type: 2}

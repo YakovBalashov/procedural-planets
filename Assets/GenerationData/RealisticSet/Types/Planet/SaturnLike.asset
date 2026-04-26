@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10ce9eeec69d71a409568ac2a690f620, type: 3}
+  m_Name: SaturnLike
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.PlanetType
+  radiusRange: {x: 500, y: 800}
+  cpuNoiseSettings: []
+  gpuNoiseSettings: []
+  <PossibleBaseColors>k__BackingField:
+  - {r: 1, g: 0.60784316, b: 0.27058825, a: 0}
+  <PossibleNormalMaps>k__BackingField:
+  - {fileID: 2800000, guid: d5b76b6f1dc57794f8e39835b7f930e6, type: 3}
+  <NormalMapTileRange>k__BackingField: {x: 1, y: 1}
+  <NormalMapBlendRange>k__BackingField: {x: 1, y: 1}
+  <BiomeCandidates>k__BackingField:
+  - <Probability>k__BackingField: 1
+    <ExclusivityGroup>k__BackingField: 0
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: 48e3e3afc1fc6e643ad54b24688b7a5b, type: 2}
+  - <Probability>k__BackingField: 1
+    <ExclusivityGroup>k__BackingField: 0
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: 5464f35be820852459e79913aca0dad3, type: 2}
+  - <Probability>k__BackingField: 1
+    <ExclusivityGroup>k__BackingField: 0
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: e8bde3baee97b47408806be87548643b, type: 2}
+  <SatelliteParameters>k__BackingField:
+    <NumberRange>k__BackingField: {x: 0, y: 6}
+    <OrbitRadiusRange>k__BackingField: {x: 3000, y: 15000}
+    <DistanceBetweenSatellitesRange>k__BackingField: {x: 1000, y: 2000}
+  <StarOrbitType>k__BackingField:
+    <ParentTypes>k__BackingField:
+    - {fileID: 11400000, guid: 93cdb83cc697bd847bd632d179cd08f1, type: 2}
+    <OrbitRadiusRange>k__BackingField: {x: 500000, y: 1000000}
+    <OrbitRatioRange>k__BackingField: {x: 1, y: 1}
+    <OrbitInclinationRange>k__BackingField: {x: -4, y: 4}
+  <PlanetOrbitType>k__BackingField:
+    <ParentTypes>k__BackingField: []
+    <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
+    <OrbitRatioRange>k__BackingField: {x: 0, y: 0}
+    <OrbitInclinationRange>k__BackingField: {x: 0, y: 0}
+  <CraterGenerationSettings>k__BackingField:
+    <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
+    <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
+    <DepthRange>k__BackingField: {x: 0.9, y: 1.1}
+    <RimWidthRange>k__BackingField: {x: 0.05, y: 0.3}
+    <RimSteepnessRange>k__BackingField: {x: 1, y: 3}
+    <NumberRange>k__BackingField: {x: 0, y: 0}
+  <Rings>k__BackingField: {fileID: 11400000, guid: cbd391625940abf43a2c090d5d07f06b, type: 2}
+  <Atmosphere>k__BackingField: {fileID: 11400000, guid: a3dc285553564c84bb78f0b996aff8b0, type: 2}

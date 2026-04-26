@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
+  m_Name: MainStripes
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
+  biomeParameters:
+    features: 33
+    color: {r: 0.10466359, g: 0.16560921, b: 0.4528302, a: 0}
+    accentColor: {r: 0, g: 0, b: 0, a: 0}
+    biomeColors:
+      baseColor: {r: 0.8117648, g: 0.627451, b: 0.4666667, a: 1}
+      accentColor: {r: 0.9528302, g: 0.8729667, b: 0.80451226, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 0.1
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 456.55603, y: 624.207, z: 56.456856}
+      <WarpType>k__BackingField: 3
+      <WarpAmplitude>k__BackingField: 150
+    maskThreshold: 0
+    blendFactor: 0.17
+    accentThreshold: 0.21
+    accentBlendFactor: 0.03
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 1, z: 0}
+    stripesScale: 43.17
+    emissionIntensity: 0
+  colors: []
+  biomeColors:
+  - baseColor: {r: 0.8117648, g: 0.627451, b: 0.46274513, a: 0}
+    accentColor: {r: 0.95294124, g: 0.8745099, b: 0.80392164, a: 0}
+  - baseColor: {r: 0.6037736, g: 0.5360939, b: 0.4756141, a: 0}
+    accentColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0}
+  - baseColor: {r: 0.90588236, g: 0.7278862, b: 0.50980395, a: 0}
+    accentColor: {r: 0.9058824, g: 0.8470589, b: 0.50980395, a: 0}
+  - baseColor: {r: 0.9056604, g: 0.84802246, b: 0.508366, a: 0}
+    accentColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0}

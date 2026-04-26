@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
+  m_Name: Ocean
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
+  biomeParameters:
+    features: 5
+    color: {r: 0, g: 0, b: 0, a: 0}
+    accentColor: {r: 0, g: 0, b: 0, a: 0}
+    biomeColors:
+      baseColor: {r: 0.043965846, g: 0.09640204, b: 0.7169812, a: 0}
+      accentColor: {r: 0.029369887, g: 0.07324845, b: 0.5660378, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 1.87
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 18.64
+    maskThreshold: -1
+    blendFactor: 0.01
+    accentThreshold: 0.28
+    accentBlendFactor: 0.38
+    heightRange: {x: -5, y: 0.1}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  colors: []
+  biomeColors:
+  - baseColor: {r: 0.043137256, g: 0.098039225, b: 0.7176471, a: 0}
+    accentColor: {r: 0.027450982, g: 0.07450981, b: 0.5647059, a: 0}

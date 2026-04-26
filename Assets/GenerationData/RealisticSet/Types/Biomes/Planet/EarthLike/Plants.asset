@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
+  m_Name: Plants
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
+  biomeParameters:
+    features: 1
+    color: {r: 0, g: 0, b: 0, a: 0}
+    accentColor: {r: 0, g: 0, b: 0, a: 0}
+    biomeColors:
+      baseColor: {r: 0.07789466, g: 0.3207547, b: 0.055980776, a: 0}
+      accentColor: {r: 0.06489383, g: 0.24528301, b: 0.047436804, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 1.87
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: 0.01
+    blendFactor: 0.16
+    accentThreshold: 0.18
+    accentBlendFactor: 0.18
+    heightRange: {x: -5, y: 0.1}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  colors: []
+  biomeColors:
+  - baseColor: {r: 0.078431375, g: 0.32156864, b: 0.054901965, a: 0}
+    accentColor: {r: 0.06666667, g: 0.24705884, b: 0.04705883, a: 0}

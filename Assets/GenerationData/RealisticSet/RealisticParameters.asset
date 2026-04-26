@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be75a9bd771f8454b96e1312c319c577, type: 3}
+  m_Name: RealisticParameters
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.GenerationParameters
+  <StarTypes>k__BackingField:
+  - {fileID: 11400000, guid: 93cdb83cc697bd847bd632d179cd08f1, type: 2}
+  <PlanetTypes>k__BackingField:
+  - {fileID: 11400000, guid: ea9cb9ff7e567f04484b1b7c8b2c9582, type: 2}
+  - {fileID: 11400000, guid: 26f6877814010764da026c9fbf3f173c, type: 2}
+  - {fileID: 11400000, guid: 765e4fba81f26cd47a8754d7b041fa98, type: 2}
+  - {fileID: 11400000, guid: 674a72c5a9605054d939ad026195a8d4, type: 2}
+  - {fileID: 11400000, guid: d890d9945abbd664093d13d95e800cca, type: 2}
+  - {fileID: 11400000, guid: dabb8fa4ca965b54b838ef969c91cc7e, type: 2}

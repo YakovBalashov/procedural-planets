@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 060565f32aa614140a1a81b350edefc3, type: 3}
+  m_Name: Earth
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
+  <Radius>k__BackingField: 60
+  <CPUNoiseSettings>k__BackingField: []
+  <GPUNoiseSettings>k__BackingField:
+  - <Enabled>k__BackingField: 1
+    <Strength>k__BackingField: 0.03
+    <BaseRoughness>k__BackingField: 2.06
+    <Persistence>k__BackingField: 0.544
+    <Lacunarity>k__BackingField: 2
+    <MinimumValue>k__BackingField: 1
+    <Octaves>k__BackingField: 4
+    <Offset>k__BackingField: {x: 404.1626, y: 165.99867, z: 985.04706}
+    <FnlSeed>k__BackingField: 0
+    <FnlNoiseType>k__BackingField: 5
+  <BaseColor>k__BackingField: {r: 1, g: 1, b: 1, a: 0}
+  <Biomes>k__BackingField:
+  - features: 1
+    color: {r: 0, g: 0, b: 0, a: 0}
+    accentColor: {r: 0, g: 0, b: 0, a: 0}
+    biomeColors:
+      baseColor: {r: 0.6509434, g: 0.5347164, b: 0.33468318, a: 0}
+      accentColor: {r: 0.6226415, g: 0.46273884, b: 0.19090424, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 2.94
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: -1
+    blendFactor: 0
+    accentThreshold: 0.19
+    accentBlendFactor: 0.18
+    heightRange: {x: -5, y: 0.1}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  - features: 1
+    color: {r: 0, g: 0, b: 0, a: 0}
+    accentColor: {r: 0, g: 0, b: 0, a: 0}
+    biomeColors:
+      baseColor: {r: 0.07789466, g: 0.3207547, b: 0.055980776, a: 0}
+      accentColor: {r: 0.06489383, g: 0.24528301, b: 0.047436804, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 1.87
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: 0.01
+    blendFactor: 0.16
+    accentThreshold: 0.18
+    accentBlendFactor: 0.18
+    heightRange: {x: -5, y: 0.1}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  - features: 65
+    color: {r: 0, g: 0, b: 0, a: 0}
+    accentColor: {r: 0, g: 0, b: 0, a: 0}
+    biomeColors:
+      baseColor: {r: 0.990566, g: 0.4521974, b: 0, a: 0}
+      accentColor: {r: 0.6627451, g: 0.30980393, b: 0.039215688, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 30.91
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: 0.59
+    blendFactor: 0.1
+    accentThreshold: 5
+    accentBlendFactor: 0
+    heightRange: {x: -5, y: 0.1}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 1
+  - features: 5
+    color: {r: 0, g: 0, b: 0, a: 0}
+    accentColor: {r: 0, g: 0, b: 0, a: 0}
+    biomeColors:
+      baseColor: {r: 0.043965846, g: 0.09640204, b: 0.7169812, a: 0}
+      accentColor: {r: 0.029369887, g: 0.07324845, b: 0.5660378, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 1.87
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 18.64
+    maskThreshold: -1
+    blendFactor: 0.01
+    accentThreshold: 0.28
+    accentBlendFactor: 0.38
+    heightRange: {x: -5, y: 0.1}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  <NormalMap>k__BackingField: {fileID: 2800000, guid: d5b76b6f1dc57794f8e39835b7f930e6, type: 3}
+  <NormalMapTile>k__BackingField: 2.583655
+  <NormalMapBlend>k__BackingField: 1
+  <CraterGenerationSettings>k__BackingField:
+    <StrengthRange>k__BackingField: {x: 0.1, y: 0.1}
+    <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
+    <DepthRange>k__BackingField: {x: 0.4, y: 0.6}
+    <RimWidthRange>k__BackingField: {x: 0.5, y: 0.5}
+    <RimSteepnessRange>k__BackingField: {x: 0.8, y: 0.8}
+    <NumberRange>k__BackingField: {x: 0, y: 0}
+  <RingParameters>k__BackingField:
+    <Enabled>k__BackingField: 0
+    <InnerRadius>k__BackingField: 1
+    <OuterRadius>k__BackingField: 2
+    <SegmentCount>k__BackingField: 100
+    <NoiseParameters>k__BackingField:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 0
+      <Octaves>k__BackingField: 0
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    <RingColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+  <AtmosphereParameters>k__BackingField:
+    <Enabled>k__BackingField: 1
+    <Color>k__BackingField: {r: 1, g: 1, b: 1, a: 1}
+    <RadiusMultiplier>k__BackingField: 1.02
+    <NoiseParameters>k__BackingField:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 0.05
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 2
+      <WarpAmplitude>k__BackingField: 17.05
+    <NoiseRange>k__BackingField: {x: -0.12, y: 0.5}
+    <MinAlpha>k__BackingField: 0.1

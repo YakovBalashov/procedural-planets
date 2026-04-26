@@ -41,7 +41,7 @@ float EvaluateCrater(float3 position)
         float currentCraterValue = (normalizedDistanceFromCenter > 1.0)
                                        ? GetRim(normalizedDistanceFromCenter, _Craters[i].rimWidth,
                                                 _Craters[i].rimSteepness)
-                                       : GetCavity(normalizedDistanceFromCenter, _Craters[i].depth);
+                                       : GetCavity(normalizedDistanceFromCenter, _Craters[i].depth * _Craters[i].radius);
 
         craterValue += currentCraterValue * _Craters[i].strength;
     }

@@ -107,11 +107,11 @@ MonoBehaviour:
   subdivisionLevel: 3
   <BodyData>k__BackingField: {fileID: 0}
   <BodyType>k__BackingField: {fileID: 0}
+  planetShader: {fileID: -6465566751694194690, guid: 37530056bb4d5024fb1b6bfa4495384a, type: 3}
   useComputeShader: 1
   useUnityNormals: 1
   displacementShader: {fileID: 7200000, guid: baa519b85dc8d5b4aa725b9eaa28ed1d, type: 3}
   normalSampleDistance: 0.01
-  planetShader: {fileID: -6465566751694194690, guid: 37530056bb4d5024fb1b6bfa4495384a, type: 3}
   atmospherePrefab: {fileID: 4594404538775017063, guid: 0a2945b9ae8abb642b0bea64c366d763, type: 3}
   ringsPrefab: {fileID: 2909059356573398082, guid: 8f845068009811448b3e2e500c82bcc7, type: 3}
 --- !u!114 &8433746115422980080

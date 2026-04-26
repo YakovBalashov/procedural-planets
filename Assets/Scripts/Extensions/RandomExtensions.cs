@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace ProceduralPlanets.Extensions
@@ -20,6 +22,20 @@ namespace ProceduralPlanets.Extensions
         public static float NextFloat(this System.Random random)
         {
             return (float)random.NextDouble();
+        }
+        
+        public static T GetRandomListElement<T> (this System.Random random, List<T> items, List<float> probabilities)
+        {
+            var totalProbability = probabilities.Sum();
+
+            var randomPoint = random.NextFloat() * totalProbability;
+
+            for (var i = 0; i < items.Count; i++)
+            {
+                if (randomPoint < probabilities[i]) return items[i];
+                randomPoint -= probabilities[i];
+            }
+            return items[^1];
         }
     }
 }

@@ -35,10 +35,10 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
 
             Dictionary<int, List<BiomeCandidate>> biomeGroups = GetBiomeGroups(BiomeCandidates);
 
-            List<BiomeParameters> biomes = GenerateBiomes(biomeGroups, random);
-
             var baseColor = PossibleBaseColors[random.Range(0, PossibleBaseColors.Count)];
-
+            
+            List<BiomeParameters> biomes = GenerateBiomes(biomeGroups, random, baseColor);
+            
             var normalMap = PossibleNormalMaps[random.Range(0, PossibleNormalMaps.Count)];
             var normalMapTile = random.Range(NormalMapTileRange.x, NormalMapTileRange.y);
             var normalMapBlend = random.Range(NormalMapBlendRange.x, NormalMapBlendRange.y);
@@ -66,19 +66,19 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         }
 
         private List<BiomeParameters> GenerateBiomes(Dictionary<int, List<BiomeCandidate>> biomeGroups,
-            System.Random random)
+            System.Random random, Color baseColor)
         {
             var biomes = new List<BiomeParameters>();
             if (biomeGroups.ContainsKey(0))
             {
                 biomes = (from biomeCandidate in biomeGroups[0]
                     where random.NextDouble() < biomeCandidate.Probability
-                    select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue))).ToList();
+                    select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue), baseColor)).ToList();
             }
 
             biomes.AddRange(from biomeGroup in biomeGroups
                 where biomeGroup.Key != 0
-                select GetBiomeFromGroup(biomeGroup.Value, random)
+                select GetBiomeFromGroup(biomeGroup.Value, random, baseColor)
                 into biome
                 where biome != null
                 select biome);
@@ -86,11 +86,11 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             return biomes;
         }
 
-        private BiomeParameters GetBiomeFromGroup(List<BiomeCandidate> biomeGroup, System.Random random)
+        private BiomeParameters GetBiomeFromGroup(List<BiomeCandidate> biomeGroup, System.Random random, Color baseColor)
         {
             var biomes = (from biomeCandidate in biomeGroup
                 where random.NextDouble() < biomeCandidate.Probability
-                select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue))).ToList();
+                select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue), baseColor)).ToList();
 
             return biomes.Count == 0 ? null : biomes[random.Range(0, biomes.Count)];
         }

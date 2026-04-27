@@ -71,12 +71,12 @@ namespace ProceduralPlanets.UI
 
             if (planetGenerator.Moons.Count == 0) return;
 
-            var moonIndex = 0;
+            var moonIndex = 1;
             foreach (var moon in planetGenerator.Moons)
             {
                 var moonButtonIndex = new Vector2(planetIndex, moonIndex);
 
-                var moonName = $"{SystemGenerator.NumberToLetter(moonIndex)}";
+                var moonName = $"{SystemGenerator.NumberToLetter(moonIndex - 1)}";
                 var moonColor = moon.GetComponent<CelestialBodyGeneratorBase>().GetBodyData().BaseColor;
                 moonColor.a = 1f;
 

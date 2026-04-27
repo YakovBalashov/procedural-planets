@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = System.Random;
 
 namespace ProceduralPlanets.Movement
@@ -14,7 +15,8 @@ namespace ProceduralPlanets.Movement
         [Range(10, 360)]
         [SerializeField] private int segmentNumber = 100;
 
-        [SerializeField] private Color color = Color.cyan;
+        [field: FormerlySerializedAs("<color>k__BackingField")] [field: SerializeField]
+        public Color Color { get; private set; } = Color.cyan;
 
         private float _centerToFocusDistance;
         private Vector3 _mainAxis;
@@ -40,19 +42,19 @@ namespace ProceduralPlanets.Movement
             speedInDegreesPerSecond = parameters.SpeedInDegreesPerSecond;
             Initialize();
         }
-        
+
         public void ChangeRadius(float deltaRadius)
         {
             radiusX += deltaRadius;
             radiusZ += deltaRadius;
             Initialize();
         }
-        
+
         public void ChangeSpeed(float deltaSpeed)
         {
             speedInDegreesPerSecond += deltaSpeed;
         }
-        
+
         public void ChangeInclination(float deltaInclination)
         {
             rotation.z += deltaInclination;
@@ -66,9 +68,9 @@ namespace ProceduralPlanets.Movement
             var rotationQuaternion = Quaternion.Euler(rotation);
             Vector3 localRotatedPoint = rotationQuaternion * GetLocalPointOnEllipse(futureAngle);
 
-            return transform.parent ? transform.parent.TransformPoint(localRotatedPoint) : localRotatedPoint;
+            return localRotatedPoint;
         }
-        
+
         private void Initialize()
         {
             _centerToFocusDistance = Mathf.Sqrt(Mathf.Abs(Mathf.Pow(radiusX, 2) - Mathf.Pow(radiusZ, 2)));
@@ -86,7 +88,7 @@ namespace ProceduralPlanets.Movement
         private void MoveBodyToAngle(float angle)
         {
             if (!transform.parent) return;
-            
+
             var rotationQuaternion = Quaternion.Euler(rotation);
 
             Vector3 localRotatedPoint = rotationQuaternion * GetLocalPointOnEllipse(angle);
@@ -105,7 +107,7 @@ namespace ProceduralPlanets.Movement
             _currentAngle = (float)(random.NextDouble() * 2 * Math.PI);
             MoveBodyToAngle(_currentAngle);
         }
-        
+
         public void CalculateAngleFromPositionForPerfectOrbit()
         {
             if (!transform.parent) return;
@@ -117,8 +119,8 @@ namespace ProceduralPlanets.Movement
         private void OnDrawGizmos()
         {
             if (transform.parent == null) return;
-            
-            Gizmos.color = color;
+
+            Gizmos.color = Color;
 
             float angleStep = (2 * Mathf.PI) / segmentNumber;
 

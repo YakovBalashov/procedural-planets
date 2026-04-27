@@ -6,7 +6,6 @@ using ProceduralPlanets.Movement;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.ScriptableObjects.Generation;
 using ProceduralPlanets.UI;
-using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
 
@@ -46,7 +45,12 @@ namespace ProceduralPlanets.Generation
         public CelestialBodyGeneratorBase GetBodyByIndex(Vector2 index)
         {
             var mainBodyIndex = (int)index.x;
-            return _celestialBodies[mainBodyIndex].GetComponent<CelestialBodyGeneratorBase>();
+            var satelliteIndex = (int)index.y;
+
+            if (satelliteIndex == 0) return _celestialBodies[mainBodyIndex].GetComponent<CelestialBodyGeneratorBase>();
+
+            return _celestialBodies[mainBodyIndex].GetComponent<PlanetGenerator>().Moons[satelliteIndex - 1]
+                .GetComponent<CelestialBodyGeneratorBase>();
         }
 
         private void Start()
@@ -67,7 +71,7 @@ namespace ProceduralPlanets.Generation
 
             GameObject primeStar = GenerateCelestialBody(starGenerationParameters);
             _celestialBodies.Add(primeStar);
-            
+
             GeneratePlanets(primeStarType, primeStar, random);
             GenerateMoons(random);
 
@@ -78,7 +82,7 @@ namespace ProceduralPlanets.Generation
         private void GenerateMoons(Random random)
         {
             var planets = _celestialBodies.Where(body => body.GetComponentInChildren<PlanetGenerator>()).ToList();
-            
+
             foreach (var planet in planets)
             {
                 var planetGenerator = planet.GetComponentInChildren<PlanetGenerator>();
@@ -117,12 +121,13 @@ namespace ProceduralPlanets.Generation
                 Transform child = primaryStarTransform.GetChild(0);
                 DestroyImmediate(child.gameObject);
             }
+
             DestroyImmediate(primaryStarTransform.gameObject);
             _celestialBodies.Clear();
         }
 
         private List<GameObject> GenerateSatellites<TParent, TParentData>(
-            SatelliteGenerationParameters<TParent, TParentData> parameters, 
+            SatelliteGenerationParameters<TParent, TParentData> parameters,
             Random random)
             where TParent : CelestialBodyType<TParentData>
             where TParentData : CelestialBodyData
@@ -141,10 +146,11 @@ namespace ProceduralPlanets.Generation
             List<GameObject> satellites = new List<GameObject>();
 
             var currentPlanetIndex = 0;
-            while (currentOrbitRadius < satelliteParameters.OrbitRadiusRange.y && currentPlanetIndex < maxSatelliteCount)
+            while (currentOrbitRadius < satelliteParameters.OrbitRadiusRange.y &&
+                   currentPlanetIndex < maxSatelliteCount)
             {
                 var offset = random.Range(satelliteParameters.DistanceBetweenSatellitesRange);
-                
+
                 List<PlanetType> planetsWithCurrentOrbit =
                     GetPlanetsCompatibleWithOrbit(availablePlanetTypes, currentOrbitRadius, parameters.OrbitSelector);
 
@@ -155,19 +161,19 @@ namespace ProceduralPlanets.Generation
                 }
 
                 PlanetType satelliteType = planetsWithCurrentOrbit[random.Next(planetsWithCurrentOrbit.Count)];
-                
+
                 OrbitParameters satelliteOrbitParameters =
                     GenerateOrbitParameters(currentOrbitRadius, parameters.OrbitSelector(satelliteType), random);
                 GameObject anchor = GenerateAnchor(satelliteOrbitParameters, parameters.ParentTransform, random);
                 anchor.name = $"{parameters.NameGenerator(currentPlanetIndex)} Anchor";
-                
+
                 var satelliteGenerationParameters = new CelestialBodyGenerationParameters<PlanetData, PlanetType>(
                     planetPrefab, satelliteType,
                     seed + currentPlanetIndex + 1,
                     anchor.transform,
                     parameters.NameGenerator(currentPlanetIndex));
                 GameObject satellite = GenerateCelestialBody(satelliteGenerationParameters);
-                
+
                 currentOrbitRadius += offset;
 
                 satellites.Add(satellite);
@@ -177,10 +183,10 @@ namespace ProceduralPlanets.Generation
             return satellites;
         }
 
-        private GameObject GenerateAnchor(OrbitParameters parameters, Transform primeStarTransform, Random random)
+        private GameObject GenerateAnchor(OrbitParameters parameters, Transform parent, Random random)
         {
-            GameObject anchor = Instantiator.InstantiateGameObject(anchorPrefab, primeStarTransform);
-            
+            GameObject anchor = Instantiator.InstantiateGameObject(anchorPrefab, parent.parent);
+
             var orbitalMovement = anchor.GetComponent<OrbitalMovement>();
             orbitalMovement.SetParameters(parameters);
             orbitalMovement.MoveToStartingPosition(random);

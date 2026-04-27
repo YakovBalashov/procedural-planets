@@ -29,6 +29,8 @@ namespace ProceduralPlanets.Movement
 
         private OrbitalMovement _orbitalMovement;
 
+        private Vector2 _currentBodyIndex;
+
         private bool _isMoving;
         private Vector3 _targetPosition;
         private Transform _targetBodyTransform;
@@ -57,12 +59,18 @@ namespace ProceduralPlanets.Movement
 
         private void MoveToBody(Vector2 targetBodyIndex)
         {
+            if (_isMoving) return;
+
+            if (targetBodyIndex.y != 0 && (int)_currentBodyIndex.x != (int)targetBodyIndex.x) return;
+
+            var travelTime = (int)targetBodyIndex.x == (int)_currentBodyIndex.x ? planetaryTravelTime : moonTravelTime;
+            
             _orbitalMovement.enabled = false;
             CenterPlayer();
             transform.SetParent(null);
 
             var targetBody = systemGenerator.GetBodyByIndex(targetBodyIndex);
-            _targetPosition = CalculateTargetPosition(targetBody);
+            _targetPosition = CalculateTargetPosition(targetBody, travelTime);
             _targetBodyTransform = targetBody.transform;
             _isMoving = true;
 
@@ -71,8 +79,10 @@ namespace ProceduralPlanets.Movement
 
             var inverseTarget = systemOrigin.position + inverseTravelDirection * distanceToTarget;
 
-            StartCoroutine(ExecuteFlight(systemOrigin.position, inverseTarget, planetaryTravelTime,
+            StartCoroutine(ExecuteFlight(systemOrigin.position, inverseTarget, travelTime,
                 targetBody.GetBodyData().PlayerOrbitRadius));
+            
+            _currentBodyIndex = targetBodyIndex;
         }
 
         private IEnumerator ExecuteFlight(Vector3 startPos, Vector3 targetPos, float travelTime, float radius)
@@ -103,18 +113,30 @@ namespace ProceduralPlanets.Movement
             _orbitalMovement.enabled = true;
         }
 
-        private Vector3 CalculateTargetPosition(CelestialBodyGeneratorBase targetBody)
+        private Vector3 CalculateTargetPosition(CelestialBodyGeneratorBase targetBody, float time)
         {
-            var targetOrbit = targetBody.gameObject.GetComponentInParent<OrbitalMovement>();
-
-            var targetBodyPosition = targetOrbit
-                ? targetOrbit.GetPositionAfterTime(planetaryTravelTime)
-                : targetBody.transform.position;
+            var targetBodyPosition = CalculateFutureTargetPosition(targetBody, time);
 
             var playerPosition = transform.position;
             var directionFromTarget = (playerPosition - targetBodyPosition).normalized;
             var offsetDistance = targetBody.GetBodyData().PlayerOrbitRadius;
             return targetBodyPosition + directionFromTarget * offsetDistance;
+        }
+
+        private Vector3 CalculateFutureTargetPosition(CelestialBodyGeneratorBase targetBody, float time)
+        {
+            var targetOrbit = targetBody.gameObject.GetComponentInParent<OrbitalMovement>();
+            
+            if (!targetOrbit) return targetBody.transform.position;
+
+            var localPosition = targetOrbit.GetPositionAfterTime(time);
+            
+            var parentOrbit = targetOrbit.transform.parent.GetComponentInParent<OrbitalMovement>();
+            
+            if (!parentOrbit) return targetOrbit.transform.parent.TransformPoint(localPosition);
+            
+            var parentPosition = parentOrbit.GetPositionAfterTime(time);
+            return parentOrbit.transform.parent.TransformPoint(parentPosition) + localPosition;
         }
 
         private void CenterPlayer()
@@ -140,6 +162,7 @@ namespace ProceduralPlanets.Movement
         {
             if (!_isMoving) return;
 
+            Gizmos.color = _orbitalMovement.Color;
             Gizmos.DrawLine(transform.position, _targetBodyTransform.position);
         }
     }

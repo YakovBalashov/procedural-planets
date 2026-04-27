@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using ProceduralPlanets.Generation;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using TMPro;
 using UnityEngine;
@@ -12,10 +14,11 @@ namespace ProceduralPlanets.UI
     {
         [SerializeField] private GameObject starButtonPrefab;
         [SerializeField] private GameObject planetButtonPrefab;
-        
+        [SerializeField] private GameObject moonButtonPrefab;
+
         [SerializeField] private RectTransform buttonContainer;
         [SerializeField] private GameObject mapPanel;
-        
+
         [SerializeField] private InputActionReference toggleMapAction;
 
         public event Action<Vector2> OnBodySelected;
@@ -25,7 +28,7 @@ namespace ProceduralPlanets.UI
             toggleMapAction.action.Enable();
             toggleMapAction.action.performed += ToggleMap;
         }
-        
+
         private void OnDisable()
         {
             toggleMapAction.action.performed -= ToggleMap;
@@ -37,28 +40,63 @@ namespace ProceduralPlanets.UI
             mapPanel.SetActive(!mapPanel.activeSelf);
         }
 
-        public void Generate(List<CelestialBodyData> celestialBodies)
+        public void Generate(List<GameObject> celestialBodies)
         {
-            GenerateButton(starButtonPrefab, celestialBodies[0], Vector2.zero);
-            
+            var starColor = celestialBodies[0].GetComponent<CelestialBodyGeneratorBase>().GetBodyData().BaseColor;
+            GenerateButton(starButtonPrefab, celestialBodies[0].name, starColor, Vector2.zero, buttonContainer);
+
             var bodyIndex = new Vector2(1, 0);
+
             foreach (var body in celestialBodies)
             {
-                if (body is StarData) continue;
-                GenerateButton(planetButtonPrefab, body, bodyIndex);
+                var bodyData = body.GetComponent<CelestialBodyGeneratorBase>().GetBodyData();
+                if (bodyData is StarData) continue;
+                bodyIndex.y = 0;
+
+                var bodyName = bodyIndex.x.ToString(CultureInfo.InvariantCulture);
+                var bodyColor = new Color(bodyData.BaseColor.r, bodyData.BaseColor.g, bodyData.BaseColor.b, 1f);
+
+                var planetButton = GenerateButton(planetButtonPrefab, bodyName, bodyColor, bodyIndex, buttonContainer);
+
+                GenerateMoonButtons(body, (int)bodyIndex.x, planetButton.transform.GetChild(1));
+
                 bodyIndex.x += 1;
             }
         }
-        
-        private void GenerateButton(GameObject prefab, CelestialBodyData bodyData, Vector2 bodyIndex)
+
+        private void GenerateMoonButtons(GameObject planet, int planetIndex, Transform parent)
         {
-            GameObject buttonObj = Instantiate(prefab, buttonContainer);
-            Button button = buttonObj.GetComponent<Button>();
-            TextMeshProUGUI buttonText = buttonObj.GetComponentInChildren<TextMeshProUGUI>();
-            buttonText.text = bodyData.name;
-            
+            var planetGenerator = planet.GetComponent<PlanetGenerator>();
+            if (!planetGenerator) return;
+
+            if (planetGenerator.Moons.Count == 0) return;
+
+            var moonIndex = 0;
+            foreach (var moon in planetGenerator.Moons)
+            {
+                var moonButtonIndex = new Vector2(planetIndex, moonIndex);
+
+                var moonName = $"{SystemGenerator.NumberToLetter(moonIndex)}";
+                var moonColor = moon.GetComponent<CelestialBodyGeneratorBase>().GetBodyData().BaseColor;
+                moonColor.a = 1f;
+
+                GenerateButton(moonButtonPrefab, moonName, moonColor, moonButtonIndex, parent);
+                moonIndex++;
+            }
+        }
+
+        private GameObject GenerateButton(GameObject prefab, string bodyName, Color color, Vector2 bodyIndex,
+            Transform parent)
+        {
+            GameObject buttonObject = Instantiate(prefab, parent);
+            Button button = buttonObject.GetComponent<Button>();
+            TextMeshProUGUI buttonText = buttonObject.GetComponentInChildren<TextMeshProUGUI>();
+            buttonText.text = bodyName;
+            button.image.color = color;
+
             button.onClick.AddListener(() => SelectBody(bodyIndex));
             button.onClick.AddListener(() => mapPanel.SetActive(false));
+            return buttonObject;
         }
 
         private void SelectBody(Vector2 bodyIndex)

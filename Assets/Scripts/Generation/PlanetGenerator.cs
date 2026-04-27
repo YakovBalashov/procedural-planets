@@ -23,6 +23,8 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private GameObject atmospherePrefab;
         [SerializeField] private GameObject ringsPrefab;
         
+        public List<GameObject> Moons { get; set; }
+        
         private PlanetaryRingsGenerator _ringsGenerator;
         private AtmosphereGenerator _atmosphereGenerator;
 

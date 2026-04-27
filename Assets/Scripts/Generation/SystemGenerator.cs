@@ -33,6 +33,11 @@ namespace ProceduralPlanets.Generation
 
         private readonly List<GameObject> _celestialBodies = new();
 
+        public static char NumberToLetter(int index)
+        {
+            return (char)(FirstCapitalLetterASCII + index);
+        }
+
         public static Vector3 GetOffset(Random random)
         {
             return new Vector3(random.NextFloat(), random.NextFloat(), random.NextFloat()) * random.Range(0, MaxOffset);
@@ -46,7 +51,7 @@ namespace ProceduralPlanets.Generation
 
         private void Start()
         {
-            // GenerateSystem();
+            GenerateSystem();
         }
 
         public void GenerateSystem()
@@ -67,9 +72,7 @@ namespace ProceduralPlanets.Generation
             GenerateMoons(random);
 
             if (!Application.isPlaying) return;
-            systemMap.Generate(_celestialBodies.Select(body =>
-                body.GetComponent<CelestialBodyGeneratorBase>()
-                    .GetBodyData()).ToList());
+            systemMap.Generate(_celestialBodies);
         }
 
         private void GenerateMoons(Random random)
@@ -85,10 +88,11 @@ namespace ProceduralPlanets.Generation
                     planetType,
                     planet.transform,
                     type => type.PlanetOrbitType,
-                    index => $"{planet.name} {(char)(FirstCapitalLetterASCII + index)}"
+                    index => $"{planet.name} {NumberToLetter(index)}"
                 );
 
-                GenerateSatellites(moonSatelliteParameters, random);
+                var moons = GenerateSatellites(moonSatelliteParameters, random);
+                planetGenerator.Moons = moons;
             }
         }
 
@@ -106,12 +110,15 @@ namespace ProceduralPlanets.Generation
         private void ClearExistingSystem()
         {
             if (Application.isPlaying) return;
-            while (transform.childCount > 0)
+            if (_celestialBodies.Count == 0) return;
+            var primaryStarTransform = _celestialBodies[0].transform;
+            while (primaryStarTransform.childCount > 0)
             {
-                _celestialBodies.Clear();
-                Transform child = transform.GetChild(0);
+                Transform child = primaryStarTransform.GetChild(0);
                 DestroyImmediate(child.gameObject);
             }
+            DestroyImmediate(primaryStarTransform.gameObject);
+            _celestialBodies.Clear();
         }
 
         private List<GameObject> GenerateSatellites<TParent, TParentData>(

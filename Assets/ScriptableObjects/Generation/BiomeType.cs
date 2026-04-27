@@ -11,7 +11,6 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
     public class BiomeType : ScriptableObject
     {
         [SerializeField] BiomeParameters biomeParameters;
-        [SerializeField] private List<Color> colors;
         [SerializeField] private List<BiomeColors> biomeColors;
         
         private const float MaxOffset = 10000f;

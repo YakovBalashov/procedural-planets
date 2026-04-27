@@ -28,8 +28,6 @@ namespace ProceduralPlanets.Generation
     public class BiomeParameters
     {
         [SerializeField] private BiomeFeatures features;
-        [SerializeField] private Color color;
-        [SerializeField] private Color accentColor;
         [SerializeField] private BiomeColors biomeColors;
         [SerializeField] private FnlParameters mainNoise;
         [SerializeField] private float maskThreshold;

@@ -21,6 +21,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         [field: SerializeField] public Vector2 NormalMapBlendRange { get; private set; }
         [field: SerializeField] public List<BiomeCandidate> BiomeCandidates { get; private set; }
         [field: SerializeField] public SatelliteParameters SatelliteParameters { get; private set; }
+        [field: SerializeField] public float RadiusToPlayerOrbitRation { get; private set; } = 1.5f;
         private const float OffsetMultiplayer = 1000f;
 
         public virtual T CreateInstance(int seed)
@@ -36,14 +37,15 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             Dictionary<int, List<BiomeCandidate>> biomeGroups = GetBiomeGroups(BiomeCandidates);
 
             var baseColor = PossibleBaseColors[random.Range(0, PossibleBaseColors.Count)];
-            
+
             List<BiomeParameters> biomes = GenerateBiomes(biomeGroups, random, baseColor);
-            
+
             var normalMap = PossibleNormalMaps[random.Range(0, PossibleNormalMaps.Count)];
             var normalMapTile = random.Range(NormalMapTileRange.x, NormalMapTileRange.y);
             var normalMapBlend = random.Range(NormalMapBlendRange.x, NormalMapBlendRange.y);
 
-            instance.Initialize(radius, copiedCPUNoiseSettings, copiedGPUNoiseSettings, biomes, baseColor, normalMap, normalMapTile, normalMapBlend);
+            instance.Initialize(radius, copiedCPUNoiseSettings, copiedGPUNoiseSettings, biomes, baseColor, normalMap,
+                normalMapTile, normalMapBlend, RadiusToPlayerOrbitRation);
             return instance;
         }
 
@@ -72,8 +74,10 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             if (biomeGroups.ContainsKey(0))
             {
                 biomes = (from biomeCandidate in biomeGroups[0]
-                    where random.NextDouble() < biomeCandidate.Probability
-                    select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue), baseColor)).ToList();
+                        where random.NextDouble() < biomeCandidate.Probability
+                        select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue),
+                            baseColor))
+                    .ToList();
             }
 
             biomes.AddRange(from biomeGroup in biomeGroups
@@ -86,11 +90,13 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             return biomes;
         }
 
-        private BiomeParameters GetBiomeFromGroup(List<BiomeCandidate> biomeGroup, System.Random random, Color baseColor)
+        private BiomeParameters GetBiomeFromGroup(List<BiomeCandidate> biomeGroup, System.Random random,
+            Color baseColor)
         {
             var biomes = (from biomeCandidate in biomeGroup
-                where random.NextDouble() < biomeCandidate.Probability
-                select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue), baseColor)).ToList();
+                    where random.NextDouble() < biomeCandidate.Probability
+                    select biomeCandidate.BiomeType.GenerateBiomeParameters(random.Next(0, int.MaxValue), baseColor))
+                .ToList();
 
             return biomes.Count == 0 ? null : biomes[random.Range(0, biomes.Count)];
         }

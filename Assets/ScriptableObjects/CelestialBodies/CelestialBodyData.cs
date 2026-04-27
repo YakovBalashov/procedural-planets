@@ -15,12 +15,14 @@ namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
         [field: SerializeField] public Texture2D NormalMap { get; private set; }
         [field: SerializeField] public float NormalMapTile { get; private set; }
         [field: SerializeField] public float NormalMapBlend { get; private set; }
+        [field: SerializeField] public float PlayerOrbitRadius { get; private set; }
 
         
         public void Initialize(float radius, List<NoiseSettings> noiseSettings, List<NoiseSettingsGPU> gpuNoiseSettings,
-            List<BiomeParameters> biomes, Color baseColor, Texture2D normalMap, float normalMapTile, float normalMapBlend)
+            List<BiomeParameters> biomes, Color baseColor, Texture2D normalMap, float normalMapTile, float normalMapBlend, float playerOrbitRatio)
         {
             Radius = radius;
+            PlayerOrbitRadius = radius * playerOrbitRatio;
             CPUNoiseSettings = noiseSettings;
             GPUNoiseSettings = gpuNoiseSettings;
             Biomes = biomes;

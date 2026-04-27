@@ -58,6 +58,17 @@ namespace ProceduralPlanets.Movement
             rotation.z += deltaInclination;
         }
 
+        public Vector3 GetPositionAfterTime(float time)
+        {
+            float futureAngle = _currentAngle + speedInDegreesPerSecond * Mathf.Deg2Rad * time;
+            futureAngle %= 2 * Mathf.PI;
+
+            var rotationQuaternion = Quaternion.Euler(rotation);
+            Vector3 localRotatedPoint = rotationQuaternion * GetLocalPointOnEllipse(futureAngle);
+
+            return transform.parent ? transform.parent.TransformPoint(localRotatedPoint) : localRotatedPoint;
+        }
+        
         private void Initialize()
         {
             _centerToFocusDistance = Mathf.Sqrt(Mathf.Abs(Mathf.Pow(radiusX, 2) - Mathf.Pow(radiusZ, 2)));

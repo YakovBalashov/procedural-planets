@@ -13,7 +13,6 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
     public abstract class CelestialBodyType<T> : ScriptableObject where T : CelestialBodyData
     {
         [SerializeField] protected Vector2 radiusRange;
-        [SerializeField] protected List<NoiseSettings> cpuNoiseSettings;
         [SerializeField] protected List<NoiseSettingsGPU> gpuNoiseSettings;
         [field: SerializeField] public List<Color> PossibleBaseColors { get; private set; }
         [field: SerializeField] public List<Texture2D> PossibleNormalMaps { get; private set; }
@@ -31,7 +30,6 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
 
             float radius = radiusRange.x + (float)random.NextDouble() * (radiusRange.y - radiusRange.x);
 
-            var copiedCPUNoiseSettings = DeepCopyNoiseSettings(cpuNoiseSettings, random);
             var copiedGPUNoiseSettings = DeepCopyNoiseSettings(gpuNoiseSettings, random);
 
             Dictionary<int, List<BiomeCandidate>> biomeGroups = GetBiomeGroups(BiomeCandidates);
@@ -44,7 +42,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             var normalMapTile = random.Range(NormalMapTileRange.x, NormalMapTileRange.y);
             var normalMapBlend = random.Range(NormalMapBlendRange.x, NormalMapBlendRange.y);
 
-            instance.Initialize(radius, copiedCPUNoiseSettings, copiedGPUNoiseSettings, biomes, baseColor, normalMap,
+            instance.Initialize(radius, copiedGPUNoiseSettings, biomes, baseColor, normalMap,
                 normalMapTile, normalMapBlend, RadiusToPlayerOrbitRation);
             return instance;
         }

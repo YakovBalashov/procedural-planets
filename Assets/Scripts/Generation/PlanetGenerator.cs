@@ -22,9 +22,9 @@ namespace ProceduralPlanets.Generation
 
         [SerializeField] private GameObject atmospherePrefab;
         [SerializeField] private GameObject ringsPrefab;
-        
+
         public List<GameObject> Moons { get; set; }
-        
+
         private PlanetaryRingsGenerator _ringsGenerator;
         private AtmosphereGenerator _atmosphereGenerator;
 
@@ -48,47 +48,22 @@ namespace ProceduralPlanets.Generation
         public override void UpdateSurface()
         {
             base.UpdateSurface();
-            
+
             if (BodyData.AtmosphereParameters.Enabled)
                 _atmosphereGenerator.UpdateAtmosphere(BodyData.AtmosphereParameters, BodyData.Radius);
-            
+
             if (BodyData.RingParameters.Enabled) _ringsGenerator.UpdateRings(BodyData.RingParameters);
         }
 
         protected override void GenerateMesh()
         {
             var mesh = CubeSphereGenerator.Generate(resolution, BodyData.Radius);
-            
+
             if (useComputeShader && displacementShader is not null) mesh = GenerateMeshOnGPU(mesh);
-            else mesh = GenerateMeshOnCPU(mesh);
 
             mesh.RecalculateBounds();
 
             MeshFilter.sharedMesh = mesh;
-        }
-
-        private Mesh GenerateMeshOnCPU(Mesh mesh)
-        {
-            var noiseGenerators = (from noiseSetting in BodyData.CPUNoiseSettings
-                where noiseSetting.Enabled
-                select new NoiseGenerator(noiseSetting)).ToList();
-
-            var minMaxElevations = new MinMax();
-            var vertices = mesh.vertices;
-
-            for (var i = 0; i < vertices.Length; i++)
-            {
-                var vertex = vertices[i];
-                var elevation = noiseGenerators.Sum(noiseGenerator => noiseGenerator.Evaluate(vertex.normalized));
-                var distanceFromCenter = BodyData.Radius * (1 + elevation);
-
-                minMaxElevations.Evaluate(distanceFromCenter);
-                vertices[i] = vertex.normalized * distanceFromCenter;
-            }
-
-            mesh.vertices = vertices;
-            mesh.RecalculateNormals();
-            return mesh;
         }
 
         private Mesh GenerateMeshOnGPU(Mesh mesh)

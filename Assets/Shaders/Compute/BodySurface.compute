@@ -1,16 +1,17 @@
-#pragma kernel CSMain
+#pragma kernel CSGeometry
+#pragma kernel CSColor
 
 #include "Assets/Shaders/Displacement/VertexDisplacement.hlsl"
 #include "Assets/Shaders/Displacement/Normal.hlsl"
+#include "Assets/Shaders/Rendering/PlanetColor.hlsl"
 
 StructuredBuffer<float3> _BaseVertices;
 RWStructuredBuffer<float3> _DisplacedVertices;
 RWStructuredBuffer<float3> _Normals;
-
-RWTexture2D<float4> Result;
+RWStructuredBuffer<float4> _VertexColors;
 
 [numthreads(64, 1, 1)]
-void CSMain(uint3 id : SV_DispatchThreadID)
+void CSGeometry(uint3 id : SV_DispatchThreadID)
 {
     _DisplacedVertices[id.x] = ApplyVertexDisplacement(_BaseVertices[id.x]);
 
@@ -19,4 +20,14 @@ void CSMain(uint3 id : SV_DispatchThreadID)
     float3 finalNormal = normalInfo.GetNormal();
 
     _Normals[id.x] = finalNormal;
+}
+
+[numthreads(64, 1, 1)]
+void CSColor(uint3 id : SV_DispatchThreadID)
+{
+    float3 color;
+    float intensity;
+    CalculateColor_float(_DisplacedVertices[id.x], _Normals[id.x], color, intensity);
+
+    _VertexColors[id.x] = float4(color, intensity);
 }

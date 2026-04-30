@@ -70,7 +70,7 @@ namespace ProceduralPlanets.Generation
         {
             var baseVertices = mesh.vertices;
 
-            int vec3Size = sizeof(float) * 3;
+            var vector3Size = Marshal.SizeOf(typeof(Vector3));
 
             var gpuNoiseSettings = BodyData.GPUNoiseSettings
                 .Where(setting => setting.Enabled)
@@ -78,44 +78,75 @@ namespace ProceduralPlanets.Generation
                 .ToArray();
             var craters = CraterGenerator.GenerateCraters(BodyData.CraterGenerationSettings, 0);
 
-            using var baseVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
-            using var displacedVertexBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
-            using var normalBuffer = new ComputeBuffer(baseVertices.Length, vec3Size);
+            using var baseVertexBuffer = new ComputeBuffer(baseVertices.Length, vector3Size);
+            using var displacedVertexBuffer = new ComputeBuffer(baseVertices.Length, vector3Size);
+            using var normalBuffer = new ComputeBuffer(baseVertices.Length, vector3Size);
             using var noiseBuffer = new ComputeBuffer(Mathf.Max(1, gpuNoiseSettings.Length),
                 Marshal.SizeOf(typeof(NoiseSettingsGPUStruct)));
             using var craterBuffer =
                 new ComputeBuffer(Mathf.Max(1, craters.Count), Marshal.SizeOf(typeof(CraterParameters)));
+            using var colorBuffer = new ComputeBuffer(baseVertices.Length, Marshal.SizeOf(typeof(Color)));
+            using var biomeBuffer = new ComputeBuffer(Mathf.Max(1, BodyData.Biomes.Count), Marshal.SizeOf(typeof(BiomeParametersStruct)));
 
             baseVertexBuffer.SetData(baseVertices);
             if (craters.Count > 0) craterBuffer.SetData(craters);
             if (gpuNoiseSettings.Length > 0) noiseBuffer.SetData(gpuNoiseSettings);
+            if (BodyData.Biomes.Count > 0)
+            {
+                var biomeStructs = BodyData.Biomes.Select(b => b.ToStruct()).ToArray();
+                biomeBuffer.SetData(biomeStructs);
+            }
 
-            int kernel = displacementShader.FindKernel("CSMain");
-            displacementShader.SetBuffer(kernel, ShaderParametersIDs.BaseVertices, baseVertexBuffer);
-            displacementShader.SetBuffer(kernel, ShaderParametersIDs.DisplacedVertices, displacedVertexBuffer);
-            displacementShader.SetBuffer(kernel, ShaderParametersIDs.Normals, normalBuffer);
-            displacementShader.SetBuffer(kernel, ShaderParametersIDs.NoiseSettingsBuffer, noiseBuffer);
-            displacementShader.SetBuffer(kernel, ShaderParametersIDs.CraterParameters, craterBuffer);
-
+            int geometryKernel = displacementShader.FindKernel("CSGeometry");
+            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.BaseVertices, baseVertexBuffer);
+            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.DisplacedVertices, displacedVertexBuffer);
+            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.Normals, normalBuffer);
+            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.NoiseSettingsBuffer, noiseBuffer);
+            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.CraterParameters, craterBuffer);
+            
             displacementShader.SetInt(ShaderParametersIDs.NoiseSettingsCount, gpuNoiseSettings.Length);
             displacementShader.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
             displacementShader.SetFloat(ShaderParametersIDs.NormalSampleDistance, normalSampleDistance);
             displacementShader.SetInt(ShaderParametersIDs.CraterCount, craters.Count);
 
             int threadGroups = Mathf.CeilToInt(baseVertices.Length / 64f);
-            displacementShader.Dispatch(kernel, threadGroups, 1, 1);
+            displacementShader.Dispatch(geometryKernel, threadGroups, 1, 1);
 
             var displacedVertices = new Vector3[baseVertices.Length];
             var normals = new Vector3[baseVertices.Length];
-
+            
             displacedVertexBuffer.GetData(displacedVertices);
             normalBuffer.GetData(normals);
 
             mesh.vertices = displacedVertices;
-
-            if (useUnityNormals) mesh.RecalculateNormals();
+            if (useUnityNormals)
+            {
+                mesh.RecalculateNormals();
+                normalBuffer.SetData(mesh.normals);
+            }
             else mesh.normals = normals;
 
+            var heightRange = GetVertexHeightRange(mesh);
+            
+            int colorKernel = displacementShader.FindKernel("CSColor");
+
+            displacementShader.SetBuffer(colorKernel, ShaderParametersIDs.BiomeParameters, biomeBuffer);
+            displacementShader.SetBuffer(colorKernel, ShaderParametersIDs.VertexColors, colorBuffer);
+            displacementShader.SetBuffer(colorKernel, ShaderParametersIDs.DisplacedVertices, displacedVertexBuffer);
+            displacementShader.SetBuffer(colorKernel, ShaderParametersIDs.Normals, normalBuffer);
+            
+            displacementShader.SetVector(ShaderParametersIDs.BaseColor, BodyData.BaseColor);
+            displacementShader.SetInt(ShaderParametersIDs.BiomeCount, BodyData.Biomes.Count);
+            displacementShader.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
+            displacementShader.SetFloat(ShaderParametersIDs.LowestVertexHeight, heightRange.x);
+            displacementShader.SetFloat(ShaderParametersIDs.HighestVertexHeight, heightRange.y);
+            
+            displacementShader.Dispatch(colorKernel, threadGroups, 1, 1);
+            
+            var colors = new Color[baseVertices.Length];
+            colorBuffer.GetData(colors);
+            mesh.colors = colors;
+            
             return mesh;
         }
 

@@ -96,10 +96,17 @@ namespace ProceduralPlanets.Generation
         
         private void UpdateVertexRange()
         {
-            var vertices = new List<Vector3>();
-            MeshFilter.sharedMesh.GetVertices(vertices);
+            var range = GetVertexHeightRange(MeshFilter.sharedMesh);
+            _materialInstance.SetFloat(ShaderParametersIDs.LowestVertexHeight, range.x);
+            _materialInstance.SetFloat(ShaderParametersIDs.HighestVertexHeight, range.y);
+        }
 
-            if (vertices.Count == 0) return;
+        protected static Vector2 GetVertexHeightRange(Mesh mesh)
+        {
+            var vertices = new List<Vector3>();
+            mesh.GetVertices(vertices);
+
+            if (vertices.Count == 0) return Vector2.zero;
 
             var minSquare = float.MaxValue;
             var maxSquare = float.MinValue;
@@ -109,9 +116,7 @@ namespace ProceduralPlanets.Generation
                 if (squareMagnitude < minSquare) minSquare = squareMagnitude;
                 if (squareMagnitude > maxSquare) maxSquare = squareMagnitude;
             }
-
-            _materialInstance.SetFloat(ShaderParametersIDs.LowestVertexHeight, Mathf.Sqrt(minSquare));
-            _materialInstance.SetFloat(ShaderParametersIDs.HighestVertexHeight, Mathf.Sqrt(maxSquare));
+            return new Vector2(Mathf.Sqrt(minSquare), Mathf.Sqrt(maxSquare));
         }
         
         protected virtual void Initialize()

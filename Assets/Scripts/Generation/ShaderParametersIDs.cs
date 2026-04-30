@@ -9,7 +9,9 @@ namespace ProceduralPlanets.Generation
 
         public static readonly int Normals = Shader.PropertyToID("_Normals");
         public static readonly int NormalSampleDistance = Shader.PropertyToID("_NormalSampleDistance");
-
+        
+        public static readonly int VertexColors = Shader.PropertyToID("_VertexColors");
+        
         public static readonly int BaseColor = Shader.PropertyToID("_BaseColor");
         public static readonly int NormalMap = Shader.PropertyToID("_NormalMap");
         public static readonly int NormalMapTile = Shader.PropertyToID("_Tile");

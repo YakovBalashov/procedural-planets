@@ -15,8 +15,9 @@ namespace ProceduralPlanets.Generation
         where TData : CelestialBodyData
         where TType : CelestialBodyType<TData>
     {
-        [Header("Mesh")] [SerializeField, Range(0, 6)]
-        protected int subdivisionLevel;
+        [Range(2, 256), SerializeField]
+        [Tooltip("Number of vertices along one edge of a single face.")]
+        protected int resolution = 10;
 
         [field: SerializeField] public TData BodyData { get; private set; }
         [field: SerializeField] public TType BodyType { get; private set; }

@@ -57,8 +57,8 @@ namespace ProceduralPlanets.Generation
 
         protected override void GenerateMesh()
         {
-            var mesh = IcoSphereGenerator.Generate(subdivisionLevel, BodyData.Radius);
-
+            var mesh = CubeSphereGenerator.Generate(resolution, BodyData.Radius);
+            
             if (useComputeShader && displacementShader is not null) mesh = GenerateMeshOnGPU(mesh);
             else mesh = GenerateMeshOnCPU(mesh);
 

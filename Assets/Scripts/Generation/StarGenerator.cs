@@ -10,9 +10,7 @@ namespace ProceduralPlanets.Generation
     {
         protected override void GenerateMesh()
         {
-            var mesh = IcoSphereGenerator.Generate(subdivisionLevel, BodyData.Radius);
-            mesh.RecalculateNormals();
-            mesh.RecalculateBounds();
+            var mesh = CubeSphereGenerator.Generate(resolution, BodyData.Radius);
             MeshFilter.sharedMesh = mesh;
         }
     }

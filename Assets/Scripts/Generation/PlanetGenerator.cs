@@ -40,19 +40,20 @@ namespace ProceduralPlanets.Generation
             }
         }
 
-        protected override Mesh GenerateMeshOnGPU(int sphereResolution)
+        protected override ComputeBuffer CreateCraterBuffer()
         {
             var craters = CraterGenerator.GenerateCraters(BodyData.CraterGenerationSettings, 0);
-            using var craterBuffer =
-                new ComputeBuffer(Mathf.Max(1, craters.Count), Marshal.SizeOf(typeof(CraterParameters)));
-            if (craters.Count > 0) craterBuffer.SetData(craters);
-            int geometryKernel = displacementShader.FindKernel("CSGeometry");
-            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.CraterParameters, craterBuffer);
-            displacementShader.SetInt(ShaderParametersIDs.CraterCount, craters.Count);
             
-            return base.GenerateMeshOnGPU(sphereResolution);
+            if (craters.Count == 0)
+                return new ComputeBuffer(1, Marshal.SizeOf(typeof(byte)));
+            
+            var craterBuffer =
+                new ComputeBuffer(Mathf.Max(1, craters.Count), Marshal.SizeOf(typeof(CraterParameters)));
+            
+            craterBuffer.SetData(craters);
+            return craterBuffer;
         }
-
+        
         public override void UpdateSurface()
         {
             base.UpdateSurface();

@@ -23,7 +23,7 @@ namespace ProceduralPlanets.Generation
         [field: SerializeField] public TType BodyType { get; private set; }
         [SerializeField] private bool useComputeShader = true;
         [SerializeField] private bool useUnityNormals = true;
-        [SerializeField] protected ComputeShader displacementShader;
+        [SerializeField] private ComputeShader displacementShader;
         [SerializeField] private float normalSampleDistance = 0.01f;
         [SerializeField] private Shader planetShader;
 
@@ -106,7 +106,12 @@ namespace ProceduralPlanets.Generation
             _meshFilter.sharedMesh = mesh;
         }
 
-        protected virtual Mesh GenerateMeshOnGPU(int sphereResolution)
+        protected virtual ComputeBuffer CreateCraterBuffer()
+        {
+            return new ComputeBuffer(1, sizeof(byte));
+        }
+
+        private Mesh GenerateMeshOnGPU(int sphereResolution)
         {
             var mesh = CubeSphereGenerator.Generate(sphereResolution, BodyData.Radius);
             
@@ -127,7 +132,8 @@ namespace ProceduralPlanets.Generation
             using var colorBuffer = new ComputeBuffer(baseVertices.Length, Marshal.SizeOf(typeof(Color)));
             using var biomeBuffer = new ComputeBuffer(Mathf.Max(1, BodyData.Biomes.Count),
                 Marshal.SizeOf(typeof(BiomeParametersStruct)));
-            using var craterBuffer = new ComputeBuffer(1, Marshal.SizeOf(typeof(CraterParameters)));
+            using var craterBuffer = CreateCraterBuffer();
+            var craterCount = (craterBuffer.stride < Marshal.SizeOf(typeof(CraterParameters))) ? 0 : craterBuffer.count;
 
             baseVertexBuffer.SetData(baseVertices);
             if (gpuNoiseSettings.Length > 0) noiseBuffer.SetData(gpuNoiseSettings);
@@ -144,7 +150,7 @@ namespace ProceduralPlanets.Generation
             displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.NoiseSettingsBuffer, noiseBuffer);
             displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.CraterParameters, craterBuffer);
             
-            displacementShader.SetInt(ShaderParametersIDs.CraterCount, 0);
+            displacementShader.SetInt(ShaderParametersIDs.CraterCount, craterCount);
             displacementShader.SetInt(ShaderParametersIDs.NoiseSettingsCount, gpuNoiseSettings.Length);
             displacementShader.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
             displacementShader.SetFloat(ShaderParametersIDs.NormalSampleDistance, normalSampleDistance);
@@ -236,7 +242,5 @@ namespace ProceduralPlanets.Generation
             if (Application.isPlaying) Destroy(_materialInstance);
             else DestroyImmediate(_materialInstance);
         }
-
-        // protected abstract void GenerateMesh();
     }
 }

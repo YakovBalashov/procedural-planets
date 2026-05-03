@@ -8,10 +8,6 @@ namespace ProceduralPlanets.Generation
     [RequireComponent(typeof(Light))]
     public class StarGenerator : CelestialBodyGenerator<StarData, StarType>
     {
-        protected override void GenerateMesh()
-        {
-            var mesh = CubeSphereGenerator.Generate(resolution, BodyData.Radius);
-            MeshFilter.sharedMesh = mesh;
-        }
+        
     }
 }

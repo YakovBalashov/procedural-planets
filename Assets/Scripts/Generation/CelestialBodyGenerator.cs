@@ -21,15 +21,19 @@ namespace ProceduralPlanets.Generation
 
         [field: SerializeField] public TData BodyData { get; private set; }
         [field: SerializeField] public TType BodyType { get; private set; }
+        [SerializeField] private bool useComputeShader = true;
+        [SerializeField] private bool useUnityNormals = true;
+        [SerializeField] protected ComputeShader displacementShader;
+        [SerializeField] private float normalSampleDistance = 0.01f;
         [SerializeField] private Shader planetShader;
-        
-        protected MeshFilter MeshFilter;
+
+        private MeshFilter _meshFilter;
         private MeshRenderer _meshRenderer;
         private ComputeBuffer _noiseSettingsBuffer;
         private Material _materialInstance;
         private ComputeBuffer _biomeBuffer;
 
-        
+
         public override void GenerateBodyData()
         {
             GenerateBodyData(Random.Range(0, int.MaxValue));
@@ -44,7 +48,7 @@ namespace ProceduralPlanets.Generation
         public override void UpdateSurface()
         {
             Initialize();
-            GenerateMesh();
+            UpdateMesh();
             UpdateMaterial();
         }
 
@@ -58,13 +62,13 @@ namespace ProceduralPlanets.Generation
             BodyType = newBodyType;
             GenerateBodyData();
         }
-        
+
         public void SetBodyData(TData newBodyData)
         {
             BodyData = newBodyData;
             UpdateSurface();
         }
-        
+
         private void UpdateMaterial()
         {
             UpdateVertexRange();
@@ -93,15 +97,105 @@ namespace ProceduralPlanets.Generation
 
             _materialInstance.SetBuffer(ShaderParametersIDs.BiomeParameters, _biomeBuffer);
         }
-        
+
+        private void UpdateMesh()
+        {
+            if (!displacementShader) return;
+            
+            var mesh = GenerateMeshOnGPU(resolution);
+            _meshFilter.sharedMesh = mesh;
+        }
+
+        protected virtual Mesh GenerateMeshOnGPU(int sphereResolution)
+        {
+            var mesh = CubeSphereGenerator.Generate(sphereResolution, BodyData.Radius);
+            
+            var baseVertices = mesh.vertices;
+
+            var vector3Size = Marshal.SizeOf(typeof(Vector3));
+
+            var gpuNoiseSettings = BodyData.GPUNoiseSettings
+                .Where(setting => setting.Enabled)
+                .Select(setting => setting.ToStruct())
+                .ToArray();
+
+            using var baseVertexBuffer = new ComputeBuffer(baseVertices.Length, vector3Size);
+            using var displacedVertexBuffer = new ComputeBuffer(baseVertices.Length, vector3Size);
+            using var normalBuffer = new ComputeBuffer(baseVertices.Length, vector3Size);
+            using var noiseBuffer = new ComputeBuffer(Mathf.Max(1, gpuNoiseSettings.Length),
+                Marshal.SizeOf(typeof(NoiseSettingsGPUStruct)));
+            using var colorBuffer = new ComputeBuffer(baseVertices.Length, Marshal.SizeOf(typeof(Color)));
+            using var biomeBuffer = new ComputeBuffer(Mathf.Max(1, BodyData.Biomes.Count),
+                Marshal.SizeOf(typeof(BiomeParametersStruct)));
+
+            baseVertexBuffer.SetData(baseVertices);
+            if (gpuNoiseSettings.Length > 0) noiseBuffer.SetData(gpuNoiseSettings);
+            if (BodyData.Biomes.Count > 0)
+            {
+                var biomeStructs = BodyData.Biomes.Select(b => b.ToStruct()).ToArray();
+                biomeBuffer.SetData(biomeStructs);
+            }
+
+            int geometryKernel = displacementShader.FindKernel("CSGeometry");
+            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.BaseVertices, baseVertexBuffer);
+            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.DisplacedVertices, displacedVertexBuffer);
+            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.Normals, normalBuffer);
+            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.NoiseSettingsBuffer, noiseBuffer);
+
+            displacementShader.SetInt(ShaderParametersIDs.NoiseSettingsCount, gpuNoiseSettings.Length);
+            displacementShader.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
+            displacementShader.SetFloat(ShaderParametersIDs.NormalSampleDistance, normalSampleDistance);
+
+            int threadGroups = Mathf.CeilToInt(baseVertices.Length / 64f);
+            displacementShader.Dispatch(geometryKernel, threadGroups, 1, 1);
+
+            var displacedVertices = new Vector3[baseVertices.Length];
+            var normals = new Vector3[baseVertices.Length];
+
+            displacedVertexBuffer.GetData(displacedVertices);
+            normalBuffer.GetData(normals);
+
+            mesh.vertices = displacedVertices;
+            if (useUnityNormals)
+            {
+                mesh.RecalculateNormals();
+                normalBuffer.SetData(mesh.normals);
+            }
+            else mesh.normals = normals;
+            mesh.RecalculateBounds();
+
+            var heightRange = GetVertexHeightRange(mesh);
+
+            int colorKernel = displacementShader.FindKernel("CSColor");
+
+            displacementShader.SetBuffer(colorKernel, ShaderParametersIDs.BiomeParameters, biomeBuffer);
+            displacementShader.SetBuffer(colorKernel, ShaderParametersIDs.VertexColors, colorBuffer);
+            displacementShader.SetBuffer(colorKernel, ShaderParametersIDs.DisplacedVertices, displacedVertexBuffer);
+            displacementShader.SetBuffer(colorKernel, ShaderParametersIDs.Normals, normalBuffer);
+
+            displacementShader.SetVector(ShaderParametersIDs.BaseColor, BodyData.BaseColor);
+            displacementShader.SetInt(ShaderParametersIDs.BiomeCount, BodyData.Biomes.Count);
+            displacementShader.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
+            displacementShader.SetFloat(ShaderParametersIDs.LowestVertexHeight, heightRange.x);
+            displacementShader.SetFloat(ShaderParametersIDs.HighestVertexHeight, heightRange.y);
+
+            displacementShader.Dispatch(colorKernel, threadGroups, 1, 1);
+
+            var colors = new Color[baseVertices.Length];
+            colorBuffer.GetData(colors);
+            mesh.colors = colors;
+
+            return mesh;
+        }
+
         private void UpdateVertexRange()
         {
-            var range = GetVertexHeightRange(MeshFilter.sharedMesh);
+            var range = GetVertexHeightRange(_meshFilter.sharedMesh);
             _materialInstance.SetFloat(ShaderParametersIDs.LowestVertexHeight, range.x);
             _materialInstance.SetFloat(ShaderParametersIDs.HighestVertexHeight, range.y);
         }
 
-        protected static Vector2 GetVertexHeightRange(Mesh mesh)
+        private static Vector2 GetVertexHeightRange(Mesh mesh)
         {
             var vertices = new List<Vector3>();
             mesh.GetVertices(vertices);
@@ -116,19 +210,20 @@ namespace ProceduralPlanets.Generation
                 if (squareMagnitude < minSquare) minSquare = squareMagnitude;
                 if (squareMagnitude > maxSquare) maxSquare = squareMagnitude;
             }
+
             return new Vector2(Mathf.Sqrt(minSquare), Mathf.Sqrt(maxSquare));
         }
-        
+
         protected virtual void Initialize()
         {
-            if (!MeshFilter) MeshFilter = GetComponent<MeshFilter>();
+            if (!_meshFilter) _meshFilter = GetComponent<MeshFilter>();
             if (!_meshRenderer) _meshRenderer = GetComponent<MeshRenderer>();
-            
+
             if (_materialInstance) return;
             _materialInstance = new Material(planetShader);
             _meshRenderer.sharedMaterial = _materialInstance;
         }
-        
+
         private void OnDestroy()
         {
             _biomeBuffer?.Release();
@@ -139,6 +234,6 @@ namespace ProceduralPlanets.Generation
             else DestroyImmediate(_materialInstance);
         }
 
-        protected abstract void GenerateMesh();
+        // protected abstract void GenerateMesh();
     }
 }

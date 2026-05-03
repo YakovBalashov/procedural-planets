@@ -127,6 +127,7 @@ namespace ProceduralPlanets.Generation
             using var colorBuffer = new ComputeBuffer(baseVertices.Length, Marshal.SizeOf(typeof(Color)));
             using var biomeBuffer = new ComputeBuffer(Mathf.Max(1, BodyData.Biomes.Count),
                 Marshal.SizeOf(typeof(BiomeParametersStruct)));
+            using var craterBuffer = new ComputeBuffer(1, Marshal.SizeOf(typeof(CraterParameters)));
 
             baseVertexBuffer.SetData(baseVertices);
             if (gpuNoiseSettings.Length > 0) noiseBuffer.SetData(gpuNoiseSettings);
@@ -141,7 +142,9 @@ namespace ProceduralPlanets.Generation
             displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.DisplacedVertices, displacedVertexBuffer);
             displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.Normals, normalBuffer);
             displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.NoiseSettingsBuffer, noiseBuffer);
-
+            displacementShader.SetBuffer(geometryKernel, ShaderParametersIDs.CraterParameters, craterBuffer);
+            
+            displacementShader.SetInt(ShaderParametersIDs.CraterCount, 0);
             displacementShader.SetInt(ShaderParametersIDs.NoiseSettingsCount, gpuNoiseSettings.Length);
             displacementShader.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
             displacementShader.SetFloat(ShaderParametersIDs.NormalSampleDistance, normalSampleDistance);

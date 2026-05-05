@@ -935,7 +935,6 @@ MonoBehaviour:
   m_Name: Polaris 5 C
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 28.584686
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -1019,6 +1018,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -4954,7 +4954,6 @@ MonoBehaviour:
   m_Name: Polaris 3
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 68.112915
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -5060,6 +5059,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -5482,7 +5482,6 @@ MonoBehaviour:
   m_Name: Polaris 9 C
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 43.112915
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.015
@@ -5588,6 +5587,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -5936,15 +5936,15 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 1
-  far clip plane: 40000
+  near clip plane: 5
+  far clip plane: 1100000
   field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -5968,7 +5968,8 @@ Transform:
   m_LocalPosition: {x: 1746, y: 1.9151111, z: 1.6069686}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 561544438}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &330585547
@@ -5988,6 +5989,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras:
+  - {fileID: 561544437}
   - {fileID: 568745350}
   m_RendererIndex: -1
   m_VolumeLayerMask:
@@ -7128,7 +7130,6 @@ MonoBehaviour:
   m_Name: Polaris 9 D
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 33.56142
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.015
@@ -7234,6 +7235,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -7524,7 +7526,6 @@ MonoBehaviour:
   m_Name: Polaris 7 F
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 59.458435
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -7630,6 +7631,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -7736,6 +7738,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 475837571312722928, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 757419711369307021, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1147660058400121059, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1302052156508529300, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
       propertyPath: color.b
       value: 0.015686275
@@ -7767,6 +7781,10 @@ PrefabInstance:
     - target: {fileID: 1302052156508529300, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
       propertyPath: <Color>k__BackingField.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1858009083424634796, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1891438339132072879, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
       propertyPath: m_LocalScale.x
@@ -7820,6 +7838,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2417310684355736463, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3284361853742707698, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388173933650939131, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5583419647238889499, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976709125888698650, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414924085786301289, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7045958382876155129, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7401323694097079747, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
       propertyPath: velocity
       value: 400
@@ -7851,6 +7897,22 @@ PrefabInstance:
     - target: {fileID: 7687471758654040645, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687471758654040645, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145323510306315247, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216963770294961003, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8300673593488333155, guid: 79cf11133f6a58e45bebc8e2f3a627f0, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8377,7 +8439,6 @@ MonoBehaviour:
   m_Name: Polaris 6 C
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 43.112915
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.015
@@ -8483,6 +8544,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -8722,7 +8784,6 @@ MonoBehaviour:
   m_Name: Polaris 8 F
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 59.458435
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -8828,6 +8889,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -8874,7 +8936,6 @@ MonoBehaviour:
   m_Name: Polaris 2
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 20.748306
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -8936,6 +8997,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -8982,7 +9044,6 @@ MonoBehaviour:
   m_Name: Polaris 7 E
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 69.009926
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -9088,6 +9149,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -9655,7 +9717,6 @@ MonoBehaviour:
   m_Name: Polaris 1
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 27.911926
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -9739,6 +9800,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -9990,7 +10052,6 @@ MonoBehaviour:
   m_Name: Polaris 8
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 655.3317
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField: []
   <BaseColor>k__BackingField: {r: 1, g: 0.60784316, b: 0.27058825, a: 0}
   <Biomes>k__BackingField:
@@ -10064,6 +10125,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 1
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -10509,7 +10571,6 @@ MonoBehaviour:
   m_Name: Polaris 6 E
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 44.00993
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.015
@@ -10615,6 +10676,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -10648,6 +10710,143 @@ MonoBehaviour:
       <WarpAmplitude>k__BackingField: 5.22
     <NoiseRange>k__BackingField: {x: 0.015888622, y: 4.924085}
     <MinAlpha>k__BackingField: 0.018308157
+--- !u!1 &561544434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 561544438}
+  - component: {fileID: 561544437}
+  - component: {fileID: 561544436}
+  - component: {fileID: 561544435}
+  m_Layer: 0
+  m_Name: PlayerCamera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &561544435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561544434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 1
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
+--- !u!81 &561544436
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561544434}
+  m_Enabled: 1
+--- !u!20 &561544437
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561544434}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 4
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 20.78461
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.1
+  far clip plane: 10
+  field of view: 60.000004
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 136
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &561544438
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561544434}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 330585546}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &567068011 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 112959012571510243, guid: 2a4c3648636c8af4dbf593f53c383c29, type: 3}
@@ -11158,7 +11357,6 @@ MonoBehaviour:
   m_Name: Polaris 10
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 668.78687
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField: []
   <BaseColor>k__BackingField: {r: 1, g: 0.60784316, b: 0.27058825, a: 0}
   <Biomes>k__BackingField:
@@ -11232,6 +11430,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 1
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -11813,7 +12012,6 @@ MonoBehaviour:
   m_Name: Polaris 8 B
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 20.748306
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -11875,6 +12073,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -12486,7 +12685,6 @@ MonoBehaviour:
   m_Name: Polaris 9 A
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 15.164771
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.3
@@ -12526,6 +12724,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -12637,7 +12836,6 @@ MonoBehaviour:
   m_Name: Polaris 6
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 641.8765
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField: []
   <BaseColor>k__BackingField: {r: 1, g: 0.60784316, b: 0.27058825, a: 0}
   <Biomes>k__BackingField:
@@ -12711,6 +12909,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 1
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -13096,7 +13295,6 @@ MonoBehaviour:
   m_Name: Polaris 6 B
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 32.66441
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.015
@@ -13202,6 +13400,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -14959,7 +15158,6 @@ MonoBehaviour:
   m_Name: Polaris 3 A
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 15.164771
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.3
@@ -14999,6 +15197,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -15536,7 +15735,6 @@ MonoBehaviour:
   m_Name: Polaris 6 D
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 21.421066
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -15598,6 +15796,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -16615,7 +16814,6 @@ MonoBehaviour:
   m_Name: Polaris 6 F
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 59.458435
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -16721,6 +16919,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -16955,7 +17154,6 @@ MonoBehaviour:
   m_Name: Polaris 7 A
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 15.164771
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.3
@@ -16995,6 +17193,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -17137,7 +17336,6 @@ MonoBehaviour:
   m_Name: Polaris 5 D
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 21.421066
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -17199,6 +17397,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -17377,7 +17576,6 @@ MonoBehaviour:
   m_Name: Polaris 8 C
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 28.584686
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -17461,6 +17659,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -17812,7 +18011,6 @@ MonoBehaviour:
   m_Name: Polaris 3 B
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 12.299323
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.3
@@ -17852,6 +18050,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -18500,7 +18699,6 @@ MonoBehaviour:
   m_Name: Polaris 9
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 512.0593
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField: []
   <BaseColor>k__BackingField: {r: 1, g: 0.60784316, b: 0.27058825, a: 0}
   <Biomes>k__BackingField:
@@ -18574,6 +18772,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 1
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -18892,7 +19091,6 @@ MonoBehaviour:
   m_Name: Polaris 7 D
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 21.421066
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -18954,6 +19152,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -19253,7 +19452,6 @@ MonoBehaviour:
   m_Name: Polaris 9 B
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 20.748306
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -19315,6 +19513,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -21405,7 +21604,6 @@ MonoBehaviour:
   m_Name: Polaris 8 A
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 27.911926
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -21489,6 +21687,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -21540,7 +21739,6 @@ MonoBehaviour:
   m_Name: Polaris 8 D
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 21.421066
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -21602,6 +21800,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -21648,7 +21847,6 @@ MonoBehaviour:
   m_Name: Polaris 5 B
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 20.748306
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -21710,6 +21908,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -22607,7 +22806,6 @@ MonoBehaviour:
   m_Name: Polaris
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.StarData
   <Radius>k__BackingField: 7169.185
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField: []
   <BaseColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
   <Biomes>k__BackingField:
@@ -22681,6 +22879,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 1
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
 --- !u!4 &1292717371 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 112959012571510243, guid: 2a4c3648636c8af4dbf593f53c383c29, type: 3}
@@ -22699,7 +22898,6 @@ MonoBehaviour:
   m_Name: Polaris 3 C
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 28.584686
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -22783,6 +22981,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -23381,7 +23580,6 @@ MonoBehaviour:
   m_Name: Polaris 10 C
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 28.584686
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -23465,6 +23663,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -23917,7 +24116,6 @@ MonoBehaviour:
   m_Name: Polaris 5 E
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 69.009926
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -24023,6 +24221,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -24954,7 +25153,6 @@ MonoBehaviour:
   m_Name: Polaris 5 F
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 59.458435
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -25060,6 +25258,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -25817,7 +26016,6 @@ MonoBehaviour:
   m_Name: Polaris 4 C
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 28.584686
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -25901,6 +26099,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -26341,7 +26540,6 @@ MonoBehaviour:
   m_Name: Polaris 9 E
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 29.257446
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -26403,6 +26601,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -26449,7 +26648,6 @@ MonoBehaviour:
   m_Name: Polaris 10 A
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 15.164771
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.3
@@ -26489,6 +26687,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -26933,7 +27132,6 @@ MonoBehaviour:
   m_Name: Polaris 4
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 58.56142
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -27039,6 +27237,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -27461,7 +27660,6 @@ MonoBehaviour:
   m_Name: Polaris 5
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 785.1489
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField: []
   <BaseColor>k__BackingField: {r: 1, g: 0.60784316, b: 0.27058825, a: 0}
   <Biomes>k__BackingField:
@@ -27535,6 +27733,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 1
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -29741,7 +29940,6 @@ MonoBehaviour:
   m_Name: Polaris 9 F
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 59.458435
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -29847,6 +30045,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -30076,7 +30275,6 @@ MonoBehaviour:
   m_Name: Polaris 10 B
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 20.748306
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -30138,6 +30336,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -30423,7 +30622,6 @@ MonoBehaviour:
   m_Name: Polaris 10 D
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 21.421066
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -30485,6 +30683,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -31024,7 +31223,6 @@ MonoBehaviour:
   m_Name: Polaris 10 F
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 59.458435
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -31130,6 +31328,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -31310,7 +31509,6 @@ MonoBehaviour:
   m_Name: Polaris 4 B
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 12.299323
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.3
@@ -31350,6 +31548,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -31396,7 +31595,6 @@ MonoBehaviour:
   m_Name: Polaris 6 A
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 27.911926
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -31480,6 +31678,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -32705,7 +32904,6 @@ MonoBehaviour:
   m_Name: Polaris 7 B
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 32.66441
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.015
@@ -32811,6 +33009,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -32862,7 +33061,6 @@ MonoBehaviour:
   m_Name: Polaris 10 E
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 29.257446
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -32924,6 +33122,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -33055,7 +33254,6 @@ MonoBehaviour:
   m_Name: Polaris 8 E
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 69.009926
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -33161,6 +33359,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -34461,7 +34660,6 @@ MonoBehaviour:
   m_Name: Polaris 4 A
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 15.164771
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.3
@@ -34501,6 +34699,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -34725,7 +34924,6 @@ MonoBehaviour:
   m_Name: Polaris 7
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 798.6041
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField: []
   <BaseColor>k__BackingField: {r: 1, g: 0.60784316, b: 0.27058825, a: 0}
   <Biomes>k__BackingField:
@@ -34799,6 +34997,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 1
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -35236,7 +35435,6 @@ MonoBehaviour:
   m_Name: Polaris 7 C
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 68.112915
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -35342,6 +35540,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
@@ -35559,7 +35758,6 @@ MonoBehaviour:
   m_Name: Polaris 5 A
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
   <Radius>k__BackingField: 15.164771
-  <CPUNoiseSettings>k__BackingField: []
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.3
@@ -35599,6 +35797,7 @@ MonoBehaviour:
   <NormalMapTile>k__BackingField: 5
   <NormalMapBlend>k__BackingField: 1
   <PlayerOrbitRadius>k__BackingField: 0
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.2, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}
@@ -36514,11 +36713,11 @@ PrefabInstance:
       objectReference: {fileID: 204915599}
     - target: {fileID: 8203326234738841399, guid: e19dbe5a7fb97774aa4fb36d8242822d, type: 3}
       propertyPath: Lens.FarClipPlane
-      value: 40000
+      value: 1100000
       objectReference: {fileID: 0}
     - target: {fileID: 8203326234738841399, guid: e19dbe5a7fb97774aa4fb36d8242822d, type: 3}
       propertyPath: Lens.NearClipPlane
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8203326234738841399, guid: e19dbe5a7fb97774aa4fb36d8242822d, type: 3}
       propertyPath: Target.TrackingTarget

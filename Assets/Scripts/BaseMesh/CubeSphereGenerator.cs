@@ -1,11 +1,14 @@
 namespace ProceduralPlanets.BaseMesh
 {
+    using System;
+    using System.Collections.Generic;
     using UnityEngine;
 
     public static class CubeSphereGenerator
     {
         private const int Int16MaxResolution = 100;
         private const int NumberOfFaces = 6;
+        private const int RoundFactor = 4;
 
         public static Mesh Generate(int resolution, float radius)
         {
@@ -20,35 +23,39 @@ namespace ProceduralPlanets.BaseMesh
                 Vector3.forward, Vector3.back
             };
 
-            var verticesPerFaceCount = resolution * resolution;
-            var vertices = new Vector3[verticesPerFaceCount * NumberOfFaces];
+            var vertexDict = new Dictionary<Vector3, int>();
+            var verticesList = new List<Vector3>();
+            var trianglesList = new List<int>();
 
-            var triangles = new int[(resolution - 1) * (resolution - 1) * NumberOfFaces * NumberOfFaces];
-
-            var vertexIndex = 0;
-            var triangleIndex = 0;
-
-            for (var i = 0; i < 6; i++)
+            for (var i = 0; i < NumberOfFaces; i++)
             {
-                GenerateFace(faceDirections[i], resolution, ref vertices, ref triangles, ref vertexIndex, ref triangleIndex,
-                    radius);
+                GenerateFace(faceDirections[i], resolution, radius, vertexDict, verticesList, trianglesList);
             }
 
-            mesh.vertices = vertices;
-            mesh.triangles = triangles;
+            mesh.vertices = verticesList.ToArray();
+            mesh.triangles = trianglesList.ToArray();
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();
 
             return mesh;
         }
 
-        private static void GenerateFace(Vector3 localUp, int resolution, ref Vector3[] vertices, ref int[] triangles, ref int vertexIndex,
-            ref int triangleIndex, float radius)
+        private static void GenerateFace(
+            Vector3 localUp, 
+            int resolution, 
+            float radius, 
+            Dictionary<Vector3, int> vertexDict, 
+            List<Vector3> verticesList, 
+            List<int> trianglesList)
         {
             var axisA = new Vector3(localUp.y, localUp.z, localUp.x);
             var axisB = Vector3.Cross(localUp, axisA);
 
-            var startIndex = vertexIndex;
+            int[][] faceIndices = new int[resolution][];
+            for (int index = 0; index < resolution; index++)
+            {
+                faceIndices[index] = new int[resolution];
+            }
 
             for (var y = 0; y < resolution; y++)
             {
@@ -56,22 +63,41 @@ namespace ProceduralPlanets.BaseMesh
                 {
                     var percent = new Vector2(x, y) / (resolution - 1);
                     var pointOnUnitCube = localUp + (percent.x - 0.5f) * 2 * axisA + (percent.y - 0.5f) * 2 * axisB;
-
                     var pointOnSphere = Spherify(pointOnUnitCube) * radius;
 
-                    vertices[vertexIndex++] = pointOnSphere;
+                    Vector3 key = new Vector3(
+                        (float)Math.Round(pointOnSphere.x, RoundFactor),
+                        (float)Math.Round(pointOnSphere.y, RoundFactor),
+                        (float)Math.Round(pointOnSphere.z, RoundFactor)
+                    );
 
-                    if (x == resolution - 1 || y == resolution - 1) continue;
-                    
-                    var i = startIndex + x + y * resolution;
+                    if (!vertexDict.TryGetValue(key, out int sharedIndex))
+                    {
+                        sharedIndex = verticesList.Count;
+                        verticesList.Add(pointOnSphere);
+                        vertexDict.Add(key, sharedIndex);
+                    }
 
-                    triangles[triangleIndex++] = i;
-                    triangles[triangleIndex++] = i + resolution + 1;
-                    triangles[triangleIndex++] = i + resolution;
+                    faceIndices[x][y] = sharedIndex;
+                }
+            }
 
-                    triangles[triangleIndex++] = i;
-                    triangles[triangleIndex++] = i + 1;
-                    triangles[triangleIndex++] = i + resolution + 1;
+            for (var y = 0; y < resolution - 1; y++)
+            {
+                for (var x = 0; x < resolution - 1; x++)
+                {
+                    int i = faceIndices[x][y];
+                    int right = faceIndices[x + 1][y];
+                    int top = faceIndices[x][y + 1];
+                    int topRight = faceIndices[x + 1][y + 1];
+
+                    trianglesList.Add(i);
+                    trianglesList.Add(topRight);
+                    trianglesList.Add(top);
+
+                    trianglesList.Add(i);
+                    trianglesList.Add(right);
+                    trianglesList.Add(topRight);
                 }
             }
         }

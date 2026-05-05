@@ -21,6 +21,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         [field: SerializeField] public List<BiomeCandidate> BiomeCandidates { get; private set; }
         [field: SerializeField] public SatelliteParameters SatelliteParameters { get; private set; }
         [field: SerializeField] public float RadiusToPlayerOrbitRation { get; private set; } = 1.5f;
+        [field: SerializeField] public Vector2 lowestLodEmissionIntensityRange { get; private set; }
         private const float OffsetMultiplayer = 1000f;
 
         public virtual T CreateInstance(int seed)
@@ -41,9 +42,11 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             var normalMap = PossibleNormalMaps[random.Range(0, PossibleNormalMaps.Count)];
             var normalMapTile = random.Range(NormalMapTileRange.x, NormalMapTileRange.y);
             var normalMapBlend = random.Range(NormalMapBlendRange.x, NormalMapBlendRange.y);
+            
+            var lowestLodEmissionIntensity = random.Range(lowestLodEmissionIntensityRange);
 
             instance.Initialize(radius, copiedGPUNoiseSettings, biomes, baseColor, normalMap,
-                normalMapTile, normalMapBlend, RadiusToPlayerOrbitRation);
+                normalMapTile, normalMapBlend, RadiusToPlayerOrbitRation, lowestLodEmissionIntensity);
             return instance;
         }
 

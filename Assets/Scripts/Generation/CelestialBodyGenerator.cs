@@ -69,7 +69,7 @@ namespace ProceduralPlanets.Generation
             UpdateSurface();
         }
 
-        private void UpdateMaterial()
+        public override void UpdateMaterial()
         {
             UpdateVertexRange();
 
@@ -111,7 +111,7 @@ namespace ProceduralPlanets.Generation
             return new ComputeBuffer(1, sizeof(byte));
         }
 
-        private Mesh GenerateMeshOnGPU(int sphereResolution)
+        public override Mesh GenerateMeshOnGPU(int sphereResolution)
         {
             var mesh = CubeSphereGenerator.Generate(sphereResolution, BodyData.Radius);
             

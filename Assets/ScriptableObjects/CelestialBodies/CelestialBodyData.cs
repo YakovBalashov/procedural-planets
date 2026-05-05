@@ -15,10 +15,12 @@ namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
         [field: SerializeField] public float NormalMapTile { get; private set; }
         [field: SerializeField] public float NormalMapBlend { get; private set; }
         [field: SerializeField] public float PlayerOrbitRadius { get; private set; }
+        [field: SerializeField] public float LowestLodEmissionIntensity { get; private set; } = 0.1f;
 
-        
+
         public void Initialize(float radius, List<NoiseSettingsGPU> gpuNoiseSettings,
-            List<BiomeParameters> biomes, Color baseColor, Texture2D normalMap, float normalMapTile, float normalMapBlend, float playerOrbitRatio)
+            List<BiomeParameters> biomes, Color baseColor, Texture2D normalMap, float normalMapTile,
+            float normalMapBlend, float playerOrbitRatio, float lowestLodEmissionIntensity)
         {
             Radius = radius;
             PlayerOrbitRadius = radius * playerOrbitRatio;
@@ -28,6 +30,7 @@ namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
             NormalMap = normalMap;
             NormalMapTile = normalMapTile;
             NormalMapBlend = normalMapBlend;
+            LowestLodEmissionIntensity = lowestLodEmissionIntensity;
         }
     }
 }

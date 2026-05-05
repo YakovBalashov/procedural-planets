@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4871293480622757834}
   - component: {fileID: 1032552763695210112}
   - component: {fileID: 185146552934206992}
+  - component: {fileID: 6872383475688770559}
   - component: {fileID: 8433746115422980080}
   m_Layer: 0
   m_Name: Planet
@@ -104,16 +105,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe1bc84d54900c34ba70f3f0af3af2a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Generation.PlanetGenerator
-  subdivisionLevel: 3
+  resolution: 10
   <BodyData>k__BackingField: {fileID: 0}
   <BodyType>k__BackingField: {fileID: 0}
-  planetShader: {fileID: -6465566751694194690, guid: 37530056bb4d5024fb1b6bfa4495384a, type: 3}
   useComputeShader: 1
   useUnityNormals: 1
   displacementShader: {fileID: 7200000, guid: baa519b85dc8d5b4aa725b9eaa28ed1d, type: 3}
   normalSampleDistance: 0.01
+  planetShader: {fileID: -6465566751694194690, guid: 82bcb46123b27554b9bde57ef9751342, type: 3}
   atmospherePrefab: {fileID: 4594404538775017063, guid: 0a2945b9ae8abb642b0bea64c366d763, type: 3}
   ringsPrefab: {fileID: 2909059356573398082, guid: 8f845068009811448b3e2e500c82bcc7, type: 3}
+--- !u!114 &6872383475688770559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6039681440229025307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086e53acc8e7c2246aa25d2fbbf2d912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.LOD.CelestialBodyLOD
+  lodLevels:
+  - <Resolution>k__BackingField: 256
+    <ScreenCoverageThreshold>k__BackingField: 0.5
+  - <Resolution>k__BackingField: 128
+    <ScreenCoverageThreshold>k__BackingField: 0.25
+  - <Resolution>k__BackingField: 64
+    <ScreenCoverageThreshold>k__BackingField: 0.12
+  - <Resolution>k__BackingField: 20
+    <ScreenCoverageThreshold>k__BackingField: 0.01
+  lowestLODResolution: 16
 --- !u!114 &8433746115422980080
 MonoBehaviour:
   m_ObjectHideFlags: 0

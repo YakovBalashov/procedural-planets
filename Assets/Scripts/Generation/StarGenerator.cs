@@ -8,6 +8,6 @@ namespace ProceduralPlanets.Generation
     [RequireComponent(typeof(Light))]
     public class StarGenerator : CelestialBodyGenerator<StarData, StarType>
     {
-        
+               
     }
 }

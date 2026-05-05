@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5181434032414948199}
   - component: {fileID: 2411807560672345087}
   - component: {fileID: 8361967482401533942}
+  - component: {fileID: 4091485369938373092}
   m_Layer: 0
   m_Name: Star
   m_TagString: Untagged
@@ -105,9 +106,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451684548bc1e0c4081aa885286dd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Generation.StarGenerator
-  subdivisionLevel: 5
+  resolution: 256
   <BodyData>k__BackingField: {fileID: 0}
   <BodyType>k__BackingField: {fileID: 0}
+  useComputeShader: 1
+  useUnityNormals: 1
+  displacementShader: {fileID: 7200000, guid: baa519b85dc8d5b4aa725b9eaa28ed1d, type: 3}
+  normalSampleDistance: 0.01
   planetShader: {fileID: -6465566751694194690, guid: 37530056bb4d5024fb1b6bfa4495384a, type: 3}
 --- !u!108 &2411807560672345087
 Light:
@@ -203,3 +208,25 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &4091485369938373092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5697796114999130581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086e53acc8e7c2246aa25d2fbbf2d912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.LOD.CelestialBodyLOD
+  lodLevels:
+  - <Resolution>k__BackingField: 256
+    <ScreenCoverageThreshold>k__BackingField: 0.5
+  - <Resolution>k__BackingField: 128
+    <ScreenCoverageThreshold>k__BackingField: 0.25
+  - <Resolution>k__BackingField: 64
+    <ScreenCoverageThreshold>k__BackingField: 0.12
+  - <Resolution>k__BackingField: 20
+    <ScreenCoverageThreshold>k__BackingField: 0.01
+  lowestLODResolution: 16

@@ -9,5 +9,9 @@ namespace ProceduralPlanets.Generation
         public abstract void UpdateSurface();
         
         public abstract CelestialBodyData GetBodyData();
+        
+        public abstract Mesh GenerateMeshOnGPU(int resolution);
+        
+        public abstract void UpdateMaterial();
     }
 }

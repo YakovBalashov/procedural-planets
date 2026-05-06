@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451684548bc1e0c4081aa885286dd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Generation.StarGenerator
-  material: {fileID: -876546973899608171, guid: 82bcb46123b27554b9bde57ef9751342, type: 3}
+  material: {fileID: 2100000, guid: c7a2e4c1e65b50942b37edd7b70b48c7, type: 2}
   resolution: 256
   <BodyData>k__BackingField: {fileID: 0}
   <BodyType>k__BackingField: {fileID: 0}

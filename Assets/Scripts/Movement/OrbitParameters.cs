@@ -1,14 +1,18 @@
+using UnityEngine;
+
 namespace ProceduralPlanets.Movement
 {
+    [System.Serializable]
     public struct OrbitParameters
     {
-        public readonly float MainRadius;
-        public readonly float RadiusRatio;
-        public readonly float Inclination;
-        public readonly float Rotation;
-        public readonly float SpeedInDegreesPerSecond;
+        [field: SerializeField] public float MainRadius {get; private set; }
+        [field: SerializeField] public float RadiusRatio {get; private set; }
+        [field: SerializeField] public float Inclination {get; private set; }
+        [field: SerializeField] public float Rotation {get; private set; }
+        [field: SerializeField] public float SpeedInDegreesPerSecond {get; private set; }
 
-        public OrbitParameters(float mainRadius, float radiusRatio, float inclination, float rotation, float speedInDegreesPerSecond)
+        public OrbitParameters(float mainRadius, float radiusRatio, float inclination, float rotation,
+            float speedInDegreesPerSecond)
         {
             MainRadius = mainRadius;
             RadiusRatio = radiusRatio;

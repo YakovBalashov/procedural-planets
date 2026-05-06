@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ProceduralPlanets.CustomInspector
 {
-    [CustomEditor(typeof(SystemGenerator))]
+    [CustomEditor(typeof(SystemGenerator), true)]
     public class SystemInspector : Editor
     {
         private SystemGenerator _systemGenerator;

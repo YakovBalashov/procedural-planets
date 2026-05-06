@@ -21,6 +21,13 @@ namespace ProceduralPlanets.Movement
             AlignAxis();
         }
         
+        public void SetParameters(Vector3 newAxis, float newSpeedInDegreesPerSecond)
+        {
+            axis = newAxis;
+            speedInDegreesPerSecond = newSpeedInDegreesPerSecond;
+            AlignAxis();
+        }
+        
         private void AlignAxis()
         {
             _axisRotation = Quaternion.FromToRotation(Vector3.up, axis.normalized);

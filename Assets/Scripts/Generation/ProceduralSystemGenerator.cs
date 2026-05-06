@@ -5,7 +5,6 @@ using ProceduralPlanets.Extensions;
 using ProceduralPlanets.Movement;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.ScriptableObjects.Generation;
-using ProceduralPlanets.UI;
 using UnityEngine;
 using Random = System.Random;
 

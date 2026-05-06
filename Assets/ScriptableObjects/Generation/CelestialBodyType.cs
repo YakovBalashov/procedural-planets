@@ -21,8 +21,14 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         [field: SerializeField] public List<BiomeCandidate> BiomeCandidates { get; private set; }
         [field: SerializeField] public SatelliteParameters SatelliteParameters { get; private set; }
         [field: SerializeField] public float RadiusToPlayerOrbitRation { get; private set; } = 1.5f;
-        [field: SerializeField] public Vector2 lowestLodEmissionIntensityRange { get; private set; }
+        [field: SerializeField] public Vector2 LowestLodEmissionIntensityRange { get; private set; }
+        [field: SerializeField] public Vector3 RotationAxis { get; private set; } = Vector3.up;
+
+        [field: SerializeField] public Vector2 RotationSpeedInDegreesPerSecondRange { get; private set; } =
+            new Vector2(0.5f, 2f);
+
         private const float OffsetMultiplayer = 1000f;
+
 
         public virtual T CreateInstance(int seed)
         {
@@ -42,11 +48,14 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             var normalMap = PossibleNormalMaps[random.Range(0, PossibleNormalMaps.Count)];
             var normalMapTile = random.Range(NormalMapTileRange.x, NormalMapTileRange.y);
             var normalMapBlend = random.Range(NormalMapBlendRange.x, NormalMapBlendRange.y);
-            
-            var lowestLodEmissionIntensity = random.Range(lowestLodEmissionIntensityRange);
+
+            var rotationSpeedInDegreesPerSecond = random.Range(RotationSpeedInDegreesPerSecondRange);
+
+            var lowestLodEmissionIntensity = random.Range(LowestLodEmissionIntensityRange);
 
             instance.Initialize(radius, copiedGPUNoiseSettings, biomes, baseColor, normalMap,
-                normalMapTile, normalMapBlend, RadiusToPlayerOrbitRation, lowestLodEmissionIntensity);
+                normalMapTile, normalMapBlend, RadiusToPlayerOrbitRation, lowestLodEmissionIntensity, RotationAxis,
+                rotationSpeedInDegreesPerSecond);
             return instance;
         }
 

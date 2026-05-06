@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using ProceduralPlanets.BaseMesh;
+using ProceduralPlanets.Movement;
 using ProceduralPlanets.Noise;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.ScriptableObjects.Generation;
@@ -28,6 +29,7 @@ namespace ProceduralPlanets.Generation
         private MeshFilter _meshFilter;
         private ComputeBuffer _noiseSettingsBuffer;
         private ComputeBuffer _biomeBuffer;
+        private AxisRotation _axisRotation;
 
 
         public override void GenerateBodyData()
@@ -44,8 +46,16 @@ namespace ProceduralPlanets.Generation
         public override void UpdateSurface()
         {
             Initialize();
+            UpdateAxis();
             UpdateMesh();
             UpdateMaterial();
+        }
+
+        private void UpdateAxis()
+        {
+            if (!_axisRotation) _axisRotation = GetComponent<AxisRotation>();
+            if (!_axisRotation) return;
+            _axisRotation.SetParameters(BodyData.RotationAxis, BodyData.RotationSpeedInDegreesPerSecond);
         }
 
         public override CelestialBodyData GetBodyData()

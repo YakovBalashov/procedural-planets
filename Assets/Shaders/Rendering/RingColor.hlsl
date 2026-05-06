@@ -1,11 +1,15 @@
 #pragma once
 
 #include "PlanetColor.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-float4 _RingColor;
-int _RingNoiseType;
-int _RingNoiseOctaves;
-float _RingNoiseFrequency;
+CBUFFER_START(UnityPerMaterial)
+    float4 _RingColor;
+    int _RingNoiseType;
+    int _RingNoiseOctaves;
+    float _RingNoiseFrequency;
+CBUFFER_END
+
 
 void CalculateColor_float(float3 position, out float4 color)
 {

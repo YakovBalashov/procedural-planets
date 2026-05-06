@@ -1,15 +1,18 @@
 #pragma once
 
 #include "PlanetColor.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 
-float4 _AtmosphereColor;
-int _AtmosphereNoiseType;
-float _AtmosphereNoiseFrequency;
-int _AtmosphereNoiseOctaves;
-int _AtmosphereNoiseWarpType;
-float _AtmosphereNoiseWarpAmplitude;
-float2 _AtmosphereNoiseRange;
-float _AtmosphereMinAlpha;
+CBUFFER_START(UnityPerMaterial)
+    float4 _AtmosphereColor;
+    int _AtmosphereNoiseType;
+    float _AtmosphereNoiseFrequency;
+    int _AtmosphereNoiseOctaves;
+    int _AtmosphereNoiseWarpType;
+    float _AtmosphereNoiseWarpAmplitude;
+    float2 _AtmosphereNoiseRange;
+    float _AtmosphereMinAlpha;
+CBUFFER_END
 
 void CalculateColor_float(float3 position, out float4 color)
 {

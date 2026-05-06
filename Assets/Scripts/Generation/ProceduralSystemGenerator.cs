@@ -176,8 +176,10 @@ namespace ProceduralPlanets.Generation
             var inclination = (float)(orbitType.OrbitInclinationRange.x + random.NextDouble() *
                 (orbitType.OrbitInclinationRange.y - orbitType.OrbitInclinationRange.x));
 
+            var velocity = random.Range(orbitType.VelocityRange);
+
             var orbitParameters = new OrbitParameters(mainRadius, radiusRatio, inclination, rotation,
-                orbitalSpeedInDegreesPerSecond);
+                velocity);
             return orbitParameters;
         }
 

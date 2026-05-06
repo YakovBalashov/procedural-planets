@@ -15,14 +15,16 @@ namespace ProceduralPlanets.Movement
         [field: SerializeField] public Vector2 OrbitRadiusRange { get; private set; }
         [field: SerializeField] public Vector2 OrbitRatioRange { get; private set; }
         [field: SerializeField] public Vector2 OrbitInclinationRange { get; private set; }
+        [field: SerializeField] public Vector2 VelocityRange { get; private set; }
 
         public OrbitType(Vector2 orbitRadiusRange, Vector2 orbitRatioRange,
-            Vector2 orbitInclinationRange)
+            Vector2 orbitInclinationRange, Vector2 velocityRange)
         {
             ParentTypes = new List<TType>();
             OrbitRadiusRange = orbitRadiusRange;
             OrbitRatioRange = orbitRatioRange;
             OrbitInclinationRange = orbitInclinationRange;
+            VelocityRange = velocityRange;
         }
     }
 }

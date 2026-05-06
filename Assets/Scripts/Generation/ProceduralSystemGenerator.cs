@@ -13,7 +13,6 @@ namespace ProceduralPlanets.Generation
     public class ProceduralSystemGenerator : SystemGenerator
     {
         [SerializeField] private GenerationParameters generationParameters;
-        [SerializeField] private float orbitalSpeedInDegreesPerSecond = 10f;
 
         private const string PrimeStarName = "Polaris";
 

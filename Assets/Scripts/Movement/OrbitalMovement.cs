@@ -1,4 +1,5 @@
 using System;
+using ProceduralPlanets.Generation;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = System.Random;
@@ -79,7 +80,7 @@ namespace ProceduralPlanets.Movement
 
         private void FixedUpdate()
         {
-            _currentAngle += speedInDegreesPerSecond * Mathf.Deg2Rad * Time.fixedDeltaTime;
+            _currentAngle += speedInDegreesPerSecond * Mathf.Deg2Rad * Time.fixedDeltaTime * SystemGenerator.TimeMultiplier;
             _currentAngle %= 2 * Mathf.PI;
 
             MoveBodyToAngle(_currentAngle);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
@@ -13,7 +14,12 @@ namespace ProceduralPlanets.Generation
         [SerializeField] protected GameObject starPrefab;
         [SerializeField] protected GameObject planetPrefab;
         [SerializeField] private SystemMap systemMap;
+        [SerializeField] private float timeMultiplier = 1f;
 
+        public static float TimeMultiplier { get; private set; }
+        private const float MinTimeMultiplier = 0.1f;
+        private const float MaxTimeMultiplier = 1000.0f;
+        
         protected List<GameObject> CelestialBodies = new();
 
         private const float MaxOffset = 10000f;
@@ -35,7 +41,6 @@ namespace ProceduralPlanets.Generation
                 .GetComponent<CelestialBodyGeneratorBase>();
         }
 
-
         public static char NumberToLetter(int index)
         {
             return (char)(FirstCapitalLetterASCII + index);
@@ -45,5 +50,17 @@ namespace ProceduralPlanets.Generation
         {
             return new Vector3(random.NextFloat(), random.NextFloat(), random.NextFloat()) * random.Range(0, MaxOffset);
         }
+
+        private void OnValidate()
+        {
+            if (Mathf.Approximately(timeMultiplier, TimeMultiplier)) return;
+            SetTimeMultiplier(timeMultiplier);
+        }
+        
+        public static void SetTimeMultiplier(float multiplier)
+        {
+            TimeMultiplier = Mathf.Clamp(multiplier, MinTimeMultiplier, MaxTimeMultiplier);
+        }
+        
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using ProceduralPlanets.Generation;
 using UnityEngine;
 
 namespace ProceduralPlanets.Movement
@@ -35,7 +36,7 @@ namespace ProceduralPlanets.Movement
 
         private void FixedUpdate()
         {
-            _currentAngle = Mathf.Repeat(speedInDegreesPerSecond * Time.fixedTime, 360f);
+            _currentAngle = Mathf.Repeat(speedInDegreesPerSecond * Time.fixedTime * SystemGenerator.TimeMultiplier, 360f);
             transform.rotation = _axisRotation * Quaternion.Euler(0f, _currentAngle, 0f);
         }
     }

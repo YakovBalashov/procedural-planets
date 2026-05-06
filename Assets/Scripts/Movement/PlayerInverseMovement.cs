@@ -11,9 +11,8 @@ namespace ProceduralPlanets.Movement
     {
         [Header("Movement Settings")]
         [SerializeField] private float planetaryTravelTime = 20f;
-
         [SerializeField] private float moonTravelTime = 10f;
-        [SerializeField] private float flightSteepness = 2f;
+        [SerializeField] private AnimationCurve planetaryTravelCurve;
 
         [Header("System References")]
         [SerializeField] private SystemMap systemMap;
@@ -25,7 +24,6 @@ namespace ProceduralPlanets.Movement
         [SerializeField] private float maxDistanceFromOrigin = 10000f;
 
         [SerializeField] private CinemachineCamera orbitalCamera;
-        [SerializeField] private AnimationCurve planetaryTravelCurve;
 
         private OrbitalMovement _orbitalMovement;
 

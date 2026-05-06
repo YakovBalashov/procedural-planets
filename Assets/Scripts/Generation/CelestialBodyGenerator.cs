@@ -21,7 +21,6 @@ namespace ProceduralPlanets.Generation
 
         [field: SerializeField] public TData BodyData { get; private set; }
         [field: SerializeField] public TType BodyType { get; private set; }
-        [SerializeField] private bool useComputeShader = true;
         [SerializeField] private bool useUnityNormals = true;
         [SerializeField] private ComputeShader displacementShader;
         [SerializeField] private float normalSampleDistance = 0.01f;

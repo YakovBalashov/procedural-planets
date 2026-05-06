@@ -3,7 +3,6 @@ using System.Linq;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using UnityEngine;
 using Random = System.Random;
-using ProceduralPlanets.Extensions;
 using ProceduralPlanets.Movement;
 
 
@@ -14,7 +13,6 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private StarData starData;
         [SerializeField] private List<LocalSystemData> localSystems;
         [SerializeField] private string starName;
-        [SerializeField] private float radiusToOrbitMultiplier = 4f;
 
         public override void GenerateSystem()
         {
@@ -37,7 +35,6 @@ namespace ProceduralPlanets.Generation
             {
                 var planetGenerator = planet.GetComponent<PlanetGenerator>();
                 var localSystem = localSystems.First(ls => ls.Planet.PlanetData == planetGenerator.GetBodyData());
-                var data = planetGenerator.GetBodyData();
 
                 var moonGenerationParameters = new SatelliteGenerationParameters
                 {

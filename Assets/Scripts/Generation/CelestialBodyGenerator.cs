@@ -25,12 +25,9 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private bool useUnityNormals = true;
         [SerializeField] private ComputeShader displacementShader;
         [SerializeField] private float normalSampleDistance = 0.01f;
-        [SerializeField] private Shader planetShader;
 
         private MeshFilter _meshFilter;
-        private MeshRenderer _meshRenderer;
         private ComputeBuffer _noiseSettingsBuffer;
-        private Material _materialInstance;
         private ComputeBuffer _biomeBuffer;
 
 
@@ -73,9 +70,11 @@ namespace ProceduralPlanets.Generation
         {
             UpdateVertexRange();
 
-            _materialInstance.SetVector(ShaderParametersIDs.BaseColor, BodyData.BaseColor);
-            _materialInstance.SetInt(ShaderParametersIDs.BiomeCount, BodyData.Biomes.Count);
-            _materialInstance.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
+            MeshRenderer.GetPropertyBlock(MaterialPropertyBlock);
+            
+            MaterialPropertyBlock.SetVector(ShaderParametersIDs.BaseColor, BodyData.BaseColor);
+            MaterialPropertyBlock.SetInt(ShaderParametersIDs.BiomeCount, BodyData.Biomes.Count);
+            MaterialPropertyBlock.SetFloat(ShaderParametersIDs.BodyRadius, BodyData.Radius);
 
             _biomeBuffer?.Release();
 
@@ -90,12 +89,14 @@ namespace ProceduralPlanets.Generation
 
             if (BodyData.NormalMap)
             {
-                _materialInstance.SetTexture(ShaderParametersIDs.NormalMap, BodyData.NormalMap);
-                _materialInstance.SetFloat(ShaderParametersIDs.NormalMapTile, BodyData.NormalMapTile);
-                _materialInstance.SetFloat(ShaderParametersIDs.NormalMapBlend, BodyData.NormalMapBlend);
+                MaterialPropertyBlock.SetTexture(ShaderParametersIDs.NormalMap, BodyData.NormalMap);
+                MaterialPropertyBlock.SetFloat(ShaderParametersIDs.NormalMapTile, BodyData.NormalMapTile);
+                MaterialPropertyBlock.SetFloat(ShaderParametersIDs.NormalMapBlend, BodyData.NormalMapBlend);
             }
 
-            _materialInstance.SetBuffer(ShaderParametersIDs.BiomeParameters, _biomeBuffer);
+            MaterialPropertyBlock.SetBuffer(ShaderParametersIDs.BiomeParameters, _biomeBuffer);
+            
+            MeshRenderer.SetPropertyBlock(MaterialPropertyBlock);
         }
 
         private void UpdateMesh()
@@ -200,8 +201,11 @@ namespace ProceduralPlanets.Generation
         private void UpdateVertexRange()
         {
             var range = GetVertexHeightRange(_meshFilter.sharedMesh);
-            _materialInstance.SetFloat(ShaderParametersIDs.LowestVertexHeight, range.x);
-            _materialInstance.SetFloat(ShaderParametersIDs.HighestVertexHeight, range.y);
+            
+            MeshRenderer.GetPropertyBlock(MaterialPropertyBlock);
+            MaterialPropertyBlock.SetFloat(ShaderParametersIDs.LowestVertexHeight, range.x);
+            MaterialPropertyBlock.SetFloat(ShaderParametersIDs.HighestVertexHeight, range.y);
+            MeshRenderer.SetPropertyBlock(MaterialPropertyBlock);
         }
 
         private static Vector2 GetVertexHeightRange(Mesh mesh)
@@ -225,22 +229,13 @@ namespace ProceduralPlanets.Generation
 
         protected virtual void Initialize()
         {
+            InitializePropBlock();
             if (!_meshFilter) _meshFilter = GetComponent<MeshFilter>();
-            if (!_meshRenderer) _meshRenderer = GetComponent<MeshRenderer>();
-
-            if (_materialInstance) return;
-            _materialInstance = new Material(planetShader);
-            _meshRenderer.sharedMaterial = _materialInstance;
         }
 
         private void OnDestroy()
         {
             _biomeBuffer?.Release();
-
-            if (!_materialInstance) return;
-
-            if (Application.isPlaying) Destroy(_materialInstance);
-            else DestroyImmediate(_materialInstance);
         }
     }
 }

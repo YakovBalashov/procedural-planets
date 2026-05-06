@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ProceduralPlanets.Generation
 {
-    public abstract class CelestialBodyGeneratorBase : MonoBehaviour
+    public abstract class CelestialBodyGeneratorBase : MeshGenerator
     {
         public abstract void GenerateBodyData();
         public abstract void UpdateSurface();

@@ -3,15 +3,14 @@ using UnityEngine;
 namespace ProceduralPlanets.Generation
 {
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-    public class PlanetaryRingsGenerator : MonoBehaviour
+    public class PlanetaryRingsGenerator : MeshGenerator
     {
-        [SerializeField] private Shader ringShader;
-        private MeshRenderer _meshRenderer;
         private MeshFilter _meshFilter;
-        private Material _materialInstance;
 
         public void UpdateRings(RingParameters parameters)
         {
+            InitializePropBlock();
+            
             if (!_meshFilter) _meshFilter = GetComponent<MeshFilter>();
             _meshFilter.sharedMesh = BaseMesh.RingGenerator.Generate(parameters.SegmentCount, parameters.InnerRadius,
                 parameters.OuterRadius);
@@ -21,18 +20,15 @@ namespace ProceduralPlanets.Generation
 
         private void UpdateMaterial(RingParameters parameters)
         {
-            if (!_meshRenderer) _meshRenderer = GetComponent<MeshRenderer>();
-
-            if (!_materialInstance)
-            {
-                _materialInstance = new Material(ringShader);
-                _meshRenderer.sharedMaterial = _materialInstance;
-            }
-
-            _materialInstance.SetColor(ShaderParametersIDs.RingColor, parameters.RingColor);
-            _materialInstance.SetInt(ShaderParametersIDs.RingNoiseType, (int)parameters.NoiseParameters.Type);
-            _materialInstance.SetInt(ShaderParametersIDs.RingNoiseOctaves, parameters.NoiseParameters.Octaves);
-            _materialInstance.SetFloat(ShaderParametersIDs.RingNoiseFrequency, parameters.NoiseParameters.Frequency);
+            MeshRenderer.GetPropertyBlock(MaterialPropertyBlock);
+            
+            MaterialPropertyBlock.SetColor(ShaderParametersIDs.RingColor, parameters.RingColor);
+            MaterialPropertyBlock.SetInt(ShaderParametersIDs.RingNoiseType, (int)parameters.NoiseParameters.Type);
+            MaterialPropertyBlock.SetInt(ShaderParametersIDs.RingNoiseOctaves, parameters.NoiseParameters.Octaves);
+            MaterialPropertyBlock.SetFloat(ShaderParametersIDs.RingNoiseFrequency, parameters.NoiseParameters.Frequency);
+            
+            MeshRenderer.SetPropertyBlock(MaterialPropertyBlock);
+            
         }
     }
 }

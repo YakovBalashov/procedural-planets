@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1901a9afdc7c3cd41a9de95f8de837b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Generation.PlanetaryRingsGenerator
-  ringShader: {fileID: -6465566751694194690, guid: 988e7a3777c9e98468fdfb0645f9e5f4, type: 3}
+  material: {fileID: 2100000, guid: f52f0bd7eb0390646860100eaa6e676a, type: 2}
 --- !u!114 &9189066312554892897
 MonoBehaviour:
   m_ObjectHideFlags: 0

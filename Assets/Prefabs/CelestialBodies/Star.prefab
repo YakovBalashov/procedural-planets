@@ -70,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: -876546973899608171, guid: 82bcb46123b27554b9bde57ef9751342, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451684548bc1e0c4081aa885286dd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Generation.StarGenerator
+  material: {fileID: -876546973899608171, guid: 82bcb46123b27554b9bde57ef9751342, type: 3}
   resolution: 256
   <BodyData>k__BackingField: {fileID: 0}
   <BodyType>k__BackingField: {fileID: 0}
@@ -113,7 +114,6 @@ MonoBehaviour:
   useUnityNormals: 1
   displacementShader: {fileID: 7200000, guid: baa519b85dc8d5b4aa725b9eaa28ed1d, type: 3}
   normalSampleDistance: 0.01
-  planetShader: {fileID: -6465566751694194690, guid: 37530056bb4d5024fb1b6bfa4495384a, type: 3}
 --- !u!108 &2411807560672345087
 Light:
   m_ObjectHideFlags: 0

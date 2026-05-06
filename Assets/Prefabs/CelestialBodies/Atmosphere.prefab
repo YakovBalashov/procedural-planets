@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d83751f4013ae3249859637277d2c3bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Generation.AtmosphereGenerator
-  atmosphereShader: {fileID: -6465566751694194690, guid: 136ceb61afe34494f8642c46725f46de, type: 3}
+  material: {fileID: 2100000, guid: 10f03eb82f324154ea402012734056eb, type: 2}
   subdivisions: 4
 --- !u!114 &420624868631685433
 MonoBehaviour:

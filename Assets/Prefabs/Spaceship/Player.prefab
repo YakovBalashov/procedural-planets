@@ -85,8 +85,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0711f0a4827e63249a220c85b08232b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.PlayerInverseMovement
-  planetaryTravelTime: 20
-  moonTravelTime: 5
+  planetaryTravelTime: 30
+  moonTravelTime: 10
+  initialRotationTime: 3
+  midflightRotationTime: 1.5
+  gapTime: 0.5
   planetaryTravelCurve:
     serializedVersion: 2
     m_Curve:
@@ -124,6 +127,7 @@ MonoBehaviour:
   systemMap: {fileID: 0}
   systemGenerator: {fileID: 0}
   systemOrigin: {fileID: 0}
+  engines: {fileID: 7732275192244595933}
   maxDistanceFromOrigin: 10000
   orbitalCamera: {fileID: 0}
 --- !u!114 &501606680496018899
@@ -140,6 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.PlayerOrientation
   rotationSpeed: 90
   rotationTime: 0.1
+  trackingSpeed: 180
   pitchAction: {fileID: -299182468022870919, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   rollAction: {fileID: -8072574839880572155, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   yawAction: {fileID: -5587704363517365904, guid: 052faaac586de48259a63d0c4782560b, type: 3}
@@ -158,7 +163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &122739178622663310
 Transform:
   m_ObjectHideFlags: 0

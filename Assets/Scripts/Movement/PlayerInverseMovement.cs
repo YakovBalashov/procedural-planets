@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace ProceduralPlanets.Movement
 {
-    [RequireComponent(typeof(OrbitalMovement))]
+    [RequireComponent(typeof(OrbitalMovement), typeof(PlayerOrientation))]
     public class PlayerInverseMovement : MonoBehaviour
     {
         private const float RadiusCollisionMultiplayer = 1.5f;
@@ -18,14 +18,17 @@ namespace ProceduralPlanets.Movement
         [SerializeField] private float planetaryTravelTime = 20f;
 
         [SerializeField] private float moonTravelTime = 10f;
+        [SerializeField] private float initialRotationTime = 3f;
+        [SerializeField] private float midflightRotationTime = 1.5f;
+        [SerializeField] private float gapTime = 0.5f;
         [SerializeField] private AnimationCurve planetaryTravelCurve;
         [SerializeField] private bool collisionCheck;
 
-        [Header("System References")]
+        [Header("References")]
         [SerializeField] private SystemMap systemMap;
-
         [SerializeField] private SystemGenerator systemGenerator;
         [SerializeField] private Transform systemOrigin;
+        [SerializeField] private GameObject engines;
 
         [Header("Recentering Settings")]
         [SerializeField] private float maxDistanceFromOrigin = 10000f;
@@ -33,6 +36,7 @@ namespace ProceduralPlanets.Movement
         [SerializeField] private CinemachineCamera orbitalCamera;
 
         private OrbitalMovement _orbitalMovement;
+        private PlayerOrientation _playerOrientation;
 
         private Vector2 _currentBodyIndex;
 
@@ -44,6 +48,7 @@ namespace ProceduralPlanets.Movement
         private void Awake()
         {
             _orbitalMovement = GetComponent<OrbitalMovement>();
+            _playerOrientation = GetComponent<PlayerOrientation>();
         }
 
         private void OnEnable()
@@ -69,11 +74,15 @@ namespace ProceduralPlanets.Movement
 
             if (targetBodyIndex.y != 0 && (int)_currentBodyIndex.x != (int)targetBodyIndex.x)
             {
-                SystemGenerator.MessageText.SetMessage("Travel to the planet first before trying to reach its moons.", 2, MessageText.ErrorColor);
+                SystemGenerator.MessageText.SetMessage("Travel to the planet first before trying to reach its moons.",
+                    2, MessageText.ErrorColor);
                 return;
             }
 
-            var travelTime = (int)targetBodyIndex.x == (int)_currentBodyIndex.x ? moonTravelTime : planetaryTravelTime;
+            var travelTime = initialRotationTime + gapTime +
+                             ((int)targetBodyIndex.x == (int)_currentBodyIndex.x
+                                 ? moonTravelTime
+                                 : planetaryTravelTime);
 
             var currentAnchor = transform.parent;
 
@@ -105,7 +114,7 @@ namespace ProceduralPlanets.Movement
             _isMoving = true;
 
             StartCoroutine(ExecuteFlight(systemOrigin.position, inverseTarget, travelTime,
-                targetBody.GetBodyData().PlayerOrbitRadius));
+                targetBody.GetBodyData().PlayerOrbitRadius, _targetPosition));
 
             _currentBodyIndex = targetBodyIndex;
         }
@@ -143,26 +152,58 @@ namespace ProceduralPlanets.Movement
             return false;
         }
 
-        private IEnumerator ExecuteFlight(Vector3 startPos, Vector3 targetPos, float travelTime, float radius)
+        private IEnumerator ExecuteFlight(Vector3 startPos, Vector3 targetPos, float travelTime, float radius,
+            Vector3 trackingPosition)
         {
             OnMovementStarted?.Invoke();
+            
+            yield return RotateShip(trackingPosition);
 
             var elapsedTime = 0f;
-
+            float halfwayTime = travelTime / 2f;
+            bool midflightRotationDone = false;
+            
             while (elapsedTime < travelTime)
             {
                 elapsedTime += Time.deltaTime;
+                
+                if (!midflightRotationDone && elapsedTime >= halfwayTime)
+                {
+                    StartCoroutine(PerformMidflightRotation(trackingPosition));
+                    midflightRotationDone = true;
+                }
+                
                 var t = planetaryTravelCurve.Evaluate(elapsedTime / travelTime);
                 systemOrigin.position = Vector3.Lerp(startPos, targetPos, t);
 
                 yield return null;
             }
-
+            
             systemOrigin.position = targetPos;
+            engines.SetActive(false);
             _isMoving = false;
 
+            _playerOrientation.TogglePlayerInput(true);
             OrbitTargetBody(radius);
             SystemGenerator.MessageText.SetMessage("Arrived at " + _targetBodyName, 3, MessageText.SuccessColor);
+        }
+
+        private IEnumerator RotateShip(Vector3 trackingPosition)
+        {
+            _playerOrientation.TogglePlayerInput(false);
+            _playerOrientation.AlignToTargetInTime(trackingPosition, initialRotationTime, false);
+            yield return new WaitForSeconds(initialRotationTime + gapTime);
+            engines.SetActive(true);
+        }
+        
+        private IEnumerator PerformMidflightRotation(Vector3 trackingPosition)
+        {
+            engines.SetActive(false);
+            yield return new WaitForSeconds(gapTime);
+
+            _playerOrientation.AlignToTargetInTime(trackingPosition, midflightRotationTime, true);
+            yield return new WaitForSeconds(midflightRotationTime + gapTime);
+            engines.SetActive(true);
         }
 
         private void OrbitTargetBody(float radius)

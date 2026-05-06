@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using ProceduralPlanets.Generation;
+using ProceduralPlanets.Movement;
 using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using TMPro;
 using UnityEngine;
@@ -21,18 +22,27 @@ namespace ProceduralPlanets.UI
 
         [SerializeField] private InputActionReference toggleMapAction;
 
+        [SerializeField] private PlayerInverseMovement playerMovement;
+
         public event Action<Vector2> OnBodySelected;
 
         private void OnEnable()
         {
             toggleMapAction.action.Enable();
             toggleMapAction.action.performed += ToggleMap;
+            playerMovement.OnMovementStarted += TurnOffMap;
         }
 
         private void OnDisable()
         {
             toggleMapAction.action.performed -= ToggleMap;
             toggleMapAction.action.Disable();
+            playerMovement.OnMovementStarted -= TurnOffMap;
+        }
+
+        private void TurnOffMap()
+        {
+            mapPanel.SetActive(false);
         }
 
         private void ToggleMap(InputAction.CallbackContext obj)
@@ -95,7 +105,6 @@ namespace ProceduralPlanets.UI
             button.image.color = color;
 
             button.onClick.AddListener(() => SelectBody(bodyIndex));
-            button.onClick.AddListener(() => mapPanel.SetActive(false));
             return buttonObject;
         }
 

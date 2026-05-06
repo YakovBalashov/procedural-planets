@@ -19,6 +19,8 @@ namespace ProceduralPlanets.Generation
         public static float TimeMultiplier { get; private set; }
         private const float MinTimeMultiplier = 0.1f;
         private const float MaxTimeMultiplier = 1000.0f;
+
+        public static MessageText MessageText;
         
         protected List<GameObject> CelestialBodies = new();
 

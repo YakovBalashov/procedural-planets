@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1891438339132072879}
   - component: {fileID: 1302052156508529300}
   - component: {fileID: 6672577040670389489}
-  - component: {fileID: 7401323694097079747}
+  - component: {fileID: 3888136925283116281}
+  - component: {fileID: 501606680496018899}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -33,10 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4841819866979602784}
-  - {fileID: 304620733728203525}
-  - {fileID: 4392166696898636949}
-  - {fileID: 4935519004079279219}
-  - {fileID: 7163253250369739788}
+  - {fileID: 122739178622663310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1302052156508529300
@@ -75,7 +73,7 @@ MonoBehaviour:
   speedChangeRate: 10
   rotationChangeRate: 45
   radiusChangeRate: 10
---- !u!114 &7401323694097079747
+--- !u!114 &3888136925283116281
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -84,20 +82,102 @@ MonoBehaviour:
   m_GameObject: {fileID: 7687471758654040645}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbdb383b1eb7aca4eac661c6110c55f4, type: 3}
+  m_Script: {fileID: 11500000, guid: 0711f0a4827e63249a220c85b08232b8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.PlayerMovement
-  orbitToBodyRadiusRatio: 1.5
-  velocity: 10
-  decelerationDistanceToRadiusRatio: 3
-  minVelocity: 0.1
-  orbitalVelocity: 2
-  accelerationDuration: 5
-  trajectoryColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  destinationColor: {r: 1, g: 0.6470588, b: 0, a: 1}
-  destinationGizmoRadius: 0.5
-  systemGenerator: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.PlayerInverseMovement
+  planetaryTravelTime: 20
+  moonTravelTime: 5
+  planetaryTravelCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.022254525
+      outSlope: 0.022254525
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.62647355
+      value: 0.9609299
+      inSlope: 0.50739175
+      outSlope: 0.50739175
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.5670142
+      outWeight: 0.22167027
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.004688605
+      outSlope: 0.004688605
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.47526
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  collisionCheck: 1
   systemMap: {fileID: 0}
+  systemGenerator: {fileID: 0}
+  systemOrigin: {fileID: 0}
+  maxDistanceFromOrigin: 10000
+  orbitalCamera: {fileID: 0}
+--- !u!114 &501606680496018899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7687471758654040645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69e655476c180f64ba44e603095c7898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.PlayerOrientation
+  rotationSpeed: 90
+  rotationTime: 0.1
+  pitchAction: {fileID: -299182468022870919, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  rollAction: {fileID: -8072574839880572155, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  yawAction: {fileID: -5587704363517365904, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+--- !u!1 &7732275192244595933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 122739178622663310}
+  m_Layer: 0
+  m_Name: Engines
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &122739178622663310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7732275192244595933}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 304620733728203525}
+  - {fileID: 4392166696898636949}
+  - {fileID: 4935519004079279219}
+  - {fileID: 7163253250369739788}
+  m_Father: {fileID: 1891438339132072879}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &759075499201370404
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -206,7 +286,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1891438339132072879}
+    m_TransformParent: {fileID: 122739178622663310}
     m_Modifications:
     - target: {fileID: 1244624151521354729, guid: aeb3a75cf79f8ff47a2d56cfa16233b7, type: 3}
       propertyPath: m_Name
@@ -288,7 +368,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1891438339132072879}
+    m_TransformParent: {fileID: 122739178622663310}
     m_Modifications:
     - target: {fileID: 1244624151521354729, guid: aeb3a75cf79f8ff47a2d56cfa16233b7, type: 3}
       propertyPath: m_Name
@@ -370,7 +450,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1891438339132072879}
+    m_TransformParent: {fileID: 122739178622663310}
     m_Modifications:
     - target: {fileID: 1244624151521354729, guid: aeb3a75cf79f8ff47a2d56cfa16233b7, type: 3}
       propertyPath: m_Name
@@ -452,7 +532,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1891438339132072879}
+    m_TransformParent: {fileID: 122739178622663310}
     m_Modifications:
     - target: {fileID: 1244624151521354729, guid: aeb3a75cf79f8ff47a2d56cfa16233b7, type: 3}
       propertyPath: m_Name

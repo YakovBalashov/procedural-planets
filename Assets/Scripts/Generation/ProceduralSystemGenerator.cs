@@ -41,6 +41,7 @@ namespace ProceduralPlanets.Generation
             GenerateMoons(random);
 
             if (!Application.isPlaying) return;
+            base.GenerateSystem();
         }
 
         private void GenerateMoons(Random random)
@@ -77,16 +78,6 @@ namespace ProceduralPlanets.Generation
 
         private void ClearExistingSystem()
         {
-            if (Application.isPlaying) return;
-            if (CelestialBodies.Count == 0) return;
-            var primaryStarTransform = CelestialBodies[0].transform;
-            while (primaryStarTransform.childCount > 0)
-            {
-                Transform child = primaryStarTransform.GetChild(0);
-                DestroyImmediate(child.gameObject);
-            }
-
-            DestroyImmediate(primaryStarTransform.gameObject);
             CelestialBodies.Clear();
         }
 

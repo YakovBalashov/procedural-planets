@@ -45,7 +45,7 @@ namespace ProceduralPlanets.Generation
                 var moons = GenerateDefinedSatellites(moonGenerationParameters, random);
                 planetGenerator.Moons = moons;
             }
-
+            if (!Application.isPlaying) return;
             base.GenerateSystem();
         }
 

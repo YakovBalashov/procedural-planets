@@ -23,7 +23,7 @@ namespace ProceduralPlanets.Movement
         private int _trackingSign;
 
         private bool _isAlignmentInProgress;
-        private bool _isPlayerInputEnabled;
+        private bool _isPlayerInputEnabled = true;
 
         private void OnEnable()
         {

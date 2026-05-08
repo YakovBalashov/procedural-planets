@@ -116,6 +116,30 @@ namespace ProceduralPlanets.Movement
             var angle = Mathf.Atan2(transform.localPosition.z, transform.localPosition.x);
             _currentAngle = angle % (2 * Mathf.PI);
         }
+        
+        public void SetCircularOrbitFromCurrentPosition(float orbitalVelocity)
+        {
+            if (!transform.parent) return;
+
+            var localPos = transform.localPosition;
+            var radius = localPos.magnitude;
+            
+            radiusX = radius;
+            radiusZ = radius;
+            speedInDegreesPerSecond = orbitalVelocity;
+
+            _currentAngle = 0f;
+
+            var inclination = Mathf.Asin(localPos.y / radius) * Mathf.Rad2Deg;
+
+            var yaw = Mathf.Atan2(-localPos.z, localPos.x) * Mathf.Rad2Deg;
+
+            rotation = new Vector3(0f, yaw, inclination);
+
+            Initialize();
+
+            MoveBodyToAngle(_currentAngle);
+        }
 
         private void OnDrawGizmos()
         {

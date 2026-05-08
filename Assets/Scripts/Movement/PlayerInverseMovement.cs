@@ -21,11 +21,13 @@ namespace ProceduralPlanets.Movement
         [SerializeField] private float initialRotationTime = 3f;
         [SerializeField] private float midflightRotationTime = 1.5f;
         [SerializeField] private float gapTime = 0.5f;
+        [SerializeField] private float defaultOrbitalVelocity = 1f;
         [SerializeField] private AnimationCurve planetaryTravelCurve;
         [SerializeField] private bool collisionCheck;
 
         [Header("References")]
         [SerializeField] private SystemMap systemMap;
+
         [SerializeField] private SystemGenerator systemGenerator;
         [SerializeField] private Transform systemOrigin;
         [SerializeField] private GameObject engines;
@@ -51,6 +53,16 @@ namespace ProceduralPlanets.Movement
             _playerOrientation = GetComponent<PlayerOrientation>();
         }
 
+        private void Start()
+        {
+            var star = systemGenerator.GetBodyByIndex(Vector2.zero);
+            transform.SetParent(star.transform.parent);
+            var newOrbit = new OrbitParameters(star.GetBodyData().PlayerOrbitRadius, 1f, 0f, 0f, defaultOrbitalVelocity);
+            _orbitalMovement.SetParameters(newOrbit);
+            _orbitalMovement.enabled = true;
+            _currentBodyIndex = Vector2.zero;
+        }
+
         private void OnEnable()
         {
             systemMap.OnBodySelected += MoveToBody;
@@ -70,7 +82,19 @@ namespace ProceduralPlanets.Movement
 
         private void MoveToBody(Vector2 targetBodyIndex)
         {
-            if (_isMoving) return;
+            if (_isMoving)
+            {
+                SystemGenerator.MessageText.SetMessage("Already traveling to a destination.",
+                    2, MessageText.ErrorColor);
+                return;
+            }
+            
+            if (targetBodyIndex == _currentBodyIndex)
+            {
+                SystemGenerator.MessageText.SetMessage("Already at the selected destination.",
+                    2, MessageText.ErrorColor);
+                return;
+            }
 
             if (targetBodyIndex.y != 0 && (int)_currentBodyIndex.x != (int)targetBodyIndex.x)
             {
@@ -79,10 +103,7 @@ namespace ProceduralPlanets.Movement
                 return;
             }
 
-            var travelTime = initialRotationTime + gapTime +
-                             ((int)targetBodyIndex.x == (int)_currentBodyIndex.x
-                                 ? moonTravelTime
-                                 : planetaryTravelTime);
+            var travelTime = (int)targetBodyIndex.x == (int)_currentBodyIndex.x ? moonTravelTime : planetaryTravelTime;
 
             var currentAnchor = transform.parent;
 
@@ -91,7 +112,7 @@ namespace ProceduralPlanets.Movement
             transform.SetParent(null);
 
             var targetBody = systemGenerator.GetBodyByIndex(targetBodyIndex);
-            _targetPosition = CalculateTargetPosition(targetBody, travelTime);
+            _targetPosition = CalculateTargetPosition(targetBody, travelTime + initialRotationTime + gapTime);
             _targetBodyTransform = targetBody.transform;
 
             var inverseTravelDirection = (transform.position - _targetPosition).normalized;
@@ -156,35 +177,35 @@ namespace ProceduralPlanets.Movement
             Vector3 trackingPosition)
         {
             OnMovementStarted?.Invoke();
-            
+
             yield return RotateShip(trackingPosition);
 
             var elapsedTime = 0f;
             float halfwayTime = travelTime / 2f;
             bool midflightRotationDone = false;
-            
+
             while (elapsedTime < travelTime)
             {
                 elapsedTime += Time.deltaTime;
-                
+
                 if (!midflightRotationDone && elapsedTime >= halfwayTime)
                 {
                     StartCoroutine(PerformMidflightRotation(trackingPosition));
                     midflightRotationDone = true;
                 }
-                
+
                 var t = planetaryTravelCurve.Evaluate(elapsedTime / travelTime);
                 systemOrigin.position = Vector3.Lerp(startPos, targetPos, t);
 
                 yield return null;
             }
-            
+
             systemOrigin.position = targetPos;
             engines.SetActive(false);
             _isMoving = false;
 
             _playerOrientation.TogglePlayerInput(true);
-            OrbitTargetBody(radius);
+            OrbitTargetBody(defaultOrbitalVelocity, _targetBodyTransform.parent);
             SystemGenerator.MessageText.SetMessage("Arrived at " + _targetBodyName, 3, MessageText.SuccessColor);
         }
 
@@ -195,7 +216,7 @@ namespace ProceduralPlanets.Movement
             yield return new WaitForSeconds(initialRotationTime + gapTime);
             engines.SetActive(true);
         }
-        
+
         private IEnumerator PerformMidflightRotation(Vector3 trackingPosition)
         {
             engines.SetActive(false);
@@ -206,12 +227,10 @@ namespace ProceduralPlanets.Movement
             engines.SetActive(true);
         }
 
-        private void OrbitTargetBody(float radius)
+        private void OrbitTargetBody(float orbitalVelocity, Transform anchor)
         {
-            transform.SetParent(_targetBodyTransform.parent);
-            var newOrbit = new OrbitParameters(radius, 1f, 0f, 0f, 5);
-            _orbitalMovement.SetParameters(newOrbit);
-            _orbitalMovement.CalculateAngleFromPositionForPerfectOrbit();
+            transform.SetParent(anchor);
+            _orbitalMovement.SetCircularOrbitFromCurrentPosition(orbitalVelocity);
             _orbitalMovement.enabled = true;
         }
 

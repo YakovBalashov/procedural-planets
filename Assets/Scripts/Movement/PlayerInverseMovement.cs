@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using ProceduralPlanets.Generation;
+using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.UI;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace ProceduralPlanets.Movement
         private const float RadiusCollisionMultiplayer = 1.5f;
 
         public event Action OnMovementStarted;
+        public event Action<CelestialBodyData> OnArrivedAtBody;
 
         [Header("Movement Settings")]
         [SerializeField] private float planetaryTravelTime = 20f;
@@ -61,6 +63,7 @@ namespace ProceduralPlanets.Movement
             _orbitalMovement.SetParameters(newOrbit);
             _orbitalMovement.enabled = true;
             _currentBodyIndex = Vector2.zero;
+            OnArrivedAtBody?.Invoke(star.GetBodyData());
         }
 
         private void OnEnable()
@@ -135,7 +138,7 @@ namespace ProceduralPlanets.Movement
             _isMoving = true;
 
             StartCoroutine(ExecuteFlight(systemOrigin.position, inverseTarget, travelTime,
-                targetBody.GetBodyData().PlayerOrbitRadius, _targetPosition));
+                targetBody.GetBodyData(), _targetPosition));
 
             _currentBodyIndex = targetBodyIndex;
         }
@@ -173,7 +176,7 @@ namespace ProceduralPlanets.Movement
             return false;
         }
 
-        private IEnumerator ExecuteFlight(Vector3 startPos, Vector3 targetPos, float travelTime, float radius,
+        private IEnumerator ExecuteFlight(Vector3 startPos, Vector3 targetPos, float travelTime, CelestialBodyData data,
             Vector3 trackingPosition)
         {
             OnMovementStarted?.Invoke();
@@ -207,6 +210,7 @@ namespace ProceduralPlanets.Movement
             _playerOrientation.TogglePlayerInput(true);
             OrbitTargetBody(defaultOrbitalVelocity, _targetBodyTransform.parent);
             SystemGenerator.MessageText.SetMessage("Arrived at " + _targetBodyName, 3, MessageText.SuccessColor);
+            OnArrivedAtBody?.Invoke(data);
         }
 
         private IEnumerator RotateShip(Vector3 trackingPosition)

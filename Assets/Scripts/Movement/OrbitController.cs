@@ -1,29 +1,38 @@
-using System;
-using ProceduralPlanets;
+using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 
 namespace ProceduralPlanets.Movement
 {
-    [RequireComponent(typeof(OrbitalMovement))]
+    [RequireComponent(typeof(OrbitalMovement), typeof(PlayerInverseMovement))]
     public class OrbitController : MonoBehaviour
     {
         [Header("Input Actions")]
         [SerializeField] private InputActionReference changeSpeedAction;
+
         [SerializeField] private InputActionReference changeRotationAction;
         [SerializeField] private InputActionReference changeRadiusAction;
-        
+
         [Header("Smoothness Settings")]
-        public float speedChangeRate = 10f;
-        public float rotationChangeRate = 45f;
-        public float radiusChangeRate = 10f;
+        [SerializeField] private float speedChangeRate = 10f;
+
+        [SerializeField] private float rotationChangeRate = 45f;
+        [SerializeField] private float radiusChangeRate = 0.2f;
 
         private OrbitalMovement _orbitalMovement;
+        private PlayerInverseMovement _playerInverseMovement;
+        private float _targetBodyRadius;
 
         private void Awake()
         {
             _orbitalMovement = GetComponent<OrbitalMovement>();
+            _playerInverseMovement = GetComponent<PlayerInverseMovement>();
+        }
+
+        private void SetTargetBodyRadius(CelestialBodyData data)
+        {
+            _targetBodyRadius = data.Radius;
         }
 
         private void OnEnable()
@@ -31,13 +40,17 @@ namespace ProceduralPlanets.Movement
             changeSpeedAction.action.Enable();
             changeRotationAction.action.Enable();
             changeRadiusAction.action.Enable();
+
+            _playerInverseMovement.OnArrivedAtBody += SetTargetBodyRadius;
         }
-        
+
         private void OnDisable()
         {
             changeSpeedAction.action.Disable();
             changeRotationAction.action.Disable();
             changeRadiusAction.action.Disable();
+
+            _playerInverseMovement.OnArrivedAtBody -= SetTargetBodyRadius;
         }
 
         private void Update()
@@ -60,7 +73,7 @@ namespace ProceduralPlanets.Movement
 
             if (radiusInput != 0)
             {
-                float deltaRadius = radiusInput * radiusChangeRate * Time.deltaTime;
+                float deltaRadius = radiusInput * radiusChangeRate * _targetBodyRadius * Time.deltaTime;
                 _orbitalMovement.ChangeRadius(deltaRadius);
             }
         }

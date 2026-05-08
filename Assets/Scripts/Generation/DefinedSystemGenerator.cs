@@ -16,10 +16,12 @@ namespace ProceduralPlanets.Generation
 
         public override void GenerateSystem()
         {
+            CelestialBodies.Clear();
             var star = Instantiator.InstantiateGameObject(starPrefab, transform);
             var starGenerator = star.GetComponent<StarGenerator>();
             starGenerator.SetBodyData(starData);
             star.name = starName;
+            CelestialBodies.Add(star);
 
             var random = new Random(seed);
 
@@ -29,11 +31,12 @@ namespace ProceduralPlanets.Generation
                 ParentTransform = star.transform,
             };
 
-            CelestialBodies = GenerateDefinedSatellites(planetGenerationParameters, random);
+            CelestialBodies.AddRange(GenerateDefinedSatellites(planetGenerationParameters, random));
 
             foreach (var planet in CelestialBodies)
             {
                 var planetGenerator = planet.GetComponent<PlanetGenerator>();
+                if (!planetGenerator) continue;
                 var localSystem = localSystems.First(ls => ls.Planet.PlanetData == planetGenerator.GetBodyData());
 
                 var moonGenerationParameters = new SatelliteGenerationParameters
@@ -57,7 +60,7 @@ namespace ProceduralPlanets.Generation
             {
                 var satelliteName = planetAndOrbitData.PlanetData.name;
 
-                var anchor = Instantiator.InstantiateGameObject(anchorPrefab, parameters.ParentTransform);
+                var anchor = Instantiator.InstantiateGameObject(anchorPrefab, parameters.ParentTransform.parent);
                 var anchorOrbit = anchor.GetComponent<OrbitalMovement>();
                 anchorOrbit.SetParameters(planetAndOrbitData.OrbitParameters);
 

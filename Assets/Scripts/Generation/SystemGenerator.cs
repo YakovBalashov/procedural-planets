@@ -18,15 +18,21 @@ namespace ProceduralPlanets.Generation
 
         public static float TimeMultiplier { get; private set; }
         private const float MinTimeMultiplier = 0.1f;
-        private const float MaxTimeMultiplier = 1000.0f;
+        private const float MaxTimeMultiplier = 100000.0f;
 
         public static MessageText MessageText;
         
-        protected List<GameObject> CelestialBodies = new();
+        protected readonly List<GameObject> CelestialBodies = new();
 
         private const float MaxOffset = 10000f;
         private const int FirstCapitalLetterASCII = 65;
 
+        private void Awake()
+        {
+            seed = new Random().Next();
+            GenerateSystem();
+        }
+        
         public virtual void GenerateSystem()
         {
             systemMap.Generate(CelestialBodies);

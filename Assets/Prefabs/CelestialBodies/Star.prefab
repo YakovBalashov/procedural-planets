@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2411807560672345087}
   - component: {fileID: 8361967482401533942}
   - component: {fileID: 4091485369938373092}
+  - component: {fileID: 4339652542752065622}
   m_Layer: 0
   m_Name: Star
   m_TagString: Untagged
@@ -69,8 +70,7 @@ MeshRenderer:
   m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: -876546973899608171, guid: 82bcb46123b27554b9bde57ef9751342, type: 3}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,11 +106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 451684548bc1e0c4081aa885286dd348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Generation.StarGenerator
-  material: {fileID: 2100000, guid: c7a2e4c1e65b50942b37edd7b70b48c7, type: 2}
+  material: {fileID: 2100000, guid: b088ac552ae682a48b92cbf55ecbba19, type: 2}
   resolution: 256
   <BodyData>k__BackingField: {fileID: 0}
   <BodyType>k__BackingField: {fileID: 0}
-  useComputeShader: 1
   useUnityNormals: 1
   displacementShader: {fileID: 7200000, guid: baa519b85dc8d5b4aa725b9eaa28ed1d, type: 3}
   normalSampleDistance: 0.01
@@ -230,3 +229,17 @@ MonoBehaviour:
   - <Resolution>k__BackingField: 20
     <ScreenCoverageThreshold>k__BackingField: 0.01
   lowestLODResolution: 16
+--- !u!114 &4339652542752065622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5697796114999130581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf00851dc50d124499cdbf820d26231f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.AxisRotation
+  axis: {x: 0, y: 0, z: 0}
+  speedInDegreesPerSecond: 1

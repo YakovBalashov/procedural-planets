@@ -16,11 +16,6 @@ namespace ProceduralPlanets.Generation
 
         private const string PrimeStarName = "Polaris";
 
-        private void Awake()
-        {
-            GenerateSystem();
-        }
-
         public override void GenerateSystem()
         {
             var random = new Random(seed);

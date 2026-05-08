@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/SolDemo.unity
+    guid: 0b3ab03559d0a3343bf017bf46d605e4
+  - enabled: 1
+    path: Assets/Scenes/SystemDemo.unity
+    guid: 66511ebd7a7deae43ab90bcbfd2a74f9
+  - enabled: 0
     path: Assets/Scenes/BodyDemo.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:

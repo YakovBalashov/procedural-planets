@@ -182,6 +182,7 @@ namespace ProceduralPlanets.Generation
             }
             else mesh.normals = normals;
             mesh.RecalculateBounds();
+            mesh.RecalculateTangents();
 
             var heightRange = GetVertexHeightRange(mesh);
 

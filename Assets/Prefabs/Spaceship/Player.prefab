@@ -90,6 +90,7 @@ MonoBehaviour:
   initialRotationTime: 3
   midflightRotationTime: 1.5
   gapTime: 0.5
+  defaultOrbitalVelocity: 0.5
   planetaryTravelCurve:
     serializedVersion: 2
     m_Curve:
@@ -128,7 +129,7 @@ MonoBehaviour:
   systemGenerator: {fileID: 0}
   systemOrigin: {fileID: 0}
   engines: {fileID: 7732275192244595933}
-  maxDistanceFromOrigin: 10000
+  maxDistanceFromOrigin: 5000
   orbitalCamera: {fileID: 0}
 --- !u!114 &501606680496018899
 MonoBehaviour:
@@ -144,7 +145,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.PlayerOrientation
   rotationSpeed: 90
   rotationTime: 0.1
-  trackingSpeed: 180
   pitchAction: {fileID: -299182468022870919, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   rollAction: {fileID: -8072574839880572155, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   yawAction: {fileID: -5587704363517365904, guid: 052faaac586de48259a63d0c4782560b, type: 3}

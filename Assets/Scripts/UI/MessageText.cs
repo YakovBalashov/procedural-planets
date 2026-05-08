@@ -30,7 +30,9 @@ namespace ProceduralPlanets.UI
         
         private IEnumerator EraseMessageAfterDelay(float delay)
         {
+            _isMessageDisplaying = true;
             yield return new WaitForSeconds(delay);
+            _isMessageDisplaying = false;   
             _text.text = string.Empty;
         }
     }

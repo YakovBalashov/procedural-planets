@@ -9,7 +9,6 @@ namespace ProceduralPlanets.Movement
     {
         [SerializeField] private float rotationSpeed = 90f;
         [SerializeField] private float rotationTime = 0.1f;
-        [SerializeField] private float trackingSpeed = 180f;
         [SerializeField] private InputActionReference pitchAction;
         [SerializeField] private InputActionReference rollAction;
         [SerializeField] private InputActionReference yawAction;
@@ -73,13 +72,14 @@ namespace ProceduralPlanets.Movement
             _isAlignmentInProgress = true;
             Quaternion startRotation = transform.rotation;
             float elapsedTime = 0f;
+            Vector3 initialUp = transform.up;
 
             int trackingSign = inverseTracking ? -1 : 1;
             Vector3 directionToTarget = (transform.position - targetPosition) * trackingSign;
 
             while (elapsedTime < duration)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, transform.up);
+                Quaternion targetRotation = Quaternion.LookRotation(directionToTarget, initialUp);
 
                 float t = elapsedTime / duration;
                 float smoothT = Mathf.SmoothStep(0f, 1f, t);

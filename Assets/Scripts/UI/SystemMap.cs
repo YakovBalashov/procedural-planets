@@ -102,7 +102,7 @@ namespace ProceduralPlanets.UI
             Button button = buttonObject.GetComponent<Button>();
             TextMeshProUGUI buttonText = buttonObject.GetComponentInChildren<TextMeshProUGUI>();
             buttonText.text = bodyName;
-            button.image.color = color;
+            button.image.color = new Color(color.r, color.g, color.b, 1f);
 
             button.onClick.AddListener(() => SelectBody(bodyIndex));
             return buttonObject;

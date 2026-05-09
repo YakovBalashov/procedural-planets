@@ -93,6 +93,13 @@ namespace ProceduralPlanets.Movement
                 return;
             }
             
+            if (SystemGenerator.CurrentTimeExponent != 0)
+            {
+                SystemGenerator.MessageText.SetMessage("Set time scale to 1x before traveling to a new destination.",
+                    2, MessageText.ErrorColor);
+                return;
+            }
+            
             if (targetBodyIndex == _currentBodyIndex)
             {
                 SystemGenerator.MessageText.SetMessage("Already at the selected destination.",

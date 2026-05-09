@@ -5,6 +5,7 @@ using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.UI;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ProceduralPlanets.Movement
 {
@@ -23,7 +24,7 @@ namespace ProceduralPlanets.Movement
         [SerializeField] private float initialRotationTime = 3f;
         [SerializeField] private float midflightRotationTime = 1.5f;
         [SerializeField] private float gapTime = 0.5f;
-        [SerializeField] private float defaultOrbitalVelocity = 1f;
+        [field: SerializeField] public float DefaultOrbitalVelocity { get; private set; } = 0.5f;
         [SerializeField] private AnimationCurve planetaryTravelCurve;
         [SerializeField] private bool collisionCheck;
 
@@ -59,7 +60,7 @@ namespace ProceduralPlanets.Movement
         {
             var star = systemGenerator.GetBodyByIndex(Vector2.zero);
             transform.SetParent(star.transform.parent);
-            var newOrbit = new OrbitParameters(star.GetBodyData().PlayerOrbitRadius, 1f, 0f, 0f, defaultOrbitalVelocity);
+            var newOrbit = new OrbitParameters(star.GetBodyData().PlayerOrbitRadius, 1f, 0f, 0f, DefaultOrbitalVelocity);
             _orbitalMovement.SetParameters(newOrbit);
             _orbitalMovement.enabled = true;
             _currentBodyIndex = Vector2.zero;
@@ -208,7 +209,7 @@ namespace ProceduralPlanets.Movement
             _isMoving = false;
 
             _playerOrientation.TogglePlayerInput(true);
-            OrbitTargetBody(defaultOrbitalVelocity, _targetBodyTransform.parent);
+            OrbitTargetBody(DefaultOrbitalVelocity, _targetBodyTransform.parent);
             SystemGenerator.MessageText.SetMessage("Arrived at " + _targetBodyName, 3, MessageText.SuccessColor);
             OnArrivedAtBody?.Invoke(data);
         }

@@ -163,5 +163,10 @@ namespace ProceduralPlanets.Movement
                 previousPoint = point;
             }
         }
+
+        public void ZeroSpeed()
+        {
+            speedInDegreesPerSecond = 0f;
+        }
     }
 }

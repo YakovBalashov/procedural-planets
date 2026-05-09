@@ -13,6 +13,8 @@ namespace ProceduralPlanets.Movement
 
         [SerializeField] private InputActionReference changeRotationAction;
         [SerializeField] private InputActionReference changeRadiusAction;
+        [SerializeField] private InputActionReference zeroSpeedAction;
+        [SerializeField] private InputActionReference resetOrbitAction;
 
         [Header("Smoothness Settings")]
         [SerializeField] private float speedChangeRate = 10f;
@@ -23,6 +25,7 @@ namespace ProceduralPlanets.Movement
         private OrbitalMovement _orbitalMovement;
         private PlayerInverseMovement _playerInverseMovement;
         private float _targetBodyRadius;
+        private float _targetBodyOrbitRadius;
 
         private void Awake()
         {
@@ -33,6 +36,7 @@ namespace ProceduralPlanets.Movement
         private void SetTargetBodyRadius(CelestialBodyData data)
         {
             _targetBodyRadius = data.Radius;
+            _targetBodyOrbitRadius = data.PlayerOrbitRadius;
         }
 
         private void OnEnable()
@@ -40,8 +44,19 @@ namespace ProceduralPlanets.Movement
             changeSpeedAction.action.Enable();
             changeRotationAction.action.Enable();
             changeRadiusAction.action.Enable();
+            resetOrbitAction.action.Enable();
+            zeroSpeedAction.action.Enable();
 
+            resetOrbitAction.action.performed += ResetOrbit;
+            zeroSpeedAction.action.performed += ZeroSpeed;
             _playerInverseMovement.OnArrivedAtBody += SetTargetBodyRadius;
+        }
+
+        private void ResetOrbit(InputAction.CallbackContext obj)
+        {
+            var parameters = new OrbitParameters(_targetBodyOrbitRadius, 1f, 0, 0,
+                _playerInverseMovement.DefaultOrbitalVelocity);
+            _orbitalMovement.SetParameters(parameters);
         }
 
         private void OnDisable()
@@ -49,8 +64,18 @@ namespace ProceduralPlanets.Movement
             changeSpeedAction.action.Disable();
             changeRotationAction.action.Disable();
             changeRadiusAction.action.Disable();
+            resetOrbitAction.action.Disable();
+            zeroSpeedAction.action.Disable();
+
+            resetOrbitAction.action.performed -= ResetOrbit;
+            zeroSpeedAction.action.performed -= ZeroSpeed;
 
             _playerInverseMovement.OnArrivedAtBody -= SetTargetBodyRadius;
+        }
+
+        private void ZeroSpeed(InputAction.CallbackContext obj)
+        {
+            _orbitalMovement.ZeroSpeed();
         }
 
         private void Update()

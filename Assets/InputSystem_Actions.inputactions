@@ -158,6 +158,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ResetOrbit",
+                    "type": "Button",
+                    "id": "49196e7b-9492-4a7b-b36c-a664c8675232",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ZeroOrbitSpeed",
+                    "type": "Button",
+                    "id": "7ee822bc-0879-4345-9648-00a5b9c801d0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -765,6 +783,28 @@
                     "action": "Yaw",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "f0c7c4be-d66b-4d05-9b33-e9c2a9778f8a",
+                    "path": "<Keyboard>/numpad0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetOrbit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7fa5b752-e4fb-4014-9d52-b3fb9447665a",
+                    "path": "<Keyboard>/numpad5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ZeroOrbitSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

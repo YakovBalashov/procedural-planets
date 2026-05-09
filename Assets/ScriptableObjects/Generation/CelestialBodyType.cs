@@ -12,6 +12,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
 {
     public abstract class CelestialBodyType<T> : ScriptableObject where T : CelestialBodyData
     {
+        [field: SerializeField] public float SpawnWeight { get; private set; } = 1f;
         [SerializeField] protected Vector2 radiusRange;
         [SerializeField] protected List<NoiseSettingsGPU> gpuNoiseSettings;
         [field: SerializeField] public List<Color> PossibleBaseColors { get; private set; }

@@ -108,7 +108,16 @@ namespace ProceduralPlanets.Generation
                     continue;
                 }
 
-                PlanetType satelliteType = planetsWithCurrentOrbit[random.Next(planetsWithCurrentOrbit.Count)];
+                var weights = planetsWithCurrentOrbit.Select(planet => planet.SpawnWeight).ToList();
+                
+                if (weights.All(weight => weight == 0))
+                {
+                    currentOrbitRadius += offset;
+                    continue;
+                }
+
+                PlanetType satelliteType = random.GetRandomListElement(planetsWithCurrentOrbit, weights);
+                
 
                 OrbitParameters satelliteOrbitParameters =
                     GenerateOrbitParameters(currentOrbitRadius, parameters.OrbitSelector(satelliteType), random);

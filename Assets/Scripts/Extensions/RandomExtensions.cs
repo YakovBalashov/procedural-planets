@@ -24,17 +24,33 @@ namespace ProceduralPlanets.Extensions
             return (float)random.NextDouble();
         }
         
-        public static T GetRandomListElement<T> (this System.Random random, List<T> items, List<float> probabilities)
+        public static T GetRandomListElement<T>(this System.Random random, List<T> items, List<float> probabilities)
         {
-            var totalProbability = probabilities.Sum();
+            float totalProbability = probabilities.Sum();
 
-            var randomPoint = random.NextFloat() * totalProbability;
+            if (totalProbability <= 0f) return items[0];
+
+            float randomPoint = random.NextFloat() * totalProbability;
+    
+            float currentSum = 0f;
 
             for (var i = 0; i < items.Count; i++)
             {
-                if (randomPoint < probabilities[i]) return items[i];
-                randomPoint -= probabilities[i];
+                if (probabilities[i] <= 0f) continue;
+
+                currentSum += probabilities[i];
+
+                if (randomPoint <= currentSum)
+                {
+                    return items[i];
+                }
             }
+
+            for (int i = items.Count - 1; i >= 0; i--)
+            {
+                if (probabilities[i] > 0f) return items[i];
+            }
+
             return items[^1];
         }
     }

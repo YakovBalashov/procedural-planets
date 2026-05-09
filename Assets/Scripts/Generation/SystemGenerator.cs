@@ -16,7 +16,7 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private SystemMap systemMap;
         [SerializeField] private float timeMultiplier = 1f;
 
-        public static float TimeMultiplier { get; private set; }
+        public static float TimeMultiplier { get; private set; } = 1f;
         private const float MinTimeMultiplier = 0.1f;
         private const float MaxTimeMultiplier = 100000.0f;
 

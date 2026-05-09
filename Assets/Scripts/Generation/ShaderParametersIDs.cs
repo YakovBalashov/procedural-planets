@@ -45,5 +45,8 @@ namespace ProceduralPlanets.Generation
         public static readonly int AtmosphereNoiseWarpAmplitude = Shader.PropertyToID("_AtmosphereNoiseWarpAmplitude");
         public static readonly int AtmosphereNoiseRange = Shader.PropertyToID("_AtmosphereNoiseRange");
         public static readonly int AtmosphereMinAlpha = Shader.PropertyToID("_AtmosphereMinAlpha");
+        
+        public static readonly int RotationAxis = Shader.PropertyToID("_Axis");
+        public static readonly int RotationAngle = Shader.PropertyToID("_Rotation");
     }
 }

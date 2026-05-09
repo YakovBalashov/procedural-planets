@@ -78,9 +78,9 @@ namespace ProceduralPlanets.Movement
             _mainAxis = (radiusX >= radiusZ) ? Vector3.right : Vector3.forward;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            _currentAngle += speedInDegreesPerSecond * Mathf.Deg2Rad * Time.fixedDeltaTime * SystemGenerator.TimeMultiplier;
+            _currentAngle += speedInDegreesPerSecond * Mathf.Deg2Rad * Time.deltaTime * SystemGenerator.TimeMultiplier;
             _currentAngle %= 2 * Mathf.PI;
 
             MoveBodyToAngle(_currentAngle);

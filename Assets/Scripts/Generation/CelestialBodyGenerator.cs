@@ -57,7 +57,6 @@ namespace ProceduralPlanets.Generation
             if (!_axisRotation) return;
 
             _axisRotation.SetParameters(BodyData.RotationAxis, BodyData.RotationSpeedInDegreesPerSecond);
-            _axisRotation.SetMeshProperties(MaterialPropertyBlock, MeshRenderer);
         }
 
         public override CelestialBodyData GetBodyData()

@@ -93,8 +93,8 @@ namespace ProceduralPlanets.Movement
             var rotationQuaternion = Quaternion.Euler(rotation);
 
             Vector3 localRotatedPoint = rotationQuaternion * GetLocalPointOnEllipse(angle);
-
-            transform.position = transform.parent.TransformPoint(localRotatedPoint);
+            
+            transform.localPosition = localRotatedPoint;
         }
 
         private Vector3 GetLocalPointOnEllipse(float angle)

@@ -15,6 +15,7 @@ namespace ProceduralPlanets.Movement
         private const float RadiusCollisionMultiplayer = 1.5f;
 
         public event Action OnMovementStarted;
+        public event Action OnCenter;
         public event Action<CelestialBodyData> OnArrivedAtBody;
 
         [Header("Movement Settings")]
@@ -289,6 +290,7 @@ namespace ProceduralPlanets.Movement
 
             var deltaPosition = transform.position - globalPosition;
             orbitalCamera?.OnTargetObjectWarped(transform, deltaPosition);
+            OnCenter?.Invoke();
         }
 
         private void OnDrawGizmos()

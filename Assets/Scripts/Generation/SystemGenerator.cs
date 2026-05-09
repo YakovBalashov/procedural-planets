@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
@@ -15,6 +14,7 @@ namespace ProceduralPlanets.Generation
         [SerializeField] protected GameObject planetPrefab;
         [SerializeField] private SystemMap systemMap;
         [SerializeField] private float timeMultiplier = 1f;
+        [SerializeField] private bool useFakeStar;
 
         public static int CurrentTimeExponent { get; private set; } = 0;
         public static float TimeMultiplier => Mathf.Pow(10, CurrentTimeExponent);

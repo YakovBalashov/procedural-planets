@@ -37,7 +37,8 @@ namespace ProceduralPlanets.Movement
 
         private void FixedUpdate()
         {
-            _currentAngle = Mathf.Repeat(speedInDegreesPerSecond * Time.fixedTime * SystemGenerator.TimeMultiplier, 360f);
+            _currentAngle += speedInDegreesPerSecond * Time.fixedDeltaTime * SystemGenerator.TimeMultiplier; 
+            _currentAngle = Mathf.Repeat(_currentAngle, 360f);
             transform.rotation = _axisRotation * Quaternion.Euler(0f, _currentAngle, 0f);
             
             if (_meshRenderer is null) return;

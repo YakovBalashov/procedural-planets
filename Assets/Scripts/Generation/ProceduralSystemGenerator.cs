@@ -86,7 +86,7 @@ namespace ProceduralPlanets.Generation
 
             SatelliteParameters satelliteParameters = parameters.ParentType.SatelliteParameters;
 
-            var maxSatelliteCount = (int)satelliteParameters.NumberRange.y;
+            var maxSatelliteCount = (int)random.Range(satelliteParameters.NumberRange);
             var firstSatelliteOrbitOffset =
                 random.Range(new Vector2(0, satelliteParameters.DistanceBetweenSatellitesRange.x));
             float currentOrbitRadius = satelliteParameters.OrbitRadiusRange.x + firstSatelliteOrbitOffset;

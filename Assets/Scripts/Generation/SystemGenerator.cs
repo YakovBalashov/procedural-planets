@@ -16,9 +16,10 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private SystemMap systemMap;
         [SerializeField] private float timeMultiplier = 1f;
 
-        public static float TimeMultiplier { get; private set; } = 1f;
-        private const float MinTimeMultiplier = 0.1f;
-        private const float MaxTimeMultiplier = 100000.0f;
+        public static int CurrentTimeExponent { get; private set; } = 0;
+        public static float TimeMultiplier => Mathf.Pow(10, CurrentTimeExponent);
+        public const int MinTimeExponent = -2;
+        public const int MaxTimeExponent = 6;
 
         public static MessageText MessageText;
         
@@ -30,6 +31,7 @@ namespace ProceduralPlanets.Generation
         private void Awake()
         {
             seed = new Random().Next();
+            timeMultiplier = 1f;
             GenerateSystem();
         }
         
@@ -67,8 +69,13 @@ namespace ProceduralPlanets.Generation
         
         public static void SetTimeMultiplier(float multiplier)
         {
-            TimeMultiplier = Mathf.Clamp(multiplier, MinTimeMultiplier, MaxTimeMultiplier);
+            var newTimeExponent = Mathf.Log10(multiplier);
+            CurrentTimeExponent = Mathf.Clamp(Mathf.RoundToInt(newTimeExponent), MinTimeExponent, MaxTimeExponent);
         }
         
+        public static void SetTimeExponent(int exponent)
+        {
+            CurrentTimeExponent = Mathf.Clamp(exponent, MinTimeExponent, MaxTimeExponent);
+        }
     }
 }

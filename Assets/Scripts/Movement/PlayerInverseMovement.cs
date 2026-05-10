@@ -9,7 +9,7 @@ using UnityEngine.Serialization;
 
 namespace ProceduralPlanets.Movement
 {
-    [RequireComponent(typeof(OrbitalMovement), typeof(PlayerOrientation))]
+    [RequireComponent(typeof(PlayerOrbitalMovement), typeof(PlayerOrientation))]
     public class PlayerInverseMovement : MonoBehaviour
     {
         private const float RadiusCollisionMultiplayer = 1.5f;
@@ -41,7 +41,7 @@ namespace ProceduralPlanets.Movement
 
         [SerializeField] private CinemachineCamera orbitalCamera;
 
-        private OrbitalMovement _orbitalMovement;
+        private PlayerOrbitalMovement _orbitalMovement;
         private PlayerOrientation _playerOrientation;
 
         private Vector2 _currentBodyIndex;
@@ -53,7 +53,7 @@ namespace ProceduralPlanets.Movement
 
         private void Awake()
         {
-            _orbitalMovement = GetComponent<OrbitalMovement>();
+            _orbitalMovement = GetComponent<PlayerOrbitalMovement>();
             _playerOrientation = GetComponent<PlayerOrientation>();
         }
 
@@ -275,18 +275,18 @@ namespace ProceduralPlanets.Movement
 
         private void CenterPlayer()
         {
-            var parent = transform.parent;
-            var localPosition = transform.localPosition;
+            // var parent = transform.parent;
+            // var localPosition = transform.localPosition;
             var globalPosition = transform.position;
 
-            transform.SetParent(null);
+            // transform.SetParent(null);
             systemOrigin.SetParent(transform, true);
 
             transform.position = Vector3.zero;
             systemOrigin.SetParent(null);
 
-            transform.parent = parent;
-            transform.localPosition = localPosition;
+            // transform.parent = parent;
+            // transform.localPosition = localPosition;
 
             var deltaPosition = transform.position - globalPosition;
             orbitalCamera?.OnTargetObjectWarped(transform, deltaPosition);

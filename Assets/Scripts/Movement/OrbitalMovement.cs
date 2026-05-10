@@ -8,10 +8,10 @@ namespace ProceduralPlanets.Movement
 {
     public class OrbitalMovement : MonoBehaviour
     {
-        [SerializeField] private float radiusX = 5f;
-        [SerializeField] private float radiusZ = 5f;
-        [SerializeField] private float speedInDegreesPerSecond = 1f;
-        [SerializeField] private Vector3 rotation;
+        [SerializeField] protected float radiusX = 5f;
+        [SerializeField] protected float radiusZ = 5f;
+        [SerializeField] protected float speedInDegreesPerSecond = 1f;
+        [SerializeField] protected Vector3 rotation;
 
         [Range(10, 360)]
         [SerializeField] private int segmentNumber = 100;
@@ -22,7 +22,7 @@ namespace ProceduralPlanets.Movement
         private float _centerToFocusDistance;
         private Vector3 _mainAxis;
 
-        private float _currentAngle = 0f;
+        protected float CurrentAngle = 0f;
 
         private void OnValidate()
         {
@@ -34,7 +34,7 @@ namespace ProceduralPlanets.Movement
             Initialize();
         }
 
-        public void SetParameters(OrbitParameters parameters)
+        public virtual void SetParameters(OrbitParameters parameters)
         {
             radiusX = parameters.MainRadius;
             radiusZ = parameters.MainRadius * parameters.RadiusRatio;
@@ -63,7 +63,7 @@ namespace ProceduralPlanets.Movement
 
         public Vector3 GetPositionAfterTime(float time)
         {
-            float futureAngle = _currentAngle + speedInDegreesPerSecond * Mathf.Deg2Rad * time;
+            float futureAngle = CurrentAngle + speedInDegreesPerSecond * Mathf.Deg2Rad * time;
             futureAngle %= 2 * Mathf.PI;
 
             var rotationQuaternion = Quaternion.Euler(rotation);
@@ -72,7 +72,7 @@ namespace ProceduralPlanets.Movement
             return localRotatedPoint;
         }
 
-        private void Initialize()
+        protected void Initialize()
         {
             _centerToFocusDistance = Mathf.Sqrt(Mathf.Abs(Mathf.Pow(radiusX, 2) - Mathf.Pow(radiusZ, 2)));
             _mainAxis = (radiusX >= radiusZ) ? Vector3.right : Vector3.forward;
@@ -80,13 +80,13 @@ namespace ProceduralPlanets.Movement
 
         private void Update()
         {
-            _currentAngle += speedInDegreesPerSecond * Mathf.Deg2Rad * Time.deltaTime * SystemGenerator.TimeMultiplier;
-            _currentAngle %= 2 * Mathf.PI;
+            CurrentAngle += speedInDegreesPerSecond * Mathf.Deg2Rad * Time.deltaTime * SystemGenerator.TimeMultiplier;
+            CurrentAngle %= 2 * Mathf.PI;
 
-            MoveBodyToAngle(_currentAngle);
+            MoveBodyToAngle(CurrentAngle);
         }
 
-        private void MoveBodyToAngle(float angle)
+        protected virtual void MoveBodyToAngle(float angle)
         {
             if (!transform.parent) return;
 
@@ -97,7 +97,7 @@ namespace ProceduralPlanets.Movement
             transform.localPosition = localRotatedPoint;
         }
 
-        private Vector3 GetLocalPointOnEllipse(float angle)
+        protected Vector3 GetLocalPointOnEllipse(float angle)
         {
             return new Vector3(radiusX * Mathf.Cos(angle), 0f, radiusZ * Mathf.Sin(angle)) +
                    _mainAxis * _centerToFocusDistance;
@@ -105,8 +105,8 @@ namespace ProceduralPlanets.Movement
 
         public void MoveToStartingPosition(Random random)
         {
-            _currentAngle = (float)(random.NextDouble() * 2 * Math.PI);
-            MoveBodyToAngle(_currentAngle);
+            CurrentAngle = (float)(random.NextDouble() * 2 * Math.PI);
+            MoveBodyToAngle(CurrentAngle);
         }
 
         public void CalculateAngleFromPositionForPerfectOrbit()
@@ -114,33 +114,9 @@ namespace ProceduralPlanets.Movement
             if (!transform.parent) return;
 
             var angle = Mathf.Atan2(transform.localPosition.z, transform.localPosition.x);
-            _currentAngle = angle % (2 * Mathf.PI);
+            CurrentAngle = angle % (2 * Mathf.PI);
         }
         
-        public void SetCircularOrbitFromCurrentPosition(float orbitalVelocity)
-        {
-            if (!transform.parent) return;
-
-            var localPos = transform.localPosition;
-            var radius = localPos.magnitude;
-            
-            radiusX = radius;
-            radiusZ = radius;
-            speedInDegreesPerSecond = orbitalVelocity;
-
-            _currentAngle = 0f;
-
-            var inclination = Mathf.Asin(localPos.y / radius) * Mathf.Rad2Deg;
-
-            var yaw = Mathf.Atan2(-localPos.z, localPos.x) * Mathf.Rad2Deg;
-
-            rotation = new Vector3(0f, yaw, inclination);
-
-            Initialize();
-
-            MoveBodyToAngle(_currentAngle);
-        }
-
         private void OnDrawGizmos()
         {
             if (transform.parent == null) return;

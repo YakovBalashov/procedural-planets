@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1891438339132072879}
-  - component: {fileID: 1302052156508529300}
   - component: {fileID: 6672577040670389489}
   - component: {fileID: 3888136925283116281}
   - component: {fileID: 501606680496018899}
+  - component: {fileID: 8734004391522065045}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -37,24 +37,6 @@ Transform:
   - {fileID: 122739178622663310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1302052156508529300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7687471758654040645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49406ae3c1a04a54cbad7ae4322f6dd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.OrbitalMovement
-  radiusX: 100
-  radiusZ: 100
-  speedInDegreesPerSecond: 1
-  rotation: {x: 0, y: 0, z: 0}
-  segmentNumber: 100
-  <Color>k__BackingField: {r: 0, g: 1, b: 1, a: 1}
 --- !u!114 &6672577040670389489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,7 +56,7 @@ MonoBehaviour:
   resetOrbitAction: {fileID: -8286103361003348239, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   speedChangeRate: 10
   rotationChangeRate: 45
-  radiusChangeRate: 10
+  radiusChangeRate: 0.2
 --- !u!114 &3888136925283116281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +132,24 @@ MonoBehaviour:
   pitchAction: {fileID: -299182468022870919, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   rollAction: {fileID: -8072574839880572155, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   yawAction: {fileID: -5587704363517365904, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+--- !u!114 &8734004391522065045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7687471758654040645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19bd7785d9b60cd439cf9090f89b0d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Movement.PlayerOrbitalMovement
+  radiusX: 5
+  radiusZ: 5
+  speedInDegreesPerSecond: 1
+  rotation: {x: 0, y: 0, z: 0}
+  segmentNumber: 100
+  <Color>k__BackingField: {r: 1, g: 0.92988527, b: 0, a: 1}
 --- !u!1 &7732275192244595933
 GameObject:
   m_ObjectHideFlags: 0

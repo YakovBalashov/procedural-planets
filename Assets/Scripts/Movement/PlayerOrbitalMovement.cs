@@ -1,3 +1,5 @@
+using System;
+using ProceduralPlanets.Generation;
 using UnityEngine;
 
 namespace ProceduralPlanets.Movement
@@ -5,8 +7,33 @@ namespace ProceduralPlanets.Movement
     public class PlayerOrbitalMovement : OrbitalMovement
     {
         private Transform _parent;
+
+        private void OnEnable()
+        {
+            SystemGenerator.OnTimeExponentChanged += HandleTimeExponentChanged;
+        }
+        
+        private void OnDisable()
+        {
+            SystemGenerator.OnTimeExponentChanged -= HandleTimeExponentChanged;
+        }
+
+        private void HandleTimeExponentChanged(int obj)
+        {
+            if (SystemGenerator.CurrentTimeExponent == 0)
+            {
+                UnlockFromParent();
+            }
+            else
+            {
+                LockToParent();
+            }
+        }
+
         protected override void MoveBodyToAngle(float angle)
         {
+            if (SystemGenerator.CurrentTimeExponent != 0) return;
+                
             if (!_parent) return;
 
             var rotationQuaternion = Quaternion.Euler(rotation);
@@ -19,7 +46,7 @@ namespace ProceduralPlanets.Movement
         public override void SetParameters(OrbitParameters parameters)
         {
             base.SetParameters(parameters);
-            _parent = transform.parent;
+            if (transform.parent) _parent = transform.parent;
             transform.SetParent(null);
         }
 
@@ -48,6 +75,17 @@ namespace ProceduralPlanets.Movement
             Initialize();
 
             MoveBodyToAngle(CurrentAngle);
+        }
+        
+        private void LockToParent()
+        {
+            if (!_parent) return;
+            transform.SetParent(_parent);
+        }
+        
+        private void UnlockFromParent()
+        {
+            SetCircularOrbitFromCurrentPosition(speedInDegreesPerSecond);
         }
     }
 }

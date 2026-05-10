@@ -285,7 +285,7 @@ namespace ProceduralPlanets.Movement
             orbitalCamera?.OnTargetObjectWarped(transform, deltaPosition);
             OnCenter?.Invoke();
         }
-
+        
         private void OnDrawGizmos()
         {
             if (!_isMoving) return;

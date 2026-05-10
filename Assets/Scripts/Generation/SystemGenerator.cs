@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
@@ -16,6 +17,7 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private float timeMultiplier = 1f;
         [SerializeField] private bool useFakeStar;
 
+        public static event Action<int> OnTimeExponentChanged;
         public static int CurrentTimeExponent { get; private set; } = 0;
         public static float TimeMultiplier => Mathf.Pow(10, CurrentTimeExponent);
         public const int MinTimeExponent = -2;
@@ -70,12 +72,13 @@ namespace ProceduralPlanets.Generation
         public static void SetTimeMultiplier(float multiplier)
         {
             var newTimeExponent = Mathf.Log10(multiplier);
-            CurrentTimeExponent = Mathf.Clamp(Mathf.RoundToInt(newTimeExponent), MinTimeExponent, MaxTimeExponent);
+            SetTimeExponent(Mathf.RoundToInt(newTimeExponent));
         }
         
         public static void SetTimeExponent(int exponent)
         {
             CurrentTimeExponent = Mathf.Clamp(exponent, MinTimeExponent, MaxTimeExponent);
+            OnTimeExponentChanged?.Invoke(CurrentTimeExponent);
         }
     }
 }

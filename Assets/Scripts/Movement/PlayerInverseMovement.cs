@@ -5,7 +5,6 @@ using ProceduralPlanets.ScriptableObjects.CelestialBodies;
 using ProceduralPlanets.UI;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ProceduralPlanets.Movement
 {
@@ -275,18 +274,12 @@ namespace ProceduralPlanets.Movement
 
         private void CenterPlayer()
         {
-            // var parent = transform.parent;
-            // var localPosition = transform.localPosition;
             var globalPosition = transform.position;
 
-            // transform.SetParent(null);
             systemOrigin.SetParent(transform, true);
 
             transform.position = Vector3.zero;
             systemOrigin.SetParent(null);
-
-            // transform.parent = parent;
-            // transform.localPosition = localPosition;
 
             var deltaPosition = transform.position - globalPosition;
             orbitalCamera?.OnTargetObjectWarped(transform, deltaPosition);

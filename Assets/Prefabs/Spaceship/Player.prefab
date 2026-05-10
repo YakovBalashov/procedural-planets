@@ -70,6 +70,8 @@ MonoBehaviour:
   changeSpeedAction: {fileID: -7114516232753091758, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   changeRotationAction: {fileID: 8604578503492570285, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   changeRadiusAction: {fileID: 864151734770856386, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  zeroSpeedAction: {fileID: 6935426427098041545, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  resetOrbitAction: {fileID: -8286103361003348239, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   speedChangeRate: 10
   rotationChangeRate: 45
   radiusChangeRate: 10
@@ -90,7 +92,7 @@ MonoBehaviour:
   initialRotationTime: 3
   midflightRotationTime: 1.5
   gapTime: 0.5
-  defaultOrbitalVelocity: 0.5
+  <DefaultOrbitalVelocity>k__BackingField: 0.5
   planetaryTravelCurve:
     serializedVersion: 2
     m_Curve:

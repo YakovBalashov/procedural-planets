@@ -12,6 +12,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
     {
         [SerializeField] BiomeParameters biomeParameters;
         [SerializeField] private List<BiomeColors> biomeColors;
+        [SerializeField] private bool useColorBasedProbabilities;
         
         private const float MaxOffset = 10000f;
         private const float Bias = 0.01f;
@@ -19,10 +20,17 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         public BiomeParameters GenerateBiomeParameters(int seed, Color baseColor)
         {
             var random = new Random(seed);
+
+            BiomeColors biomeColor;
             
-            List<float> colorProbabilities = CalculateColorProbabilities(biomeColors, baseColor);
-            
-            var biomeColor = random.GetRandomListElement(biomeColors, colorProbabilities);
+            if (useColorBasedProbabilities)
+            {
+                List<float> colorProbabilities = CalculateColorProbabilities(biomeColors, baseColor);
+                biomeColor = random.GetRandomListElement(biomeColors, colorProbabilities);
+            } else
+            {
+                biomeColor = biomeColors[random.Range(0, biomeColors.Count)];
+            }
             
             var offset = new Vector3(random.NextFloat(), random.NextFloat(), random.NextFloat()) *
                          random.Range(0, MaxOffset);

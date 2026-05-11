@@ -22,14 +22,14 @@ namespace ProceduralPlanets.Movement
         [SerializeField] private float rotationChangeRate = 45f;
         [SerializeField] private float radiusChangeRate = 0.2f;
 
-        private OrbitalMovement _orbitalMovement;
+        private PlayerOrbitalMovement _orbitalMovement;
         private PlayerInverseMovement _playerInverseMovement;
         private float _targetBodyRadius;
         private float _targetBodyOrbitRadius;
 
         private void Awake()
         {
-            _orbitalMovement = GetComponent<OrbitalMovement>();
+            _orbitalMovement = GetComponent<PlayerOrbitalMovement>();
             _playerInverseMovement = GetComponent<PlayerInverseMovement>();
         }
 

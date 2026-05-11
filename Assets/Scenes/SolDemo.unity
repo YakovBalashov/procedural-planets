@@ -1171,10 +1171,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1967479950374370317, guid: 786aca12655367b4da1b6156bc9936c2, type: 3}
-      propertyPath: m_Cameras.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1967479950374370317, guid: 786aca12655367b4da1b6156bc9936c2, type: 3}
       propertyPath: 'm_Cameras.Array.data[2]'
       value: 
       objectReference: {fileID: 568745350}
@@ -1217,10 +1213,6 @@ PrefabInstance:
     - target: {fileID: 4895175953703513423, guid: 786aca12655367b4da1b6156bc9936c2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7298042856254484818, guid: 786aca12655367b4da1b6156bc9936c2, type: 3}
-      propertyPath: field of view
-      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7316994865014336408, guid: 786aca12655367b4da1b6156bc9936c2, type: 3}
       propertyPath: m_CameraType

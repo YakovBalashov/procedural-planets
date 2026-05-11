@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10ce9eeec69d71a409568ac2a690f620, type: 3}
   m_Name: EarthLike
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.PlanetType
+  <SpawnWeight>k__BackingField: 1
   radiusRange: {x: 50, y: 70}
-  cpuNoiseSettings: []
   gpuNoiseSettings:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 0.03
@@ -26,7 +26,7 @@ MonoBehaviour:
     <FnlSeed>k__BackingField: 0
     <FnlNoiseType>k__BackingField: 5
   <PossibleBaseColors>k__BackingField:
-  - {r: 1, g: 1, b: 1, a: 0}
+  - {r: 0, g: 0.7052603, b: 1, a: 0}
   <PossibleNormalMaps>k__BackingField:
   - {fileID: 2800000, guid: d5b76b6f1dc57794f8e39835b7f930e6, type: 3}
   <NormalMapTileRange>k__BackingField: {x: 5, y: 5}
@@ -48,12 +48,17 @@ MonoBehaviour:
     <NumberRange>k__BackingField: {x: 0, y: 3}
     <OrbitRadiusRange>k__BackingField: {x: 1000, y: 5000}
     <DistanceBetweenSatellitesRange>k__BackingField: {x: 500, y: 500}
+  <RadiusToPlayerOrbitRation>k__BackingField: 2.5
+  <LowestLodEmissionIntensityRange>k__BackingField: {x: 3, y: 5}
+  <RotationAxis>k__BackingField: {x: 0, y: 1, z: 0}
+  <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.5, y: 2}
   <StarOrbitType>k__BackingField:
     <ParentTypes>k__BackingField:
     - {fileID: 11400000, guid: 93cdb83cc697bd847bd632d179cd08f1, type: 2}
     <OrbitRadiusRange>k__BackingField: {x: 150000, y: 300000}
     <OrbitRatioRange>k__BackingField: {x: 1, y: 1}
     <OrbitInclinationRange>k__BackingField: {x: -3, y: 3}
+    <VelocityRange>k__BackingField: {x: 0.000011574075, y: 0.00001157407}
   <PlanetOrbitType>k__BackingField:
     <ParentTypes>k__BackingField:
     - {fileID: 11400000, guid: 26f6877814010764da026c9fbf3f173c, type: 2}
@@ -61,6 +66,7 @@ MonoBehaviour:
     <OrbitRadiusRange>k__BackingField: {x: 7000, y: 12000}
     <OrbitRatioRange>k__BackingField: {x: 0.99, y: 1.01}
     <OrbitInclinationRange>k__BackingField: {x: -3, y: 3}
+    <VelocityRange>k__BackingField: {x: 0.0001157407, y: 0.0001157407}
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}

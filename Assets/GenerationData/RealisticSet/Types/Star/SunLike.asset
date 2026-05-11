@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: SunLike
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.StarType
   radiusRange: {x: 7000, y: 7500}
-  cpuNoiseSettings: []
   gpuNoiseSettings: []
   <PossibleBaseColors>k__BackingField:
-  - {r: 1, g: 0.76555127, b: 0, a: 0}
+  - {r: 1, g: 0.76555127, b: 0, a: 1}
   <PossibleNormalMaps>k__BackingField:
   - {fileID: 2800000, guid: d5b76b6f1dc57794f8e39835b7f930e6, type: 3}
   <NormalMapTileRange>k__BackingField: {x: 1, y: 1}
@@ -36,5 +35,8 @@ MonoBehaviour:
     <OrbitRadiusRange>k__BackingField: {x: 40000, y: 1000000}
     <DistanceBetweenSatellitesRange>k__BackingField: {x: 50000, y: 100000}
   <RadiusToPlayerOrbitRation>k__BackingField: 1.5
+  <LowestLodEmissionIntensityRange>k__BackingField: {x: 0, y: 0}
+  <RotationAxis>k__BackingField: {x: 0, y: 1, z: 0}
+  <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.5, y: 2}
   <CompatibleStarTypes>k__BackingField: []
   <StarNumberRange>k__BackingField: {x: 1, y: 1}

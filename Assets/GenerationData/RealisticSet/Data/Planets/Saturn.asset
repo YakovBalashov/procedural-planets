@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 060565f32aa614140a1a81b350edefc3, type: 3}
+  m_Name: Saturn
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
+  <Radius>k__BackingField: 582
+  <GPUNoiseSettings>k__BackingField: []
+  <BaseColor>k__BackingField: {r: 0.5188679, g: 0.44497764, b: 0.20314167, a: 0}
+  <Biomes>k__BackingField:
+  - features: 33
+    biomeColors:
+      baseColor: {r: 0.6431373, g: 0.5148918, b: 0.21960783, a: 0}
+      accentColor: {r: 0.6431373, g: 0.5137255, b: 0.21960786, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 0.1
+      <Octaves>k__BackingField: 3
+      <Offset>k__BackingField: {x: -93.48, y: 0, z: 0}
+      <WarpType>k__BackingField: 3
+      <WarpAmplitude>k__BackingField: 88.51
+    maskThreshold: 0
+    blendFactor: 0.3
+    accentThreshold: 0.1
+    accentBlendFactor: 0.28
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 1, z: 0}
+    stripesScale: 17.76
+    emissionIntensity: 0
+  - features: 33
+    biomeColors:
+      baseColor: {r: 0.93725497, g: 0.7019608, b: 0.38431376, a: 1}
+      accentColor: {r: 0.9056604, g: 0.6529771, b: 0.31185475, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 0.1
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 3456, y: 456, z: 456456}
+      <WarpType>k__BackingField: 3
+      <WarpAmplitude>k__BackingField: 150
+    maskThreshold: 0.09
+    blendFactor: 0.17
+    accentThreshold: 0.21
+    accentBlendFactor: 0.2
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 1, z: 0}
+    stripesScale: 43.17
+    emissionIntensity: 0
+  - features: 33
+    biomeColors:
+      baseColor: {r: 0.20784314, g: 0.20525998, b: 0.11764706, a: 0}
+      accentColor: {r: 0.33962262, g: 0.324821, b: 0.12335349, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 0.8
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 2.57, y: 0, z: 0}
+      <WarpType>k__BackingField: 3
+      <WarpAmplitude>k__BackingField: 88.51
+    maskThreshold: 0.77
+    blendFactor: 0.42
+    accentThreshold: 0.7
+    accentBlendFactor: 0.21
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 1, z: 0}
+    stripesScale: 6.46
+    emissionIntensity: 0
+  <NormalMap>k__BackingField: {fileID: 2800000, guid: d5b76b6f1dc57794f8e39835b7f930e6, type: 3}
+  <NormalMapTile>k__BackingField: 5
+  <NormalMapBlend>k__BackingField: 0.1
+  <PlayerOrbitRadius>k__BackingField: 1455
+  <LowestLodEmissionIntensity>k__BackingField: 0.1
+  <RotationAxis>k__BackingField: {x: 0.38, y: 1, z: 0}
+  <RotationSpeedInDegreesPerSecond>k__BackingField: 0.011111111
+  <CraterGenerationSettings>k__BackingField:
+    <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
+    <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
+    <DepthRange>k__BackingField: {x: 0.9, y: 1.1}
+    <RimWidthRange>k__BackingField: {x: 0.05, y: 0.3}
+    <RimSteepnessRange>k__BackingField: {x: 1, y: 3}
+    <NumberRange>k__BackingField: {x: 0, y: 0}
+  <RingParameters>k__BackingField:
+    <Enabled>k__BackingField: 1
+    <InnerRadius>k__BackingField: 800
+    <OuterRadius>k__BackingField: 1100
+    <SegmentCount>k__BackingField: 100
+    <NoiseParameters>k__BackingField:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 0.1
+      <Octaves>k__BackingField: 3
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    <RingColor>k__BackingField: {r: 1, g: 0.9378784, b: 0.8632076, a: 0}
+  <AtmosphereParameters>k__BackingField:
+    <Enabled>k__BackingField: 0
+    <Color>k__BackingField: {r: 1, g: 1, b: 1, a: 0}
+    <RadiusMultiplier>k__BackingField: 1.01
+    <NoiseParameters>k__BackingField:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 0
+      <Octaves>k__BackingField: 0
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    <NoiseRange>k__BackingField: {x: 1, y: 1}
+    <MinAlpha>k__BackingField: 0.02

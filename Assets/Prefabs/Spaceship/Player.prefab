@@ -113,7 +113,7 @@ MonoBehaviour:
   systemGenerator: {fileID: 0}
   systemOrigin: {fileID: 0}
   engines: {fileID: 7732275192244595933}
-  maxDistanceFromOrigin: 5000
+  maxDistanceFromOrigin: 10000
   orbitalCamera: {fileID: 0}
 --- !u!114 &501606680496018899
 MonoBehaviour:

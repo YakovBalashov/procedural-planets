@@ -22,7 +22,8 @@ namespace ProceduralPlanets.Generation
 
             ClearExistingSystem();
 
-            StarType primeStarType = generationParameters.StarTypes[random.Next(generationParameters.StarTypes.Length)];
+            StarType primeStarType = random.GetRandomListElement(generationParameters.StarTypes.ToList(),
+                generationParameters.StarTypes.Select(type => type.SpawnWeight).ToList());
 
             var starGenerationParameters = new CelestialBodyGenerationParameters<StarData, StarType>(starPrefab,
                 primeStarType, seed, transform, PrimeStarName);
@@ -109,7 +110,7 @@ namespace ProceduralPlanets.Generation
                 }
 
                 var weights = planetsWithCurrentOrbit.Select(planet => planet.SpawnWeight).ToList();
-                
+
                 if (weights.All(weight => weight == 0))
                 {
                     currentOrbitRadius += offset;
@@ -117,7 +118,7 @@ namespace ProceduralPlanets.Generation
                 }
 
                 PlanetType satelliteType = random.GetRandomListElement(planetsWithCurrentOrbit, weights);
-                
+
 
                 OrbitParameters satelliteOrbitParameters =
                     GenerateOrbitParameters(currentOrbitRadius, parameters.OrbitSelector(satelliteType), random);

@@ -23,6 +23,8 @@ namespace ProceduralPlanets.UI
         [SerializeField] private InputActionReference toggleMapAction;
 
         [SerializeField] private PlayerInverseMovement playerMovement;
+        
+        [SerializeField] private bool useBodyNames;
 
         public event Action<Vector2> OnBodySelected;
 
@@ -63,7 +65,7 @@ namespace ProceduralPlanets.UI
                 if (bodyData is StarData) continue;
                 bodyIndex.y = 0;
 
-                var bodyName = bodyIndex.x.ToString(CultureInfo.InvariantCulture);
+                var bodyName = useBodyNames ? body.name : bodyIndex.x.ToString(CultureInfo.InvariantCulture);
                 var bodyColor = new Color(bodyData.BaseColor.r, bodyData.BaseColor.g, bodyData.BaseColor.b, 1f);
 
                 var planetButton = GenerateButton(planetButtonPrefab, bodyName, bodyColor, bodyIndex, buttonContainer);
@@ -86,7 +88,7 @@ namespace ProceduralPlanets.UI
             {
                 var moonButtonIndex = new Vector2(planetIndex, moonIndex);
 
-                var moonName = $"{SystemGenerator.NumberToLetter(moonIndex - 1)}";
+                var moonName = useBodyNames ? moon.name : $"{SystemGenerator.NumberToLetter(moonIndex - 1)}";
                 var moonColor = moon.GetComponent<CelestialBodyGeneratorBase>().GetBodyData().BaseColor;
                 moonColor.a = 1f;
 

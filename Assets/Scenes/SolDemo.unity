@@ -1239,6 +1239,7 @@ GameObject:
   - component: {fileID: 1511690001}
   - component: {fileID: 1511690000}
   - component: {fileID: 1511689999}
+  - component: {fileID: 1511690003}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -1368,6 +1369,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 608472434}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1511690003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511689998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f99097cbee022d4fa60ff70839a3723, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.Generation.StarLightColor
+  systemGenerator: {fileID: 608472433}
 --- !u!224 &1797581252 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2853635637741270226, guid: 34130ef3f71ba4743b692ae5e56d324b, type: 3}

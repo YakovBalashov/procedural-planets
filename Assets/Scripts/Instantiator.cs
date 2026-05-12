@@ -7,9 +7,16 @@ namespace ProceduralPlanets
     {
         public static GameObject InstantiateGameObject(GameObject prefab, Transform parent)
         {
-            if (Application.isPlaying) return Object.Instantiate(prefab, parent);
-            
+            if (Application.isPlaying)
+            {
+                return Object.Instantiate(prefab, parent);
+            }
+
+            #if UNITY_EDITOR
             return (GameObject)PrefabUtility.InstantiatePrefab(prefab, parent);
+            #else
+            return Object.Instantiate(prefab, parent);
+            #endif
         }
     }
 }

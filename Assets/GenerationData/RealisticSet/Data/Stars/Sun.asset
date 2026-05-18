@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.StarData
   <Radius>k__BackingField: 6957
   <GPUNoiseSettings>k__BackingField: []
-  <BaseColor>k__BackingField: {r: 1, g: 0.93873477, b: 0.6745283, a: 1}
+  <BaseColor>k__BackingField: {r: 1, g: 0.97544897, b: 0.8726415, a: 1}
   <Biomes>k__BackingField:
   - features: 64
     biomeColors:

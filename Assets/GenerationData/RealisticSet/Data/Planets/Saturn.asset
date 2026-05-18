@@ -100,7 +100,7 @@ MonoBehaviour:
     <Enabled>k__BackingField: 1
     <InnerRadius>k__BackingField: 800
     <OuterRadius>k__BackingField: 1100
-    <SegmentCount>k__BackingField: 100
+    <SegmentCount>k__BackingField: 200
     <NoiseParameters>k__BackingField:
       <Type>k__BackingField: 0
       <Frequency>k__BackingField: 0.1
@@ -122,3 +122,4 @@ MonoBehaviour:
       <WarpAmplitude>k__BackingField: 0
     <NoiseRange>k__BackingField: {x: 1, y: 1}
     <MinAlpha>k__BackingField: 0.02
+  <PrefabOverride>k__BackingField: {fileID: 0}

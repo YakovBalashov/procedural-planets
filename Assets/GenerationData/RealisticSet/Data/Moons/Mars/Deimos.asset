@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060565f32aa614140a1a81b350edefc3, type: 3}
   m_Name: Deimos
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.PlanetData
-  <Radius>k__BackingField: 6
+  <Radius>k__BackingField: 0.06
   <GPUNoiseSettings>k__BackingField:
   - <Enabled>k__BackingField: 1
     <Strength>k__BackingField: 1

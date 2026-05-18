@@ -10,6 +10,7 @@ namespace ProceduralPlanets.ScriptableObjects.CelestialBodies
         [field: SerializeField] public CraterGenerationSettings CraterGenerationSettings { get; private set; }
         [field: SerializeField] public RingParameters RingParameters { get; private set; }
         [field: SerializeField] public AtmosphereParameters AtmosphereParameters { get; private set; }
+        [field: SerializeField] public GameObject PrefabOverride { get; private set; }
 
         public void InitializePlanet(CraterGenerationSettings craterGenerationSettings, RingParameters ringParameters,
             AtmosphereParameters atmosphereParameters)

@@ -17,6 +17,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         [field: SerializeField] public CraterGenerationSettings CraterGenerationSettings { get; private set; }
         [field: SerializeField] public RingType Rings { get; private set; }
         [field: SerializeField] public AtmosphereType Atmosphere { get; private set; }
+        [field: SerializeField] public GameObject PrefabOverride { get; private set; }
 
         public override PlanetData CreateInstance(int seed)
         {

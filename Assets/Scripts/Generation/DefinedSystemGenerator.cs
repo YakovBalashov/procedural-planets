@@ -58,16 +58,19 @@ namespace ProceduralPlanets.Generation
 
             foreach (var planetAndOrbitData in parameters.Satellites)
             {
-                var satelliteName = planetAndOrbitData.PlanetData.name;
+                PlanetData planetData = planetAndOrbitData.PlanetData;
+                var satelliteName = planetData.name;
 
                 var anchor = Instantiator.InstantiateGameObject(anchorPrefab, parameters.ParentTransform.parent);
                 var anchorOrbit = anchor.GetComponent<OrbitalMovement>();
                 anchorOrbit.SetParameters(planetAndOrbitData.OrbitParameters);
+                
+                var prefab = planetData.PrefabOverride ? planetData.PrefabOverride : planetPrefab;
 
-                var satellite = Instantiator.InstantiateGameObject(planetPrefab, anchor.transform);
+                var satellite = Instantiator.InstantiateGameObject(prefab, anchor.transform);
                 satellite.transform.localPosition = Vector3.zero;
                 var satelliteGenerator = satellite.GetComponent<PlanetGenerator>();
-                satelliteGenerator.SetBodyData(planetAndOrbitData.PlanetData);
+                satelliteGenerator.SetBodyData(planetData);
                 satellite.name = satelliteName;
 
                 anchorOrbit.MoveToStartingPosition(random);

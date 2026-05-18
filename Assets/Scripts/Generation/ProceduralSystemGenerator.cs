@@ -118,15 +118,17 @@ namespace ProceduralPlanets.Generation
                 }
 
                 PlanetType satelliteType = random.GetRandomListElement(planetsWithCurrentOrbit, weights);
-
-
+                
                 OrbitParameters satelliteOrbitParameters =
                     GenerateOrbitParameters(currentOrbitRadius, parameters.OrbitSelector(satelliteType), random);
+                
                 GameObject anchor = GenerateAnchor(satelliteOrbitParameters, parameters.ParentTransform, random);
                 anchor.name = $"{parameters.NameGenerator(currentPlanetIndex)} Anchor";
 
+                var prefab = satelliteType.PrefabOverride ? satelliteType.PrefabOverride : planetPrefab;
+                
                 var satelliteGenerationParameters = new CelestialBodyGenerationParameters<PlanetData, PlanetType>(
-                    planetPrefab, satelliteType,
+                    prefab, satelliteType,
                     seed + currentPlanetIndex + 1,
                     anchor.transform,
                     parameters.NameGenerator(currentPlanetIndex));

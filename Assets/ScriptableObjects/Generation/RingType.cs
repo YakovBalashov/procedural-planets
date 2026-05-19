@@ -14,6 +14,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
         [field: SerializeField] public int SegmentCount { get; private set; }
         [field: SerializeField] public FnlParameters NoiseParameters { get; private set; }
         [field: SerializeField] public List<Color> Colors { get; private set; }
+        [field: SerializeField] public Vector2 NoiseRange { get; private set; } = new Vector2(-1f, 1f);
 
         public RingParameters GenerateRingParameters(int seed)
         {
@@ -22,7 +23,7 @@ namespace ProceduralPlanets.ScriptableObjects.Generation
             var outerRadius = random.Range(OuterRadiusRange);
             var color = Colors[random.Range(0, Colors.Count)];
             NoiseParameters.SetOffset(SystemGenerator.GetOffset(random));
-            return new RingParameters(true, innerRadius, outerRadius, SegmentCount, NoiseParameters, color);
+            return new RingParameters(true, innerRadius, outerRadius, SegmentCount, NoiseParameters, color, NoiseRange);
         }
     }
 }

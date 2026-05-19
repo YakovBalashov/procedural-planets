@@ -26,6 +26,7 @@ namespace ProceduralPlanets.Generation
             MaterialPropertyBlock.SetInt(ShaderParametersIDs.RingNoiseType, (int)parameters.NoiseParameters.Type);
             MaterialPropertyBlock.SetInt(ShaderParametersIDs.RingNoiseOctaves, parameters.NoiseParameters.Octaves);
             MaterialPropertyBlock.SetFloat(ShaderParametersIDs.RingNoiseFrequency, parameters.NoiseParameters.Frequency);
+            MaterialPropertyBlock.SetVector(ShaderParametersIDs.RingNoiseNoiseRange, parameters.NoiseRange);
             
             MeshRenderer.SetPropertyBlock(MaterialPropertyBlock);
             

@@ -36,6 +36,7 @@ namespace ProceduralPlanets.Generation
         public static readonly int RingNoiseType = Shader.PropertyToID("_RingNoiseType");
         public static readonly int RingNoiseOctaves = Shader.PropertyToID("_RingNoiseOctaves");
         public static readonly int RingNoiseFrequency = Shader.PropertyToID("_RingNoiseFrequency");
+        public static readonly int RingNoiseNoiseRange = Shader.PropertyToID("_RingNoiseRange");
         
         public static readonly int AtmosphereColor = Shader.PropertyToID("_AtmosphereColor");
         public static readonly int AtmosphereNoiseType = Shader.PropertyToID("_AtmosphereNoiseType");

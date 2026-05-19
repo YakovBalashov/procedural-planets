@@ -8,6 +8,7 @@ CBUFFER_START(UnityPerMaterial)
     int _RingNoiseType;
     int _RingNoiseOctaves;
     float _RingNoiseFrequency;
+    float2 _RingNoiseRange;
 CBUFFER_END
 
 
@@ -23,7 +24,7 @@ void CalculateColor_float(float3 position, out float4 color)
 
     float distanceFromCenter = length(position);
     float noiseValue = fnlGetNoise3D(state, distanceFromCenter, 0, 0);
-    float alpha = InverseLerp(-1, 1, noiseValue);
+    float alpha = InverseLerp(_RingNoiseRange.x, _RingNoiseRange.y, noiseValue);
 
     color.a = alpha;
 }

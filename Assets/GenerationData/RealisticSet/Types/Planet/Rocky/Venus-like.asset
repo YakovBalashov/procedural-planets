@@ -10,37 +10,48 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10ce9eeec69d71a409568ac2a690f620, type: 3}
-  m_Name: IslandWoldRinged
+  m_Name: Venus-like
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.PlanetType
   <SpawnWeight>k__BackingField: 1
-  radiusRange: {x: 40, y: 90}
+  radiusRange: {x: 30, y: 80}
   gpuNoiseSettings:
   - <Enabled>k__BackingField: 1
-    <Strength>k__BackingField: 0.03
-    <BaseRoughness>k__BackingField: 2.06
-    <Persistence>k__BackingField: 0.544
+    <Strength>k__BackingField: 0.015
+    <BaseRoughness>k__BackingField: 7.29
+    <Persistence>k__BackingField: 0.478
     <Lacunarity>k__BackingField: 2
-    <MinimumValue>k__BackingField: 1.5
+    <MinimumValue>k__BackingField: 0
     <Octaves>k__BackingField: 4
-    <Offset>k__BackingField: {x: 404.1626, y: 165.99867, z: 985.04706}
+    <Offset>k__BackingField: {x: 0, y: 0, z: 0}
     <FnlSeed>k__BackingField: 0
-    <FnlNoiseType>k__BackingField: 5
+    <FnlNoiseType>k__BackingField: 2
   <PossibleBaseColors>k__BackingField:
-  - {r: 0, g: 0.5506481, b: 1, a: 0}
+  - {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 0}
+  - {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 0}
+  - {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 0}
+  - {r: 0.3679245, g: 0.35980883, b: 0.27941436, a: 0}
+  - {r: 0.36862746, g: 0.2928642, b: 0.2784314, a: 0}
+  - {r: 0.28527135, g: 0.36862746, b: 0.2784314, a: 0}
+  - {r: 0.2784314, g: 0.30894908, b: 0.36862746, a: 0}
+  - {r: 0.509434, g: 0.33578017, b: 0.08410466, a: 0}
+  - {r: 0.46226418, g: 0.18263718, b: 0.115566045, a: 0}
   <PossibleNormalMaps>k__BackingField:
-  - {fileID: 2800000, guid: d5b76b6f1dc57794f8e39835b7f930e6, type: 3}
-  <NormalMapTileRange>k__BackingField: {x: 1, y: 1}
+  - {fileID: 2800000, guid: 2e8e6544f9d123e45afcf4a2fa9596df, type: 3}
+  - {fileID: 2800000, guid: b4b67be3b396f144aabb640dba70f9b4, type: 3}
+  - {fileID: 2800000, guid: 136d97f37cf4aa447b1581e68ef76784, type: 3}
+  - {fileID: 2800000, guid: c3908df9511f7ce4dbda6a8694cfa476, type: 3}
+  <NormalMapTileRange>k__BackingField: {x: 3, y: 7}
   <NormalMapBlendRange>k__BackingField: {x: 1, y: 1}
   <BiomeCandidates>k__BackingField:
+  - <Probability>k__BackingField: 0.2
+    <ExclusivityGroup>k__BackingField: 0
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: ce2b21d507bb0624182f9839516f0729, type: 2}
   - <Probability>k__BackingField: 1
     <ExclusivityGroup>k__BackingField: 0
-    <BiomeType>k__BackingField: {fileID: 11400000, guid: 7c2452820e8d34d44b2f3b4ff7f24ccc, type: 2}
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: 7ce4ed29a6536c34cb3312ce97385c16, type: 2}
   - <Probability>k__BackingField: 1
     <ExclusivityGroup>k__BackingField: 0
-    <BiomeType>k__BackingField: {fileID: 11400000, guid: c0617c258e230b8459d06b429d1efeab, type: 2}
-  - <Probability>k__BackingField: 1
-    <ExclusivityGroup>k__BackingField: 0
-    <BiomeType>k__BackingField: {fileID: 11400000, guid: db9afedb38f5b7b46bc5846473cb6e72, type: 2}
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: 34f2c275f7fc82f46bf0d3aa55309f81, type: 2}
   <SatelliteParameters>k__BackingField:
     <NumberRange>k__BackingField: {x: 0, y: 0}
     <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
@@ -62,12 +73,12 @@ MonoBehaviour:
     <OrbitInclinationRange>k__BackingField: {x: 0, y: 0}
     <VelocityRange>k__BackingField: {x: 0, y: 0}
   <CraterGenerationSettings>k__BackingField:
-    <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
-    <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
-    <DepthRange>k__BackingField: {x: 0.9, y: 1.1}
-    <RimWidthRange>k__BackingField: {x: 0.05, y: 0.3}
-    <RimSteepnessRange>k__BackingField: {x: 1, y: 3}
-    <NumberRange>k__BackingField: {x: 0, y: 0}
-  <Rings>k__BackingField: {fileID: 11400000, guid: 078d650777a03d342a36cacd5ed1922b, type: 2}
-  <Atmosphere>k__BackingField: {fileID: 11400000, guid: e51dd27b1618c3b4a9c9ec1c071e8aa2, type: 2}
+    <StrengthRange>k__BackingField: {x: 1, y: 1}
+    <RadiusRange>k__BackingField: {x: 0.01, y: 0.03}
+    <DepthRange>k__BackingField: {x: 0.1, y: 0.3}
+    <RimWidthRange>k__BackingField: {x: 0.3, y: 0.5}
+    <RimSteepnessRange>k__BackingField: {x: 0, y: 0}
+    <NumberRange>k__BackingField: {x: 300, y: 500}
+  <Rings>k__BackingField: {fileID: 0}
+  <Atmosphere>k__BackingField: {fileID: 11400000, guid: 7173c070895e8a44d88d00d05cc1a357, type: 2}
   <PrefabOverride>k__BackingField: {fileID: 0}

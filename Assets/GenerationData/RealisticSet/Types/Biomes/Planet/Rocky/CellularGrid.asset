@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
+  m_Name: CellularGrid
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
+  biomeParameters:
+    features: 1
+    biomeColors:
+      baseColor: {r: 0.25490198, g: 0.21960786, b: 0.18431373, a: 0}
+      accentColor: {r: 0.25490198, g: 0.21960786, b: 0.18431373, a: 0}
+    mainNoise:
+      <Type>k__BackingField: 2
+      <Frequency>k__BackingField: 20
+      <Octaves>k__BackingField: 3
+      <Offset>k__BackingField: {x: 1558.9165, y: 6653.668, z: 5863.5127}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: -0.59
+    blendFactor: 0.4
+    accentThreshold: 0
+    accentBlendFactor: 0.5
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  biomeColors:
+  - baseColor: {r: 0.25490198, g: 0.21960786, b: 0.18431373, a: 0}
+    accentColor: {r: 0.25490198, g: 0.21960786, b: 0.18431373, a: 0}
+  - baseColor: {r: 0.4433962, g: 0.34405035, b: 0.24470451, a: 0}
+    accentColor: {r: 0.4811321, g: 0.3801397, b: 0.2791474, a: 0}
+  - baseColor: {r: 0.6415094, g: 0.6073929, b: 0.5719117, a: 0}
+    accentColor: {r: 0.509434, g: 0.49381456, b: 0.4781951, a: 0}
+  - baseColor: {r: 0.6415094, g: 0.6073929, b: 0.5719117, a: 0}
+    accentColor: {r: 0.3679245, g: 0.36011478, b: 0.35230508, a: 0}
+  - baseColor: {r: 0.5, g: 0.3313679, b: 0.16273585, a: 0}
+    accentColor: {r: 0.3301887, g: 0.2141554, b: 0.09812211, a: 0}
+  - baseColor: {r: 0.5943396, g: 0.32352772, b: 0.2719384, a: 0}
+    accentColor: {r: 0.5471698, g: 0.25551254, b: 0.17292629, a: 0}
+  useColorBasedProbabilities: 0

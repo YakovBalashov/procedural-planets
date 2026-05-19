@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.RingType
   <InnerRadiusRange>k__BackingField: {x: 900, y: 1000}
   <OuterRadiusRange>k__BackingField: {x: 1200, y: 1300}
-  <SegmentCount>k__BackingField: 2000
+  <SegmentCount>k__BackingField: 200
   <NoiseParameters>k__BackingField:
     <Type>k__BackingField: 0
     <Frequency>k__BackingField: 0.08

@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
+  m_Name: Lava
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
+  biomeParameters:
+    features: 65
+    biomeColors:
+      baseColor: {r: 0.79215693, g: 0.79215693, b: 0.79215693, a: 0}
+      accentColor: {r: 1, g: 1, b: 1, a: 0}
+    mainNoise:
+      <Type>k__BackingField: 1
+      <Frequency>k__BackingField: 8
+      <Octaves>k__BackingField: 3
+      <Offset>k__BackingField: {x: 1654.3634, y: 763.2687, z: 3936.4077}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: 0.6
+    blendFactor: 0.1
+    accentThreshold: 0.42
+    accentBlendFactor: 0.43
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 1.5
+  biomeColors:
+  - baseColor: {r: 0.6886792, g: 0.13546833, b: 0, a: 0}
+    accentColor: {r: 0.6901961, g: 0.0873631, b: 0, a: 0}
+  useColorBasedProbabilities: 0

@@ -10,12 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
-  m_Name: MainPuddles
+  m_Name: MainPuddlesVolcanic
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
   biomeParameters:
     features: 1
-    color: {r: 0.31132078, g: 0.31132078, b: 0.31132078, a: 1}
-    accentColor: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
     biomeColors:
       baseColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 0}
       accentColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 0}
@@ -23,7 +21,7 @@ MonoBehaviour:
       <Type>k__BackingField: 1
       <Frequency>k__BackingField: 1.94
       <Octaves>k__BackingField: 3
-      <Offset>k__BackingField: {x: 6253.8525, y: 5220.0454, z: 1428.6041}
+      <Offset>k__BackingField: {x: 414.1443, y: 348.10703, z: 1720.633}
       <WarpType>k__BackingField: 0
       <WarpAmplitude>k__BackingField: 0
     maskThreshold: 0.21
@@ -37,10 +35,11 @@ MonoBehaviour:
     stripesAxis: {x: 0, y: 0, z: 0}
     stripesScale: 0
     emissionIntensity: 0
-  colors:
-  - {r: 0, g: 0, b: 0, a: 0}
   biomeColors:
-  - baseColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 0}
-    accentColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 0}
-  - baseColor: {r: 0.5188679, g: 0.2440573, b: 0.09545213, a: 0}
-    accentColor: {r: 0.41509432, g: 0.28145322, b: 0.021537915, a: 0}
+  - baseColor: {r: 0.3962264, g: 0.22148557, b: 0.042986836, a: 0}
+    accentColor: {r: 0.254717, g: 0.14445756, b: 0.030037377, a: 0}
+  - baseColor: {r: 0.39607844, g: 0.04313724, b: 0.06303722, a: 0}
+    accentColor: {r: 0.2924528, g: 0.048282295, b: 0.061847363, a: 0}
+  - baseColor: {r: 0.20754719, g: 0.16545035, b: 0.16778907, a: 0}
+    accentColor: {r: 0.13207549, g: 0.10528659, b: 0.10772194, a: 0}
+  useColorBasedProbabilities: 0

@@ -29,7 +29,7 @@ MonoBehaviour:
     <NumberRange>k__BackingField: {x: 0, y: 0}
     <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
     <DistanceBetweenSatellitesRange>k__BackingField: {x: 0, y: 0}
-  <RadiusToPlayerOrbitRation>k__BackingField: 1.5
+  <RadiusToPlayerOrbitRation>k__BackingField: 2.5
   <LowestLodEmissionIntensityRange>k__BackingField: {x: 0, y: 0}
   <RotationAxis>k__BackingField: {x: 0, y: 1, z: 0}
   <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.5, y: 2}
@@ -52,6 +52,6 @@ MonoBehaviour:
     <RimWidthRange>k__BackingField: {x: 0.05, y: 0.3}
     <RimSteepnessRange>k__BackingField: {x: 1, y: 3}
     <NumberRange>k__BackingField: {x: 0, y: 0}
-  <Rings>k__BackingField: {fileID: 0}
+  <Rings>k__BackingField: {fileID: 11400000, guid: 078d650777a03d342a36cacd5ed1922b, type: 2}
   <Atmosphere>k__BackingField: {fileID: 11400000, guid: e51dd27b1618c3b4a9c9ec1c071e8aa2, type: 2}
   <PrefabOverride>k__BackingField: {fileID: 0}

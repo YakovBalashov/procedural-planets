@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2b156b11569fe84296bdea7f0af7dfd, type: 3}
-  m_Name: BarelyVisible
+  m_Name: Rocky
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.RingType
-  <InnerRadiusRange>k__BackingField: {x: 900, y: 1000}
-  <OuterRadiusRange>k__BackingField: {x: 1200, y: 1300}
+  <InnerRadiusRange>k__BackingField: {x: 130, y: 160}
+  <OuterRadiusRange>k__BackingField: {x: 180, y: 220}
   <SegmentCount>k__BackingField: 200
   <NoiseParameters>k__BackingField:
     <Type>k__BackingField: 0
-    <Frequency>k__BackingField: 0.02
-    <Octaves>k__BackingField: 4
-    <Offset>k__BackingField: {x: 4006.1814, y: 7508.139, z: 8961.638}
+    <Frequency>k__BackingField: 0.4
+    <Octaves>k__BackingField: 5
+    <Offset>k__BackingField: {x: 128.13225, y: 149.49973, z: 262.12668}
     <WarpType>k__BackingField: 0
     <WarpAmplitude>k__BackingField: 0
   <Colors>k__BackingField:
@@ -31,4 +31,4 @@ MonoBehaviour:
   - {r: 0.8018868, g: 0.71830463, b: 0.38203096, a: 0}
   - {r: 0.372686, g: 0.59602034, b: 0.6320754, a: 0}
   - {r: 0.42475083, g: 0.7341642, b: 0.7830189, a: 0}
-  <NoiseRange>k__BackingField: {x: 0, y: 0.8}
+  <NoiseRange>k__BackingField: {x: -1, y: 1}

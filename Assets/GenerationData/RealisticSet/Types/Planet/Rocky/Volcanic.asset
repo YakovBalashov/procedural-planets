@@ -10,33 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10ce9eeec69d71a409568ac2a690f620, type: 3}
-  m_Name: GasGiantFarBarelyVisibleRings
+  m_Name: Volcanic
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.PlanetType
   <SpawnWeight>k__BackingField: 1
-  radiusRange: {x: 200, y: 800}
-  gpuNoiseSettings: []
+  radiusRange: {x: 10, y: 35}
+  gpuNoiseSettings:
+  - <Enabled>k__BackingField: 1
+    <Strength>k__BackingField: 0.015
+    <BaseRoughness>k__BackingField: 7.29
+    <Persistence>k__BackingField: 0.478
+    <Lacunarity>k__BackingField: 2
+    <MinimumValue>k__BackingField: 0
+    <Octaves>k__BackingField: 4
+    <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+    <FnlSeed>k__BackingField: 0
+    <FnlNoiseType>k__BackingField: 2
   <PossibleBaseColors>k__BackingField:
-  - {r: 1, g: 0.67734396, b: 0.36320752, a: 0}
-  - {r: 0.764151, g: 0.43026882, b: 0.10453011, a: 0}
-  - {r: 0.7647059, g: 0.33710805, b: 0.10588235, a: 0}
-  - {r: 0.7169812, g: 0.57435393, b: 0.49715206, a: 0}
-  - {r: 0.5188679, g: 0.44933298, b: 0.41362584, a: 0}
-  - {r: 0.4032044, g: 0.4056604, b: 0.1511659, a: 0}
-  - {r: 0.8207547, g: 0.7500862, b: 0.4219918, a: 0}
+  - {r: 0.3962264, g: 0.12965983, b: 0, a: 0}
+  - {r: 0.2735849, g: 0.15107735, b: 0.09162514, a: 0}
+  - {r: 0.23584908, g: 0.10010094, b: 0.030037384, a: 0}
+  - {r: 0.16037738, g: 0.11140874, b: 0.08548417, a: 0}
+  - {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0}
+  - {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 0}
   <PossibleNormalMaps>k__BackingField:
-  - {fileID: 2800000, guid: d5b76b6f1dc57794f8e39835b7f930e6, type: 3}
-  <NormalMapTileRange>k__BackingField: {x: 1, y: 1}
+  - {fileID: 2800000, guid: 2e8e6544f9d123e45afcf4a2fa9596df, type: 3}
+  - {fileID: 2800000, guid: b4b67be3b396f144aabb640dba70f9b4, type: 3}
+  - {fileID: 2800000, guid: 136d97f37cf4aa447b1581e68ef76784, type: 3}
+  - {fileID: 2800000, guid: c3908df9511f7ce4dbda6a8694cfa476, type: 3}
+  <NormalMapTileRange>k__BackingField: {x: 3, y: 7}
   <NormalMapBlendRange>k__BackingField: {x: 1, y: 1}
   <BiomeCandidates>k__BackingField:
   - <Probability>k__BackingField: 1
     <ExclusivityGroup>k__BackingField: 0
-    <BiomeType>k__BackingField: {fileID: 11400000, guid: 48e3e3afc1fc6e643ad54b24688b7a5b, type: 2}
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: b7ca7e1bba58ab346972d562ff2da699, type: 2}
   - <Probability>k__BackingField: 1
     <ExclusivityGroup>k__BackingField: 0
-    <BiomeType>k__BackingField: {fileID: 11400000, guid: 5464f35be820852459e79913aca0dad3, type: 2}
-  - <Probability>k__BackingField: 1
-    <ExclusivityGroup>k__BackingField: 0
-    <BiomeType>k__BackingField: {fileID: 11400000, guid: e8bde3baee97b47408806be87548643b, type: 2}
+    <BiomeType>k__BackingField: {fileID: 11400000, guid: 22c44b43453c09e41ac0c032e789c80a, type: 2}
   <SatelliteParameters>k__BackingField:
     <NumberRange>k__BackingField: {x: 0, y: 0}
     <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
@@ -58,12 +67,12 @@ MonoBehaviour:
     <OrbitInclinationRange>k__BackingField: {x: 0, y: 0}
     <VelocityRange>k__BackingField: {x: 0, y: 0}
   <CraterGenerationSettings>k__BackingField:
-    <StrengthRange>k__BackingField: {x: 0.05, y: 0.3}
-    <RadiusRange>k__BackingField: {x: 0.05, y: 0.2}
-    <DepthRange>k__BackingField: {x: 0.9, y: 1.1}
-    <RimWidthRange>k__BackingField: {x: 0.05, y: 0.3}
-    <RimSteepnessRange>k__BackingField: {x: 1, y: 3}
-    <NumberRange>k__BackingField: {x: 0, y: 0}
-  <Rings>k__BackingField: {fileID: 11400000, guid: 111c982b5894abd44872a765d15e931a, type: 2}
+    <StrengthRange>k__BackingField: {x: 1, y: 1}
+    <RadiusRange>k__BackingField: {x: 0.01, y: 0.03}
+    <DepthRange>k__BackingField: {x: 0.1, y: 0.3}
+    <RimWidthRange>k__BackingField: {x: 0.3, y: 0.5}
+    <RimSteepnessRange>k__BackingField: {x: 0, y: 0}
+    <NumberRange>k__BackingField: {x: 500, y: 1000}
+  <Rings>k__BackingField: {fileID: 0}
   <Atmosphere>k__BackingField: {fileID: 0}
-  <PrefabOverride>k__BackingField: {fileID: 0}
+  <PrefabOverride>k__BackingField: {fileID: 6039681440229025307, guid: 748a6c74147ab9846a436c91ac54482b, type: 3}

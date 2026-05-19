@@ -42,7 +42,7 @@ MonoBehaviour:
     <NumberRange>k__BackingField: {x: 0, y: 0}
     <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
     <DistanceBetweenSatellitesRange>k__BackingField: {x: 0, y: 0}
-  <RadiusToPlayerOrbitRation>k__BackingField: 1.5
+  <RadiusToPlayerOrbitRation>k__BackingField: 2.5
   <LowestLodEmissionIntensityRange>k__BackingField: {x: 0, y: 0}
   <RotationAxis>k__BackingField: {x: 0, y: 1, z: 0}
   <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.5, y: 2}

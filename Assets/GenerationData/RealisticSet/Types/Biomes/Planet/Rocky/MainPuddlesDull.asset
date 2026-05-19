@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
+  m_Name: MainPuddlesDull
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
+  biomeParameters:
+    features: 1
+    biomeColors:
+      baseColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 0}
+      accentColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 0}
+    mainNoise:
+      <Type>k__BackingField: 1
+      <Frequency>k__BackingField: 1.94
+      <Octaves>k__BackingField: 3
+      <Offset>k__BackingField: {x: 1171.8225, y: 1088.0895, z: 2401.6907}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: 0.21
+    blendFactor: 0.36
+    accentThreshold: 0.63
+    accentBlendFactor: 0.54
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  biomeColors:
+  - baseColor: {r: 0.30980393, g: 0.30980393, b: 0.30980393, a: 0}
+    accentColor: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 0}
+  - baseColor: {r: 0.46226418, g: 0.43541184, b: 0.42083484, a: 0}
+    accentColor: {r: 0.4245283, g: 0.35644358, b: 0.22227661, a: 0}
+  - baseColor: {r: 0.6415094, g: 0.43417013, b: 0.3177287, a: 0}
+    accentColor: {r: 0.735849, g: 0.41069227, b: 0.10065861, a: 0}
+  - baseColor: {r: 0.4922048, g: 0.5188679, b: 0.37936097, a: 0}
+    accentColor: {r: 0.24195802, g: 0.3018868, b: 0.20932718, a: 0}
+  - baseColor: {r: 0.2305536, g: 0.31132078, b: 0.29738033, a: 0}
+    accentColor: {r: 0.17875579, g: 0.31013522, b: 0.3679245, a: 0}
+  useColorBasedProbabilities: 0

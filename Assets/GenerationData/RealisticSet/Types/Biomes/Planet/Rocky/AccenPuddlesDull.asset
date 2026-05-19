@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
+  m_Name: AccenPuddlesDull
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
+  biomeParameters:
+    features: 1
+    biomeColors:
+      baseColor: {r: 0.79215693, g: 0.79215693, b: 0.79215693, a: 0}
+      accentColor: {r: 1, g: 1, b: 1, a: 0}
+    mainNoise:
+      <Type>k__BackingField: 1
+      <Frequency>k__BackingField: 4.86
+      <Octaves>k__BackingField: 3
+      <Offset>k__BackingField: {x: 3608.7124, y: 506.10046, z: 2270.9016}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: 0.85
+    blendFactor: 0.65
+    accentThreshold: 0.42
+    accentBlendFactor: 0.43
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  biomeColors:
+  - baseColor: {r: 0.79215693, g: 0.79215693, b: 0.79215693, a: 0}
+    accentColor: {r: 1, g: 1, b: 1, a: 0}
+  - baseColor: {r: 0.8207547, g: 0.8075482, b: 0.66202384, a: 0}
+    accentColor: {r: 0.9245283, g: 0.90839493, b: 0.8242257, a: 0}
+  - baseColor: {r: 0.81960785, g: 0.7325634, b: 0.6627451, a: 0}
+    accentColor: {r: 0.9254902, g: 0.8693615, b: 0.8235294, a: 0}
+  - baseColor: {r: 0.81960785, g: 0.67452705, b: 0.6627451, a: 0}
+    accentColor: {r: 0.9254902, g: 0.82455957, b: 0.8235294, a: 0}
+  - baseColor: {r: 0.6627451, g: 0.81960785, b: 0.74495214, a: 0}
+    accentColor: {r: 0.8235294, g: 0.9254902, b: 0.85791665, a: 0}
+  - baseColor: {r: 0.6627451, g: 0.81346595, b: 0.81960785, a: 0}
+    accentColor: {r: 0.8235294, g: 0.9254902, b: 0.9127138, a: 0}
+  useColorBasedProbabilities: 0

@@ -18,12 +18,12 @@ namespace ProceduralPlanets.Generation
             {
                 var newCrater = new CraterParameters
                 {
-                    Position = Random.onUnitSphere,
-                    Radius = Random.Range(settings.RadiusRange.x, settings.RadiusRange.y),
-                    Depth = Random.Range(settings.DepthRange.x, settings.DepthRange.y),
-                    RimWidth = Random.Range(settings.RimWidthRange.x, settings.RimWidthRange.y),
-                    RimSteepness = Random.Range(settings.RimSteepnessRange.x, settings.RimSteepnessRange.y),
-                    Strength = Random.Range(settings.StrengthRange.x, settings.StrengthRange.y)
+                    Position = random.OnUnitSphere(),
+                    Radius = random.Range(settings.RadiusRange.x, settings.RadiusRange.y),
+                    Depth = random.Range(settings.DepthRange.x, settings.DepthRange.y),
+                    RimWidth = random.Range(settings.RimWidthRange.x, settings.RimWidthRange.y),
+                    RimSteepness = random.Range(settings.RimSteepnessRange.x, settings.RimSteepnessRange.y),
+                    Strength = random.Range(settings.StrengthRange.x, settings.StrengthRange.y)
                 };
                 craters.Add(newCrater);
             }

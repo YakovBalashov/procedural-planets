@@ -40,9 +40,9 @@ namespace ProceduralPlanets.Generation
             }
         }
 
-        protected override ComputeBuffer CreateCraterBuffer()
+        protected override ComputeBuffer CreateCraterBuffer(int seed)
         {
-            var craters = CraterGenerator.GenerateCraters(BodyData.CraterGenerationSettings, 0);
+            var craters = CraterGenerator.GenerateCraters(BodyData.CraterGenerationSettings, seed);
             
             if (craters.Count == 0)
                 return new ComputeBuffer(1, Marshal.SizeOf(typeof(byte)));

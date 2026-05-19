@@ -39,7 +39,7 @@ namespace ProceduralPlanets.LOD
             _meshes = new List<Mesh>(lodLevels.Count);
             foreach (var lodLevel in lodLevels)
             {
-                _meshes.Add(generator.GenerateMeshOnGPU(lodLevel.Resolution));
+                _meshes.Add(generator.GenerateMeshOnGPU(lodLevel.Resolution, generator.Seed));
             }
             
             var color = new Color(data.BaseColor.r, data.BaseColor.g, data.BaseColor.b, data.LowestLodEmissionIntensity);

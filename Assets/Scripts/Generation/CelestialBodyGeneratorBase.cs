@@ -10,8 +10,11 @@ namespace ProceduralPlanets.Generation
         
         public abstract CelestialBodyData GetBodyData();
         
-        public abstract Mesh GenerateMeshOnGPU(int resolution);
+        public abstract Mesh GenerateMeshOnGPU(int resolution, int seed);
         
         public abstract void UpdateMaterial();
+        
+        public int Seed { get; protected set; }
+        
     }
 }

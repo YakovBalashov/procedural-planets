@@ -25,7 +25,7 @@ namespace ProceduralPlanets.Generation
         [SerializeField] private bool useUnityNormals = true;
         [SerializeField] private ComputeShader displacementShader;
         [SerializeField] private float normalSampleDistance = 0.01f;
-
+        
         private MeshFilter _meshFilter;
         private ComputeBuffer _noiseSettingsBuffer;
         private ComputeBuffer _biomeBuffer;
@@ -34,11 +34,13 @@ namespace ProceduralPlanets.Generation
 
         public override void GenerateBodyData()
         {
-            GenerateBodyData(Random.Range(0, int.MaxValue));
+            var seed = Random.Range(0, int.MaxValue);
+            GenerateBodyData(seed);
         }
 
         public void GenerateBodyData(int seed)
         {
+            Seed = seed;
             BodyData = BodyType.CreateInstance(seed);
             UpdateSurface(seed);
         }
@@ -47,7 +49,7 @@ namespace ProceduralPlanets.Generation
         {
             Initialize();
             UpdateAxis();
-            UpdateMesh();
+            UpdateMesh(seed);
             UpdateMaterial();
         }
 
@@ -109,20 +111,20 @@ namespace ProceduralPlanets.Generation
             MeshRenderer.SetPropertyBlock(MaterialPropertyBlock);
         }
 
-        private void UpdateMesh()
+        private void UpdateMesh(int seed)
         {
             if (!displacementShader) return;
             
-            var mesh = GenerateMeshOnGPU(resolution);
+            var mesh = GenerateMeshOnGPU(resolution, seed);
             _meshFilter.sharedMesh = mesh;
         }
 
-        protected virtual ComputeBuffer CreateCraterBuffer()
+        protected virtual ComputeBuffer CreateCraterBuffer(int seed)
         {
             return new ComputeBuffer(1, sizeof(byte));
         }
 
-        public override Mesh GenerateMeshOnGPU(int sphereResolution)
+        public override Mesh GenerateMeshOnGPU(int sphereResolution, int seed)
         {
             var mesh = CubeSphereGenerator.Generate(sphereResolution, BodyData.Radius);
             
@@ -143,7 +145,7 @@ namespace ProceduralPlanets.Generation
             using var colorBuffer = new ComputeBuffer(baseVertices.Length, Marshal.SizeOf(typeof(Color)));
             using var biomeBuffer = new ComputeBuffer(Mathf.Max(1, BodyData.Biomes.Count),
                 Marshal.SizeOf(typeof(BiomeParametersStruct)));
-            using var craterBuffer = CreateCraterBuffer();
+            using var craterBuffer = CreateCraterBuffer(seed);
             var craterCount = (craterBuffer.stride < Marshal.SizeOf(typeof(CraterParameters))) ? 0 : craterBuffer.count;
 
             baseVertexBuffer.SetData(baseVertices);

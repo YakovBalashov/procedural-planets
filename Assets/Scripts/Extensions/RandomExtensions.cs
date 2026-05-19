@@ -24,6 +24,16 @@ namespace ProceduralPlanets.Extensions
             return (float)random.NextDouble();
         }
         
+        public static Vector3 OnUnitSphere(this System.Random random)
+        {
+            var z = random.Range(-1f, 1f);
+            var t = random.Range(0f, Mathf.PI * 2f);
+            var r = Mathf.Sqrt(1 - z * z);
+            var x = r * Mathf.Cos(t);
+            var y = r * Mathf.Sin(t);
+            return new Vector3(x, y, z);
+        }
+        
         public static T GetRandomListElement<T>(this System.Random random, List<T> items, List<float> probabilities)
         {
             float totalProbability = probabilities.Sum();

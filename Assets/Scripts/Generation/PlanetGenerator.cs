@@ -54,9 +54,9 @@ namespace ProceduralPlanets.Generation
             return craterBuffer;
         }
         
-        public override void UpdateSurface()
+        public override void UpdateSurface(int seed)
         {
-            base.UpdateSurface();
+            base.UpdateSurface(seed);
 
             if (BodyData.AtmosphereParameters.Enabled)
                 _atmosphereGenerator.UpdateAtmosphere(BodyData.AtmosphereParameters, BodyData.Radius);

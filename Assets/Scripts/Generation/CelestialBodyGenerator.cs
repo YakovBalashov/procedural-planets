@@ -40,10 +40,10 @@ namespace ProceduralPlanets.Generation
         public void GenerateBodyData(int seed)
         {
             BodyData = BodyType.CreateInstance(seed);
-            UpdateSurface();
+            UpdateSurface(seed);
         }
 
-        public override void UpdateSurface()
+        public override void UpdateSurface(int seed)
         {
             Initialize();
             UpdateAxis();
@@ -73,7 +73,7 @@ namespace ProceduralPlanets.Generation
         public void SetBodyData(TData newBodyData)
         {
             BodyData = newBodyData;
-            UpdateSurface();
+            UpdateSurface(0);
         }
 
         public override void UpdateMaterial()

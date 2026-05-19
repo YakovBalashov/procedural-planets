@@ -22,18 +22,19 @@ namespace ProceduralPlanets.CustomInspector
             
             base.OnInspectorGUI();
             
+            EditorGUILayout.InspectorTitlebar(true, _bodyGenerator);
+            RenderPlanetSurfaceInspector(_bodyGenerator.GetBodyData());
+            
             if (GUILayout.Button("Generate Body Data")) 
             {
                 _bodyGenerator.GenerateBodyData();
+                return;
             }
-            
-            EditorGUILayout.InspectorTitlebar(true, _bodyGenerator);
-            RenderPlanetSurfaceInspector(_bodyGenerator.GetBodyData());
             
             if (EditorGUI.EndChangeCheck())
             {
                 EditorUtility.SetDirty(_bodyGenerator);
-                _bodyGenerator.UpdateSurface();
+                _bodyGenerator.UpdateSurface(0);
             }
             
             serializedObject.ApplyModifiedProperties();

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: O
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.StarType
   <SpawnWeight>k__BackingField: 1
-  radiusRange: {x: 7000, y: 7500}
+  radiusRange: {x: 117000, y: 135000}
   gpuNoiseSettings: []
   <PossibleBaseColors>k__BackingField:
   - {r: 0.85202754, g: 0.8066038, b: 1, a: 1}
@@ -32,12 +32,12 @@ MonoBehaviour:
     <ExclusivityGroup>k__BackingField: 0
     <BiomeType>k__BackingField: {fileID: 11400000, guid: 0accdf1b8b58f844aaacbd6d4bbbe09b, type: 2}
   <SatelliteParameters>k__BackingField:
-    <NumberRange>k__BackingField: {x: 5, y: 15}
-    <OrbitRadiusRange>k__BackingField: {x: 40000, y: 1000000}
-    <DistanceBetweenSatellitesRange>k__BackingField: {x: 50000, y: 100000}
-  <RadiusToPlayerOrbitRation>k__BackingField: 1.5
+    <NumberRange>k__BackingField: {x: 5, y: 20}
+    <OrbitRadiusRange>k__BackingField: {x: 500000, y: 50000000}
+    <DistanceBetweenSatellitesRange>k__BackingField: {x: 500000, y: 5000000}
+  <RadiusToPlayerOrbitRation>k__BackingField: 5
   <LowestLodEmissionIntensityRange>k__BackingField: {x: 0, y: 0}
   <RotationAxis>k__BackingField: {x: 0, y: 1, z: 0}
-  <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.5, y: 2}
+  <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.001, y: 0.005}
   <CompatibleStarTypes>k__BackingField: []
   <StarNumberRange>k__BackingField: {x: 1, y: 1}

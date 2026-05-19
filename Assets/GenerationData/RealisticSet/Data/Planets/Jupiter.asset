@@ -122,3 +122,4 @@ MonoBehaviour:
       <WarpAmplitude>k__BackingField: 0
     <NoiseRange>k__BackingField: {x: 1, y: 1}
     <MinAlpha>k__BackingField: 0.02
+  <PrefabOverride>k__BackingField: {fileID: 0}

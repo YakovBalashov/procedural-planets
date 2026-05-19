@@ -64,19 +64,42 @@ MonoBehaviour:
   <RadiusToPlayerOrbitRation>k__BackingField: 3.5
   <LowestLodEmissionIntensityRange>k__BackingField: {x: 0, y: 0}
   <RotationAxis>k__BackingField: {x: 0, y: 1, z: 0}
-  <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.5, y: 2}
+  <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.001, y: 0.005}
   <StarOrbitType>k__BackingField:
-    <ParentTypes>k__BackingField: []
-    <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
-    <OrbitRatioRange>k__BackingField: {x: 0, y: 0}
-    <OrbitInclinationRange>k__BackingField: {x: 0, y: 0}
-    <VelocityRange>k__BackingField: {x: 0, y: 0}
+    <ParentTypes>k__BackingField:
+    - {fileID: 11400000, guid: 779f04d296edbea4c892430717346e55, type: 2}
+    - {fileID: 11400000, guid: 93cdb83cc697bd847bd632d179cd08f1, type: 2}
+    - {fileID: 11400000, guid: b53ffb14da83e4a4fbc22b8a6ea6fe75, type: 2}
+    - {fileID: 11400000, guid: 551fd05358612ed43ac0ba9b40567ac6, type: 2}
+    <OrbitRadiusRange>k__BackingField: {x: 500000, y: 6000000}
+    <OrbitRatioRange>k__BackingField: {x: 0.99, y: 1.01}
+    <OrbitInclinationRange>k__BackingField: {x: -2, y: 2}
+    <VelocityRange>k__BackingField: {x: 0.00001, y: 0.00009}
   <PlanetOrbitType>k__BackingField:
-    <ParentTypes>k__BackingField: []
-    <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
-    <OrbitRatioRange>k__BackingField: {x: 0, y: 0}
-    <OrbitInclinationRange>k__BackingField: {x: 0, y: 0}
-    <VelocityRange>k__BackingField: {x: 0, y: 0}
+    <ParentTypes>k__BackingField:
+    - {fileID: 11400000, guid: df301d0e5956c21458d407b5dc704415, type: 2}
+    - {fileID: 11400000, guid: faa876821855ba64c88a711f2b2d69aa, type: 2}
+    - {fileID: 11400000, guid: d16aa639804adf34781160c45fbc1ece, type: 2}
+    - {fileID: 11400000, guid: 6b6a5a7493a286d4bace43a9f868e79e, type: 2}
+    - {fileID: 11400000, guid: 6d781db1a8a1dd648adfd56679d42910, type: 2}
+    - {fileID: 11400000, guid: 4134f2457f9ca01489ec07c2ca3a80e1, type: 2}
+    - {fileID: 11400000, guid: 12dac4eb94c31554ca64224de913cb70, type: 2}
+    - {fileID: 11400000, guid: 31cf948789ac59e4b9f7bc26ee8484b0, type: 2}
+    - {fileID: 11400000, guid: e737bd837dddfc94798cba8545eeac98, type: 2}
+    - {fileID: 11400000, guid: 48059d62b47f20d4cab7cb8c36826e82, type: 2}
+    - {fileID: 11400000, guid: a8113402bf349184393aa7c273bec1ec, type: 2}
+    - {fileID: 11400000, guid: 3b0a1f6123ab13e4b843ae10cb3c50c2, type: 2}
+    - {fileID: 11400000, guid: e4c9a5bbaf4cc3744bc0e0e2709cebf3, type: 2}
+    - {fileID: 11400000, guid: d019f89adb72c954ca9208125c2ff137, type: 2}
+    - {fileID: 11400000, guid: 31e1db00ec8d3bd47b6dc58dcf2b99b2, type: 2}
+    - {fileID: 11400000, guid: f248dd0eef9753a4f8bc0bccbbc6c125, type: 2}
+    - {fileID: 11400000, guid: 0b484b846d8ed0b45ac8506bd4855c7c, type: 2}
+    - {fileID: 11400000, guid: 131aad7688f0f8d42a4590e6f41fdb68, type: 2}
+    - {fileID: 11400000, guid: f9d0f22a7a084a3408a3d5511bab39d0, type: 2}
+    <OrbitRadiusRange>k__BackingField: {x: 3000, y: 20000}
+    <OrbitRatioRange>k__BackingField: {x: 0.97, y: 1.03}
+    <OrbitInclinationRange>k__BackingField: {x: -6, y: 6}
+    <VelocityRange>k__BackingField: {x: 0.00001, y: 0.00001}
   <CraterGenerationSettings>k__BackingField:
     <StrengthRange>k__BackingField: {x: 1, y: 1}
     <RadiusRange>k__BackingField: {x: 0.01, y: 0.1}

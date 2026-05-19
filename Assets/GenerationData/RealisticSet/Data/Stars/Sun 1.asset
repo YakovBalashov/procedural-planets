@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b319d1f872c2a40ba3c5b95457bb60, type: 3}
+  m_Name: Sun 1
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.CelestialBodies.StarData
+  <Radius>k__BackingField: 6957
+  <GPUNoiseSettings>k__BackingField: []
+  <BaseColor>k__BackingField: {r: 1, g: 0.97544897, b: 0.8726415, a: 1}
+  <Biomes>k__BackingField:
+  - features: 64
+    biomeColors:
+      baseColor: {r: 1, g: 0.8066038, b: 0.9904079, a: 0}
+      accentColor: {r: 0.62352943, g: 0.015686275, b: 0, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 0
+      <Octaves>k__BackingField: 0
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: 0
+    blendFactor: 0
+    accentThreshold: 1
+    accentBlendFactor: 0
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 14.3
+  - features: 65
+    biomeColors:
+      baseColor: {r: 0.15030509, g: 0.07694017, b: 0.8584906, a: 0}
+      accentColor: {r: 0.33962262, g: 0.2698584, b: 0.2675329, a: 0}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 15.25
+      <Octaves>k__BackingField: 3
+      <Offset>k__BackingField: {x: 389.3264, y: 7274.438, z: 5342.126}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: -0.1
+    blendFactor: 0.15
+    accentThreshold: 1
+    accentBlendFactor: 0
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 10.67
+  - features: 65
+    biomeColors:
+      baseColor: {r: 1, g: 1, b: 1, a: 0}
+      accentColor: {r: 1, g: 1, b: 1, a: 0}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 2.48
+      <Octaves>k__BackingField: 3
+      <Offset>k__BackingField: {x: 5848.354, y: 7692.072, z: 7430.2007}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 0
+    maskThreshold: 0.47
+    blendFactor: 0.15
+    accentThreshold: 1
+    accentBlendFactor: 0
+    heightRange: {x: 0, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 41.65
+  <NormalMap>k__BackingField: {fileID: 2800000, guid: d5b76b6f1dc57794f8e39835b7f930e6, type: 3}
+  <NormalMapTile>k__BackingField: 1
+  <NormalMapBlend>k__BackingField: 1
+  <PlayerOrbitRadius>k__BackingField: 50000
+  <LowestLodEmissionIntensity>k__BackingField: 10
+  <RotationAxis>k__BackingField: {x: 0, y: 1, z: 0}
+  <RotationSpeedInDegreesPerSecond>k__BackingField: 1

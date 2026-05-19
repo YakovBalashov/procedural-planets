@@ -33,11 +33,11 @@ MonoBehaviour:
     <BiomeType>k__BackingField: {fileID: 11400000, guid: f7cf558a43cdf734ba835b9b4159abea, type: 2}
   <SatelliteParameters>k__BackingField:
     <NumberRange>k__BackingField: {x: 5, y: 15}
-    <OrbitRadiusRange>k__BackingField: {x: 40000, y: 1000000}
-    <DistanceBetweenSatellitesRange>k__BackingField: {x: 50000, y: 100000}
-  <RadiusToPlayerOrbitRation>k__BackingField: 1.5
+    <OrbitRadiusRange>k__BackingField: {x: 500000, y: 50000000}
+    <DistanceBetweenSatellitesRange>k__BackingField: {x: 500000, y: 5000000}
+  <RadiusToPlayerOrbitRation>k__BackingField: 5
   <LowestLodEmissionIntensityRange>k__BackingField: {x: 0, y: 0}
   <RotationAxis>k__BackingField: {x: 0, y: 1, z: 0}
-  <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.5, y: 2}
+  <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.001, y: 0.005}
   <CompatibleStarTypes>k__BackingField: []
   <StarNumberRange>k__BackingField: {x: 1, y: 1}

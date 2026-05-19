@@ -45,19 +45,23 @@ MonoBehaviour:
     <ExclusivityGroup>k__BackingField: 0
     <BiomeType>k__BackingField: {fileID: 11400000, guid: c65a1bcef55d36a4da6a941d74401641, type: 2}
   <SatelliteParameters>k__BackingField:
-    <NumberRange>k__BackingField: {x: 0, y: 0}
-    <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
-    <DistanceBetweenSatellitesRange>k__BackingField: {x: 0, y: 0}
+    <NumberRange>k__BackingField: {x: 0, y: 3}
+    <OrbitRadiusRange>k__BackingField: {x: 2000, y: 10000}
+    <DistanceBetweenSatellitesRange>k__BackingField: {x: 700, y: 1500}
   <RadiusToPlayerOrbitRation>k__BackingField: 2.5
   <LowestLodEmissionIntensityRange>k__BackingField: {x: 0, y: 0}
   <RotationAxis>k__BackingField: {x: 0, y: 1, z: 0}
-  <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.5, y: 2}
+  <RotationSpeedInDegreesPerSecondRange>k__BackingField: {x: 0.001, y: 0.005}
   <StarOrbitType>k__BackingField:
-    <ParentTypes>k__BackingField: []
-    <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}
-    <OrbitRatioRange>k__BackingField: {x: 0, y: 0}
-    <OrbitInclinationRange>k__BackingField: {x: 0, y: 0}
-    <VelocityRange>k__BackingField: {x: 0, y: 0}
+    <ParentTypes>k__BackingField:
+    - {fileID: 11400000, guid: 779f04d296edbea4c892430717346e55, type: 2}
+    - {fileID: 11400000, guid: 93cdb83cc697bd847bd632d179cd08f1, type: 2}
+    - {fileID: 11400000, guid: b53ffb14da83e4a4fbc22b8a6ea6fe75, type: 2}
+    - {fileID: 11400000, guid: 551fd05358612ed43ac0ba9b40567ac6, type: 2}
+    <OrbitRadiusRange>k__BackingField: {x: 1000000, y: 6000000}
+    <OrbitRatioRange>k__BackingField: {x: 0.99, y: 1.01}
+    <OrbitInclinationRange>k__BackingField: {x: -2, y: 2}
+    <VelocityRange>k__BackingField: {x: 0.00001, y: 0.00009}
   <PlanetOrbitType>k__BackingField:
     <ParentTypes>k__BackingField: []
     <OrbitRadiusRange>k__BackingField: {x: 0, y: 0}

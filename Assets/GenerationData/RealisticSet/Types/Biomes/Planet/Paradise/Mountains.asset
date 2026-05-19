@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
+  m_Name: Mountains
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
+  biomeParameters:
+    features: 5
+    biomeColors:
+      baseColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 0}
+      accentColor: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 1.87
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 1591.8773, y: 3907.6519, z: 3847.811}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 18.64
+    maskThreshold: -1
+    blendFactor: 0.2
+    accentThreshold: 0.28
+    accentBlendFactor: 0.38
+    heightRange: {x: 0.8, y: 1}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  biomeColors:
+  - baseColor: {r: 0.43529415, g: 0.43529415, b: 0.43529415, a: 0}
+    accentColor: {r: 0.36862746, g: 0.36862746, b: 0.36862746, a: 0}
+  - baseColor: {r: 0.3773585, g: 0.26034132, b: 0.17265932, a: 0}
+    accentColor: {r: 0.3584906, g: 0.22678822, b: 0.13020648, a: 1}
+  - baseColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0}
+    accentColor: {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
+  - baseColor: {r: 0.509434, g: 0.2329879, b: 0.0985226, a: 0}
+    accentColor: {r: 0.6320754, g: 0.2752339, b: 0.10435206, a: 1}
+  - baseColor: {r: 0.50980395, g: 0.4348066, b: 0.0980392, a: 0}
+    accentColor: {r: 0.3679245, g: 0.31233913, b: 0.060742244, a: 1}
+  useColorBasedProbabilities: 0

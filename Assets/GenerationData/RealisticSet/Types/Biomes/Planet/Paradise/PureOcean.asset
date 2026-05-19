@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
+  m_Name: PureOcean
+  m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
+  biomeParameters:
+    features: 1
+    biomeColors:
+      baseColor: {r: 0.043965846, g: 0.09640204, b: 0.7169812, a: 0}
+      accentColor: {r: 0.029369887, g: 0.07324845, b: 0.5660378, a: 1}
+    mainNoise:
+      <Type>k__BackingField: 0
+      <Frequency>k__BackingField: 1.87
+      <Octaves>k__BackingField: 4
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <WarpType>k__BackingField: 0
+      <WarpAmplitude>k__BackingField: 18.64
+    maskThreshold: -1
+    blendFactor: 0.2
+    accentThreshold: 0.28
+    accentBlendFactor: 0.38
+    heightRange: {x: -5, y: 0}
+    steepnessRange: {x: 0, y: 0}
+    poleAngle: 0
+    poleDirection: {x: 0, y: 0, z: 0}
+    stripesAxis: {x: 0, y: 0, z: 0}
+    stripesScale: 0
+    emissionIntensity: 0
+  biomeColors:
+  - baseColor: {r: 0.043137256, g: 0.098039225, b: 0.7176471, a: 0}
+    accentColor: {r: 0.027450982, g: 0.07450981, b: 0.5647059, a: 0}
+  - baseColor: {r: 0, g: 0.036090355, b: 0.4433962, a: 0}
+    accentColor: {r: 0.006674973, g: 0.02888116, b: 0.2830189, a: 0}
+  - baseColor: {r: 0, g: 0.25332123, b: 0.44313726, a: 0}
+    accentColor: {r: 0, g: 0.1752021, b: 0.3018868, a: 1}
+  - baseColor: {r: 0.22828409, g: 0.43741316, b: 0.509434, a: 0}
+    accentColor: {r: 0.20745817, g: 0.3490343, b: 0.3962264, a: 1}
+  - baseColor: {r: 0.22745098, g: 0.50980395, b: 0.49340034, a: 0}
+    accentColor: {r: 0.15445887, g: 0.3679245, b: 0.35310045, a: 1}
+  - baseColor: {r: 0.071956225, g: 0.11618621, b: 0.31132078, a: 0}
+    accentColor: {r: 0.054512292, g: 0.090185106, b: 0.23584908, a: 1}
+  - baseColor: {r: 0.20198639, g: 0.09812211, b: 0.4245283, a: 0}
+    accentColor: {r: 0.11200018, g: 0.052287295, b: 0.23584908, a: 1}
+  useColorBasedProbabilities: 0

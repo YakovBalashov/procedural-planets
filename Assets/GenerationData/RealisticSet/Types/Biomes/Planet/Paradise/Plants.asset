@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
   biomeParameters:
     features: 1
-    color: {r: 0, g: 0, b: 0, a: 0}
-    accentColor: {r: 0, g: 0, b: 0, a: 0}
     biomeColors:
       baseColor: {r: 0.07789466, g: 0.3207547, b: 0.055980776, a: 0}
       accentColor: {r: 0.06489383, g: 0.24528301, b: 0.047436804, a: 1}
@@ -23,7 +21,7 @@ MonoBehaviour:
       <Type>k__BackingField: 0
       <Frequency>k__BackingField: 1.87
       <Octaves>k__BackingField: 4
-      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <Offset>k__BackingField: {x: 204.98383, y: 1935.8693, z: 1650.2108}
       <WarpType>k__BackingField: 0
       <WarpAmplitude>k__BackingField: 0
     maskThreshold: 0.01
@@ -37,7 +35,23 @@ MonoBehaviour:
     stripesAxis: {x: 0, y: 0, z: 0}
     stripesScale: 0
     emissionIntensity: 0
-  colors: []
   biomeColors:
   - baseColor: {r: 0.078431375, g: 0.32156864, b: 0.054901965, a: 0}
     accentColor: {r: 0.06666667, g: 0.24705884, b: 0.04705883, a: 0}
+  - baseColor: {r: 0.24405235, g: 0.32156864, b: 0.05490195, a: 0}
+    accentColor: {r: 0.14804326, g: 0.24705882, b: 0.04705882, a: 0}
+  - baseColor: {r: 0.16206181, g: 0.46226418, b: 0.13300997, a: 0}
+    accentColor: {r: 0.101049535, g: 0.3490566, b: 0.07409222, a: 0}
+  - baseColor: {r: 0.21843044, g: 0.4627451, b: 0.13333336, a: 0}
+    accentColor: {r: 0.14883314, g: 0.34901962, b: 0.07450981, a: 0}
+  - baseColor: {r: 0.3454299, g: 0.7075472, b: 0.21693665, a: 0}
+    accentColor: {r: 0.21913491, g: 0.49056602, b: 0.11801351, a: 0}
+  - baseColor: {r: 0.05490195, g: 0.32156864, b: 0.18590912, a: 0}
+    accentColor: {r: 0.04705882, g: 0.24705882, b: 0.13643143, a: 0}
+  - baseColor: {r: 0.05490195, g: 0.31381527, b: 0.32156864, a: 0}
+    accentColor: {r: 0.04705882, g: 0.24705882, b: 0.20916483, a: 0}
+  - baseColor: {r: 0.06645527, g: 0.23584908, b: 0.050062314, a: 0}
+    accentColor: {r: 0.038557794, g: 0.14150941, b: 0.027367385, a: 0}
+  - baseColor: {r: 0.050980385, g: 0.23529412, b: 0.18679877, a: 0}
+    accentColor: {r: 0.027450979, g: 0.14117648, b: 0.11416662, a: 0}
+  useColorBasedProbabilities: 0

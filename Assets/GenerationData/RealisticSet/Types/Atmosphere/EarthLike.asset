@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f33ab9b03332a418e6325bb8bfd0d1, type: 3}
   m_Name: EarthLike
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.AtmosphereType
-  <RadiusMultiplier>k__BackingField: 1.02
+  <RadiusMultiplier>k__BackingField: 1.025
   <NoiseParameters>k__BackingField:
     <Type>k__BackingField: 0
     <Frequency>k__BackingField: 0.05
-    <Octaves>k__BackingField: 4
-    <Offset>k__BackingField: {x: 4847.139, y: 2398.8218, z: 1189.5803}
+    <Octaves>k__BackingField: 5
+    <Offset>k__BackingField: {x: 4820.2383, y: 7694.377, z: 5561.832}
     <WarpType>k__BackingField: 2
-    <WarpAmplitude>k__BackingField: 17.05
-  <NoiseRangeMinRange>k__BackingField: {x: -0.15, y: -0.1}
-  <NoiseRangeMaxRange>k__BackingField: {x: 0.45, y: 0.55}
-  <MinAlphaRange>k__BackingField: {x: 0.07, y: 0.13}
+    <WarpAmplitude>k__BackingField: 10
+  <NoiseRangeMinRange>k__BackingField: {x: -0.5, y: -0.1}
+  <NoiseRangeMaxRange>k__BackingField: {x: 0.45, y: 0.8}
+  <MinAlphaRange>k__BackingField: {x: 0.07, y: 0.3}
   <Colors>k__BackingField:
   - {r: 1, g: 1, b: 1, a: 0}

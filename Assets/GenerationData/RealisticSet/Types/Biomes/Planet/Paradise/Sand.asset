@@ -14,8 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
   biomeParameters:
     features: 1
-    color: {r: 0, g: 0, b: 0, a: 0}
-    accentColor: {r: 0, g: 0, b: 0, a: 0}
     biomeColors:
       baseColor: {r: 0.6509434, g: 0.5347164, b: 0.33468318, a: 0}
       accentColor: {r: 0.6226415, g: 0.46273884, b: 0.19090424, a: 1}
@@ -23,7 +21,7 @@ MonoBehaviour:
       <Type>k__BackingField: 0
       <Frequency>k__BackingField: 2.94
       <Octaves>k__BackingField: 4
-      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
+      <Offset>k__BackingField: {x: 542.1672, y: 229.06343, z: 370.3178}
       <WarpType>k__BackingField: 0
       <WarpAmplitude>k__BackingField: 0
     maskThreshold: -1
@@ -37,7 +35,15 @@ MonoBehaviour:
     stripesAxis: {x: 0, y: 0, z: 0}
     stripesScale: 0
     emissionIntensity: 0
-  colors: []
   biomeColors:
   - baseColor: {r: 0.6509804, g: 0.53333336, b: 0.33333334, a: 0}
     accentColor: {r: 0.62352943, g: 0.45882356, b: 0.19215688, a: 0}
+  - baseColor: {r: 0.6509804, g: 0.601698, b: 0.33333334, a: 0}
+    accentColor: {r: 0.62352943, g: 0.5800404, b: 0.19215687, a: 0}
+  - baseColor: {r: 0.6027662, g: 0.6509804, b: 0.33333334, a: 0}
+    accentColor: {r: 0.54527736, g: 0.62352943, b: 0.19215687, a: 0}
+  - baseColor: {r: 0.6509804, g: 0.47188476, b: 0.33333334, a: 0}
+    accentColor: {r: 0.62352943, g: 0.43101957, b: 0.19215687, a: 0}
+  - baseColor: {r: 0.6509804, g: 0.38416192, b: 0.33333334, a: 0}
+    accentColor: {r: 0.62352943, g: 0.24731821, b: 0.19215687, a: 0}
+  useColorBasedProbabilities: 0

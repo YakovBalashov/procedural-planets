@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
-  m_Name: StarFront
+  m_Name: O-Back
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
   biomeParameters:
-    features: 65
+    features: 64
     biomeColors:
-      baseColor: {r: 0.7372549, g: 0.027450982, b: 0, a: 0}
-      accentColor: {r: 0.7372549, g: 0.027450982, b: 0, a: 0}
+      baseColor: {r: 1, g: 0.8066038, b: 0.9904079, a: 0}
+      accentColor: {r: 0.62352943, g: 0.015686275, b: 0, a: 1}
     mainNoise:
       <Type>k__BackingField: 0
-      <Frequency>k__BackingField: 15.25
-      <Octaves>k__BackingField: 3
-      <Offset>k__BackingField: {x: 2345.4895, y: 7149.912, z: 1068.001}
+      <Frequency>k__BackingField: 0
+      <Octaves>k__BackingField: 0
+      <Offset>k__BackingField: {x: 0, y: 0, z: 0}
       <WarpType>k__BackingField: 0
       <WarpAmplitude>k__BackingField: 0
     maskThreshold: 0
-    blendFactor: 0.15
-    accentThreshold: 0
+    blendFactor: 0
+    accentThreshold: 1
     accentBlendFactor: 0
     heightRange: {x: 0, y: 0}
     steepnessRange: {x: 0, y: 0}
@@ -34,7 +34,8 @@ MonoBehaviour:
     poleDirection: {x: 0, y: 0, z: 0}
     stripesAxis: {x: 0, y: 0, z: 0}
     stripesScale: 0
-    emissionIntensity: 7
+    emissionIntensity: 14.3
   biomeColors:
-  - baseColor: {r: 0.7372549, g: 0.027450982, b: 0, a: 0}
-    accentColor: {r: 0.7372549, g: 0.027450982, b: 0, a: 0}
+  - baseColor: {r: 1, g: 0.8078432, b: 0.9921569, a: 0}
+    accentColor: {r: 0.7372549, g: 0.07058824, b: 0, a: 0}
+  useColorBasedProbabilities: 0

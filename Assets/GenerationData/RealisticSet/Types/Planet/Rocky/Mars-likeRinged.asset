@@ -85,6 +85,6 @@ MonoBehaviour:
     <RimWidthRange>k__BackingField: {x: 0.3, y: 0.5}
     <RimSteepnessRange>k__BackingField: {x: 0, y: 0}
     <NumberRange>k__BackingField: {x: 300, y: 500}
-  <Rings>k__BackingField: {fileID: 0}
+  <Rings>k__BackingField: {fileID: 11400000, guid: 186caede18d605e4495007a9af36a7e8, type: 2}
   <Atmosphere>k__BackingField: {fileID: 11400000, guid: aa27edbcfc6e3814ab48ba4a82356650, type: 2}
   <PrefabOverride>k__BackingField: {fileID: 0}

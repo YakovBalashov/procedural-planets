@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2b156b11569fe84296bdea7f0af7dfd, type: 3}
   m_Name: Rocky
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.RingType
-  <InnerRadiusRange>k__BackingField: {x: 130, y: 160}
-  <OuterRadiusRange>k__BackingField: {x: 180, y: 220}
+  <InnerRadiusRange>k__BackingField: {x: 110, y: 140}
+  <OuterRadiusRange>k__BackingField: {x: 150, y: 190}
   <SegmentCount>k__BackingField: 200
   <NoiseParameters>k__BackingField:
     <Type>k__BackingField: 0
     <Frequency>k__BackingField: 0.4
     <Octaves>k__BackingField: 5
-    <Offset>k__BackingField: {x: 128.13225, y: 149.49973, z: 262.12668}
+    <Offset>k__BackingField: {x: 1820.4656, y: 4519.087, z: 1290.4824}
     <WarpType>k__BackingField: 0
     <WarpAmplitude>k__BackingField: 0
   <Colors>k__BackingField:

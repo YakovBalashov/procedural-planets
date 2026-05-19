@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
-  m_Name: AccentPuddles
+  m_Name: IceSecondaryStripes 1
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
   biomeParameters:
     features: 33
     biomeColors:
-      baseColor: {r: 0.8584906, g: 0.3764552, b: 0.044544328, a: 0}
-      accentColor: {r: 0.7830189, g: 0.23993355, b: 0.06278926, a: 0}
+      baseColor: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 0}
+      accentColor: {r: 1, g: 1, b: 1, a: 1}
     mainNoise:
       <Type>k__BackingField: 0
       <Frequency>k__BackingField: 0.8
       <Octaves>k__BackingField: 4
-      <Offset>k__BackingField: {x: 4795.3394, y: 5875.027, z: 5576.524}
+      <Offset>k__BackingField: {x: 4509.5576, y: 1364.7725, z: 5001.957}
       <WarpType>k__BackingField: 3
       <WarpAmplitude>k__BackingField: 88.51
-    maskThreshold: 0.56
+    maskThreshold: 0.77
     blendFactor: 0.42
     accentThreshold: 0.7
     accentBlendFactor: 0.21
@@ -36,14 +36,14 @@ MonoBehaviour:
     stripesScale: 6.46
     emissionIntensity: 0
   biomeColors:
-  - baseColor: {r: 0.8584906, g: 0.3764552, b: 0.044544328, a: 0}
-    accentColor: {r: 0.7830189, g: 0.23993355, b: 0.06278926, a: 0}
-  - baseColor: {r: 0.85882354, g: 0.70442945, b: 0.043137245, a: 0}
-    accentColor: {r: 1, g: 0.7100036, b: 0.13679248, a: 0}
-  - baseColor: {r: 0.22680633, g: 0.41509432, b: 0.16642933, a: 0}
-    accentColor: {r: 0.18379991, g: 0.33962262, b: 0.04645782, a: 0}
-  - baseColor: {r: 0.19166073, g: 0.30965105, b: 0.5566038, a: 0}
-    accentColor: {r: 0.26900142, g: 0.38003564, b: 0.6132076, a: 0}
-  - baseColor: {r: 0.26415092, g: 0.15824135, b: 0.23655398, a: 0}
-    accentColor: {r: 0.33962262, g: 0.22908507, b: 0.31096473, a: 0}
+  - baseColor: {r: 0.62352943, g: 0.62352943, b: 0.62352943, a: 0}
+    accentColor: {r: 1, g: 1, b: 1, a: 0}
+  - baseColor: {r: 0.5536223, g: 0.8207547, b: 0.784739, a: 0}
+    accentColor: {r: 0.5481933, g: 0.9150943, b: 0.86653394, a: 0}
+  - baseColor: {r: 0.5529412, g: 0.77108395, b: 0.81960785, a: 0}
+    accentColor: {r: 0.51290494, g: 0.7964845, b: 0.9622642, a: 0}
+  - baseColor: {r: 0.5529412, g: 0.6371738, b: 0.81960785, a: 0}
+    accentColor: {r: 0.7242346, g: 0.7715229, b: 0.8773585, a: 0}
+  - baseColor: {r: 0.70211816, g: 0.9245283, b: 0.8497959, a: 0}
+    accentColor: {r: 0.7736294, g: 0.8962264, b: 0.85536075, a: 0}
   useColorBasedProbabilities: 0

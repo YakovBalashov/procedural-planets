@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc83e155abea5634db9525c08d4bedcc, type: 3}
-  m_Name: MainStripes
+  m_Name: MainWeakerStripes
   m_EditorClassIdentifier: Assembly-CSharp::ProceduralPlanets.ScriptableObjects.Generation.BiomeType
   biomeParameters:
     features: 33
@@ -21,7 +21,7 @@ MonoBehaviour:
       <Type>k__BackingField: 0
       <Frequency>k__BackingField: 0.1
       <Octaves>k__BackingField: 4
-      <Offset>k__BackingField: {x: 84.61062, y: 2969.5723, z: 766.06525}
+      <Offset>k__BackingField: {x: 2880.3584, y: 5719.064, z: 7934.5566}
       <WarpType>k__BackingField: 3
       <WarpAmplitude>k__BackingField: 150
     maskThreshold: 0
@@ -33,7 +33,7 @@ MonoBehaviour:
     poleAngle: 0
     poleDirection: {x: 0, y: 0, z: 0}
     stripesAxis: {x: 0, y: 1, z: 0}
-    stripesScale: 43.17
+    stripesScale: 10
     emissionIntensity: 0
   biomeColors:
   - baseColor: {r: 0.8117648, g: 0.627451, b: 0.46274513, a: 0}

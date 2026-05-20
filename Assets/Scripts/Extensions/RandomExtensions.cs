@@ -34,6 +34,12 @@ namespace ProceduralPlanets.Extensions
             return new Vector3(x, y, z);
         }
         
+        public static T GetRandomListElement<T>(this System.Random random, List<T> items)
+        {
+            if (items.Count == 0) return default;
+            return items[random.Range(0, items.Count)];
+        }
+        
         public static T GetRandomListElement<T>(this System.Random random, List<T> items, List<float> probabilities)
         {
             float totalProbability = probabilities.Sum();

@@ -14,19 +14,21 @@ namespace ProceduralPlanets.Generation
     {
         [SerializeField] private GenerationParameters generationParameters;
 
-        private const string PrimeStarName = "Polaris";
+        private readonly List<string> _starPrefixes = new() { "HIP", "HD", "HR", "LP", "Kepler", "TOI", "LHS", "GJ", "K2"};
 
         public override void GenerateSystem()
         {
             var random = new Random(seed);
 
+            var primeStarName = $"{random.GetRandomListElement(_starPrefixes)} {seed}";
+            
             ClearExistingSystem();
 
             StarType primeStarType = random.GetRandomListElement(generationParameters.StarTypes.ToList(),
                 generationParameters.StarTypes.Select(type => type.SpawnWeight).ToList());
 
             var starGenerationParameters = new CelestialBodyGenerationParameters<StarData, StarType>(starPrefab,
-                primeStarType, seed, transform, PrimeStarName);
+                primeStarType, seed, transform, primeStarName);
 
             GameObject primeStar = GenerateCelestialBody(starGenerationParameters);
             CelestialBodies.Add(primeStar);
@@ -65,7 +67,7 @@ namespace ProceduralPlanets.Generation
                 primeStarType,
                 primeStar.transform,
                 type => type.StarOrbitType,
-                index => $"{PrimeStarName} {index + 1}"
+                index => $"{index + 1}"
             );
             CelestialBodies.AddRange(GenerateSatellites(planetSatelliteParameters, random));
         }

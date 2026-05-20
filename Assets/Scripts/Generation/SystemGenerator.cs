@@ -32,7 +32,7 @@ namespace ProceduralPlanets.Generation
 
         private void Awake()
         {
-            seed = new Random().Next();
+            seed = Mathf.Abs(new Random().Next());
             timeMultiplier = 1f;
             GenerateSystem();
         }

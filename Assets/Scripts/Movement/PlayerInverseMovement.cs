@@ -192,7 +192,7 @@ namespace ProceduralPlanets.Movement
             yield return RotateShip(trackingPosition);
 
             var elapsedTime = 0f;
-            float halfwayTime = travelTime / 2f;
+            float halfwayTime = travelTime / 3f;
             bool midflightRotationDone = false;
 
             while (elapsedTime < travelTime)

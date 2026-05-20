@@ -12,6 +12,7 @@ CBUFFER_START(UnityPerMaterial)
     float _AtmosphereNoiseWarpAmplitude;
     float2 _AtmosphereNoiseRange;
     float _AtmosphereMinAlpha;
+    float3 _AtmosphereOffset;
 CBUFFER_END
 
 void CalculateColor_float(float3 position, out float4 color)
@@ -25,6 +26,8 @@ void CalculateColor_float(float3 position, out float4 color)
     state.octaves = _AtmosphereNoiseOctaves;
     state.domain_warp_type = _AtmosphereNoiseWarpType;
     state.domain_warp_amp = _AtmosphereNoiseWarpAmplitude;
+
+    position += _AtmosphereOffset;
     
     if (_AtmosphereNoiseWarpAmplitude > 0) fnlDomainWarp3D(state, position.x, position.y, position.z);
 

@@ -26,6 +26,7 @@ namespace ProceduralPlanets.Generation
             MaterialPropertyBlock.SetFloat(ShaderParametersIDs.AtmosphereNoiseWarpAmplitude, parameters.NoiseParameters.WarpAmplitude);
             MaterialPropertyBlock.SetVector(ShaderParametersIDs.AtmosphereNoiseRange, parameters.NoiseRange);
             MaterialPropertyBlock.SetFloat(ShaderParametersIDs.AtmosphereMinAlpha, parameters.MinAlpha);
+            MaterialPropertyBlock.SetVector(ShaderParametersIDs.AtmosphereOffset, parameters.NoiseParameters.Offset);
             
             MeshRenderer.SetPropertyBlock(MaterialPropertyBlock);
         }

@@ -1,11 +1,16 @@
-# Procedural Planets
-Project currently in development for a bachelors thesis.
+# Procedural Generation of Planetary Systems
+A Unity tool for procedural generation of individual celestial bodies and entire planetary systems. 
+The tool was developed for my bachelor's thesis. It allows users to create highly customizable celestial bodies and planetary systems. Simple game functionality was developed alongside the tool to better showcase the tool's capabilities. 
 # Features
 - Mesh Generation
 - Multilayer Noise
-- Icosphere Generation 
-- Tessellation
+- Biomes
+- Planet Generation
+- Star Generation
+- Planetary System Generation
+- Player Movement
+- Orbital Movement
+- Level of Detail
 # Screenshots
-<img width="1581" height="889" alt="image" src="https://github.com/user-attachments/assets/2d408eef-1972-4fe2-934e-68c041c74d17" />
-<img width="1280" height="572" alt="image" src="https://github.com/user-attachments/assets/c7fb10a4-8e30-467e-94ac-9207b9a50f8b" />
-<img width="1280" height="391" alt="image" src="https://github.com/user-attachments/assets/a24344fc-764b-4c1e-a283-a6207c460524" />
+<img width="1602" height="1069" alt="notable-bodies" src="https://github.com/user-attachments/assets/20e4afc6-af52-4403-8b15-6c046eb8f456" />
+<img width="5772" height="4335" alt="last-slide" src="https://github.com/user-attachments/assets/69fe2f80-e5e6-46c7-9b02-6ec7ed1ceafc" />
